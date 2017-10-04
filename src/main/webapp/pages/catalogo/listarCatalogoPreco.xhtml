@@ -1,0 +1,107 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:adm="http://github.com/adminfaces"
+                template="/WEB-INF/templates/template.xhtml">
+
+    <ui:define name="head-end">
+        <style type="text/css">
+            .ui-grid-row .ui-grid-col-2,
+            .ui-grid-row .ui-grid-col-10 {
+                padding: 0.5em 0;
+                margin-left: 10px;
+            }
+
+            .ui-orderlist .ui-orderlist-list {
+                height: auto;
+            }
+
+            .ui-orderlist .ui-grid-row .ui-grid-col-2,
+            .ui-orderlist .ui-grid-row .ui-grid-col-10 {
+                padding: 0;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="title">
+        Pesquisa de preços
+    </ui:define>
+
+    <ui:define name="description">
+        Pesquise ... 
+    </ui:define>
+
+    <ui:define name="body">
+        <adm:breadcrumb title="Pesquisa de Preços"/>
+
+			<h:form>
+			
+            	<div class="box box-primary">
+            	
+                	<div class="box-header with-border">
+                	
+                    	<p:commandButton action="manterCatalogoPreco?faces-redirect=true" ajax="false" icon="fa fa-plus" value="Novo" styleClass="btn-primary"/>
+                    	<p:spacer width="5"/>
+	                    <p:commandButton value="Excluir" icon="fa fa-trash" styleClass="btn-danger" action="#{listaCatalogoPrecoMB.excluirSelecionados}" process="@form" update="@form"/>
+	                    <p:spacer width="5"/>
+	                    <p:commandButton value="" oncomplete="PF('catalogossSelecionados').show()" update="@(.ui-dialog)"  styleClass="btn-info" icon="fa fa-search"/>
+	                    <p:separator/>
+	                    
+	                    <p:dataTable id="catalogoPrecoTable" widgetVar="catalogoPrecoTable" rows="10"
+	                    			 value="#{listaCatalogoPrecoMB.catalogos}" var="catalogoPreco" rowKey="#{catalogoPreco.id}"
+	                    			 selection="#{listaCatalogoPrecoMB.catalogosSelecionados}"        			 
+	                                 paginator="true" 	                                 
+	                                 paginatorPosition="bottom"	                                 
+	                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+	                                 currentPageReportTemplate=""
+	                                 rowsPerPageTemplate="5,10,15,20,30">
+	
+	                        <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>	                        
+	                        
+  	                        <p:column headerText="Produto" filterBy="#{catalogoPreco.produto.nome}" sortBy="#{catalogoPreco.produto.nome}">
+	                        	<h:link value="#{catalogoPreco.produto.nome}" outcome="manterCatalogoPreco.xhtml">
+	                        		<f:param name="id" value="#{catalogoPreco.id}"/>
+	                        	</h:link>
+	                        </p:column>
+	                        
+  	                        <p:column headerText="Marca" filterBy="#{catalogoPreco.produto.marca}" sortBy="#{catalogoPreco.produto.marca}">
+	                        	<h:outputText value="#{catalogoPreco.produto.marca}"/>
+	                        </p:column>
+	                        
+	                        <p:column headerText="Modelo" filterBy="#{catalogoPreco.produto.modelo}" sortBy="#{catalogoPreco.produto.modelo}">
+	                        	<h:outputText value="#{catalogoPreco.produto.modelo}"/>
+	                        </p:column>
+	                        
+  	                        <p:column headerText="Valor a Vista">
+	                        	<h:outputText value="#{catalogoPreco.valorAVista}">
+	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
+	                        	</h:outputText>
+	                        </p:column>
+	                        
+   	                        <p:column headerText="Valor a Prazo">
+	                        	<h:outputText value="#{catalogoPreco.valorAPrazo}">
+	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
+	                        	</h:outputText>
+	                        </p:column>
+	                        
+	                    </p:dataTable>
+	                    
+					</div>
+					
+	            </div>
+	            
+        	</h:form>
+        	
+        	<p:dialog header="Catalogos Selecionados" widgetVar="catalogossSelecionados" height="250"
+                  	  width="400" responsive="true" styleClass="box-success">
+	            <p:dataList id="listaCatalogosSelecionados" value="#{listaCatalogoPrecoMB.catalogosSelecionados}" var="catalogoPreco"
+	                        type="definition">
+							ID: #{catalogoPreco.id} - PRODUTO: #{catalogoPreco.produto.nome} - MARCA: #{catalogoPreco.produto.marca} - MODELO: #{catalogoPreco.produto.modelo} - VALOR A VISTA: #{catalogoPreco.valorAVista} - VALOR A PRAZO: #{catalogoPreco.valorAPrazo}
+	            </p:dataList>
+			</p:dialog>
+        
+    </ui:define>
+
+</ui:composition>

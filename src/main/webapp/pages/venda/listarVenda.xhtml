@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:adm="http://github.com/adminfaces"
+                template="/WEB-INF/templates/template.xhtml">
+
+    <ui:define name="head-end">
+        <style type="text/css">
+            .ui-grid-row .ui-grid-col-2,
+            .ui-grid-row .ui-grid-col-10 {
+                padding: 0.5em 0;
+                margin-left: 10px;
+            }
+
+            .ui-orderlist .ui-orderlist-list {
+                height: auto;
+            }
+
+            .ui-orderlist .ui-grid-row .ui-grid-col-2,
+            .ui-orderlist .ui-grid-row .ui-grid-col-10 {
+                padding: 0;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="title">
+        Pesquisa de vendas
+    </ui:define>
+
+    <ui:define name="description">
+        Pesquise ... 
+    </ui:define>
+
+    <ui:define name="body">
+        <adm:breadcrumb title="Pesquisa de vendas"/>
+
+			<h:form>
+            	<div class="box box-primary">
+                	<div class="box-header with-border">
+                    	<p:commandButton action="manterVenda?faces-redirect=true" ajax="false" icon="fa fa-plus" value="Novo" styleClass="btn-primary"/>
+                    	<p:spacer width="5"/>
+	                    <p:commandButton value="Excluir" icon="fa fa-trash" styleClass="btn-danger" action="#{listaVendaMB.excluirSelecionadas}" process="@form" update="@form" rendered="#{listaVendaMB.vendas.size() > 0}"/>
+	                    <p:spacer width="5"/>
+	                    <p:commandButton value="" oncomplete="PF('vendasSelecionadas').show()" update="@(.ui-dialog)"  styleClass="btn-info" icon="fa fa-search" rendered="#{listaVendaMB.vendas.size() > 0}"/>
+	                                     
+	                    <p:separator/>
+	                    
+<!-- 	                    rowStyleClass="#{venda.status eq 'AGUARDANDOPAGAMENTO' ? 'btn-warning' : venda.status eq 'PAGAMENTOPARCIAL' ? 'btn-primary' : venda.status eq 'VENDACONCLUIDA' ? 'btn-success' : 'btn-danger'}" -->
+	                    
+	                    <p:dataTable id="vendaTable" widgetVar="vendaTable" rows="10"	 
+	                    			 value="#{listaVendaMB.vendas}" var="venda" rowKey="#{venda.id}" 
+	                    			 selection="#{listaVendaMB.vendasSelecionadas}"                   			 
+	                                 paginator="true" 	                                 
+	                                 paginatorPosition="bottom"	                                 
+	                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+	                                 currentPageReportTemplate=""
+	                                 rowsPerPageTemplate="5,10,15,20,30">
+	
+	                        <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>	                        
+	                        
+	                        <p:column headerText="Data da Venda" filterBy="#{venda.dataVendaFormatada}" sortBy="#{venda.dataVendaFormatada}">
+ 	                        	<h:link value="#{venda.dataVendaFormatada}" outcome="manterVenda.xhtml">
+	                        		<f:param name="id" value="#{venda.id}"/>
+	                        	</h:link>
+	                        </p:column>
+	                        
+   	                        <p:column headerText="Cliente" filterBy="#{venda.cliente.nome}" sortBy="#{venda.cliente.nome}">
+	                        	<h:outputText value="#{venda.cliente.nome}" />
+	                        </p:column>
+	                        
+   	                        <p:column headerText="Valor Venda">
+	                        	<h:outputText value="#{venda.valorTotal}">
+	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
+	                        	</h:outputText>
+	                        </p:column>
+	                        
+  	                        <p:column headerText="Qtde">
+	                        	<h:outputText value="#{venda.quantidadeTotal}" />
+	                        </p:column>
+	                        
+   	                        <p:column headerText="Vendedor" filterBy="#{venda.funcionario.nome}" sortBy="#{venda.funcionario.nome}">
+	                        	<h:outputText value="#{venda.funcionario.nome}" />
+	                        </p:column>
+	                        
+   	                        <p:column headerText="Status" filterBy="#{venda.status.descricao}" sortBy="#{venda.status.descricao}" style="text-align: center;">
+	                        	<h:outputText value="#{venda.status.descricao}"/>
+	                        </p:column>
+	                        	
+	                    </p:dataTable>
+					</div>
+	            </div>
+        	</h:form>
+        	
+        	<p:dialog header="Vendas Selecionadas" widgetVar="vendasSelecionadas" height="250"
+                  	  width="400" responsive="true" styleClass="box-success">
+	            <p:dataList id="listaVendasSelecionadas" value="#{listaVendaMB.vendasSelecionadas}" var="venda"
+	                        type="definition">
+							ID: #{venda.id} - DATA DA COMPRA: #{venda.dataVenda} - VALOR DA COMPRA: #{venda.valorTotal} - QUANTIDADE: #{venda.quantidadeTotal} 
+	            </p:dataList>
+			</p:dialog>
+        
+    </ui:define>
+
+</ui:composition>

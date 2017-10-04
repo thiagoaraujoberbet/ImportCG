@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces">
+                
+	<div class="box box-primary">
+
+		<div class="box-header with-border">
+		
+   			<div class="ui-fluid">
+       
+        		<p:panelGrid id="cadastroGeral" columns="13" style="width:100%;" rendered="#{vendaMB.venda.status ne 'VENDACONCLUIDA'}">
+        		
+					<p:outputLabel value="Pago R$" for="valorPago"/>
+					<p:inputNumber id="valorPago" value="#{vendaMB.calcularValorPago()}" disabled="true"/>
+					
+					<p:outputLabel value="Restante R$" for="valorRestante"/>
+					<p:inputNumber id="valorRestante" value="#{vendaMB.calcularValorRestante()}" disabled="true"/>
+               
+					<p:outputLabel value="Forma" for="formaPagamento"/>
+					<p:selectOneMenu id="formaPagamento" value="#{vendaMB.pagamento.forma}">
+						<f:selectItem itemLabel="Selecione..."/>
+						<f:selectItem itemLabel="Dinheiro" itemValue="DINHEIRO"/>
+						<f:selectItem itemLabel="Débito" itemValue="DEBITO"/>
+						<f:selectItem itemLabel="Crédito" itemValue="CREDITO"/>
+						<f:selectItem itemLabel="Cheque" itemValue="CHEQUE"/>
+						<f:ajax event="change" render="cadastrarPagamento"/>
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Valor R$" for="valorPagamento"/>
+					<p:inputNumber id="valorPagamento" value="#{vendaMB.pagamento.valor}"/>
+					
+					<p:outputLabel value="Data" for="dataPagamento"/>
+					<p:calendar id="dataPagamento" value="#{vendaMB.pagamento.data}" pattern="dd/MM/yyyy" mask="true"/>
+					
+					<p:commandButton action="#{vendaMB.salvarPagamento()}" update="@form" icon="fa fa-plus" title="Adicionar" styleClass="btn-success"
+						rendered="#{vendaMB.pagamento.forma eq 'DINHEIRO'}"/>
+		
+				</p:panelGrid>
+				
+				<p:spacer />
+				
+				<p:panelGrid id="cadastroCartao" columns="11" style="width:100%;" 
+					rendered="#{(vendaMB.pagamento.forma eq 'DEBITO' or vendaMB.pagamento.forma eq 'CREDITO') and vendaMB.venda.status ne 'VENDACONCLUIDA'}">
+				
+					<p:outputLabel value="Parcelas" for="parcela"/>
+					<p:inputText id="parcela" value="#{vendaMB.pagamento.parcela}"/>
+				
+					<p:outputLabel value="Valor Parc. R$" for="valorParcela"/>
+					<p:inputNumber id="valorParcela" value="#{vendaMB.pagamento.valorParcela}"/>
+					
+					<p:outputLabel value="Saldo R$" for="saldo"/>
+					<p:inputNumber id="saldo" value="#{vendaMB.pagamento.saldo}"/>
+					
+					<p:outputLabel value="Taxa R$" for="taxa"/>
+					<p:inputNumber id="taxa" value="#{vendaMB.pagamento.taxa}"/>
+					
+					<p:outputLabel value="Recebimento" for="dataRecebimento"/>
+					<p:calendar id="dataRecebimento" value="#{vendaMB.pagamento.dataRecebimento}" pattern="dd/MM/yyyy" mask="true"/>
+					
+					<p:commandButton action="#{vendaMB.salvarPagamento()}" update="@form" icon="fa fa-plus" title="Adicionar" styleClass="btn-success"
+						rendered="#{vendaMB.pagamento.forma eq 'DEBITO' or vendaMB.pagamento.forma eq 'CREDITO'}"/>
+				
+				</p:panelGrid>
+
+				<p:spacer />
+
+				<p:dataTable id="pagamentoTable" widgetVar="pagamentoTable" rows="5"	 
+      			 		value="#{vendaMB.pagamentos}" var="item" rowKey="#{item.id}"
+      			 		expandableRowGroups="true"
+                       paginator="true" 	                                 
+                       paginatorPosition="bottom"	                                 
+                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                       currentPageReportTemplate=""
+                       rowsPerPageTemplate="5,10,15,20,30">
+                       
+                    <p:column headerText="Forma">
+						<h:outputText value="#{item.forma.descricao}"/>	
+                    </p:column>
+                    
+                   <p:column headerText="Valor">
+                    	<h:outputText value="#{item.valor}">
+                    		<f:convertNumber type="currency" currencySymbol="R$"/>
+                    	</h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Saldo">
+                    	<h:outputText value="#{item.forma eq 'DINHEIRO' ? item.valor : item.saldo}">
+                    		<f:convertNumber type="currency" currencySymbol="R$"/>
+                    	</h:outputText>
+                    </p:column>
+                    
+                   	<p:column headerText="Data de Pag.">
+						<h:outputText value="#{item.data}">
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>	
+                    </p:column>
+                    
+                    <p:column headerText="Recebido?" width="10%">
+						<p:commandButton value="#{item.pago ? 'Sim' : 'Não'}" update="@form" styleClass="#{item.pago ? 'btn-success' : 'btn-danger'}" action="#{vendaMB.confirmarRecebimento()}"
+							disabled="#{(item.forma eq 'DEBITO' or item.forma eq 'CREDITO' or item.venda.status eq 'VENDACONCLUIDA') and item.pago}">
+							<f:setPropertyActionListener value="#{item}" target="#{vendaMB.pagamento}" />
+						</p:commandButton>	
+                    </p:column>
+                    
+                   	<p:column styleClass="align-center" width="10%">
+			             <p:commandButton update="@form" icon="fa fa-pencil" styleClass="btn-primary" title="Editar" 
+			             	disabled="#{item.pago or ((item.forma eq 'DEBITO' or item.forma eq 'CREDITO') and !item.pago)}">
+			                <f:setPropertyActionListener value="true" target="#{vendaMB.edicaoPagamento}" />
+			                <f:setPropertyActionListener value="#{item}" target="#{vendaMB.pagamento}" />
+			            </p:commandButton>
+			        </p:column>
+			        
+                   	<p:column styleClass="align-center" width="10%">
+			             <p:commandButton update="@form" icon="fa fa-trash" styleClass="btn-danger" title="Excluir" action="#{vendaMB.excluirPagamento()}" disabled="#{item.pago}">
+			                <f:setPropertyActionListener value="#{item}" target="#{vendaMB.pagamento}" />
+			            </p:commandButton>
+			        </p:column>
+                    
+               	</p:dataTable>
+
+			</div>
+              
+		</div>
+              
+	</div>
+	
+</ui:composition>                

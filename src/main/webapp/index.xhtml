@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="WEB-INF/templates/template.xhtml">
+
+    <ui:define name="head-end">
+        <ui:param name="renderBreadCrumb" value="false"/>
+    </ui:define>
+
+    <ui:define name="title">
+        <p:growl autoUpdate="true" life="4000"/>
+
+        <h2 class="align-center">
+            Bem vindo ao sistema de vendas <span class="text-aqua"> <i><a href="https://www.instagram.com/importcgms/?hl=pt-br" target="_blank"
+                                                          style="text-transform: none;text-decoration: none"> ImportCG</a></i></span>!
+            <br/>
+        </h2>
+        
+      	<div class="box box-primary">
+      
+           <div class="box-header with-border">
+          
+          <p:panelGrid columns="3" style="width: 100%;">
+               <p:chart type="pie" model="#{listaPrincipalMB.pieModelMesAnterior}" responsive="true" />
+               <p:chart type="pie" model="#{listaPrincipalMB.pieModelMesAtual}" responsive="true" />
+               <p:chart type="pie" model="#{listaPrincipalMB.pieModelGeral}" responsive="true" />
+          </p:panelGrid>
+          
+           </div>
+          
+   		</div>
+
+    </ui:define>
+
+
+</ui:composition>

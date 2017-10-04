@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
+                template="/WEB-INF/templates/template.xhtml">
+                
+    <ui:define name="title">
+        Cadastro Baixa
+    </ui:define>
+
+    <ui:define name="body">
+        <f:metadata>
+        	<f:viewParam name="id" value="#{baixaMB.idBaixa}" converter="javax.faces.Long"/>
+        	<f:event listener="#{baixaMB.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+
+        <adm:breadcrumb title="Cadastro de Baixas #{baixaMB.baixa.id}" link="manterBaixa.xhtml?id=#{baixaMB.baixa.id}"/>
+        <h:form id="form" prependId="false">
+            <p:focus/>
+			
+            <div class="box box-primary">
+            
+                <div class="box-header with-border">
+                
+                    <div id="main-buttons" class="hidden-sm hidden-xs">
+                        <p:commandButton value="Salvar" update="@form" icon="fa fa-check"  action="#{baixaMB.salvar(true)}" styleClass="btn-primary" rendered="#{!baixaMB.baixa.edicao}"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="Voltar" immediate="true" action="listarBaixa?faces-redirect=true" process="@this" icon="fa fa-close"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="Excluir"  process="@this" icon="fa fa-trash" action="#{baixaMB.excluir()}" styleClass="btn-danger" rendered="#{baixaMB.baixa.edicao}"/>
+                        <p:spacer width="5"/>
+                    </div>
+                    
+                    <p:splitButton value="Salvar" update="@form" icon="fa fa-check" action="#{baixaMB.salvar(true)}" styleClass="hidden-md hidden-lg btn-primary">
+                        <p:menuitem value="Excluir" process="@this" icon="fa fa-trash" action="#{baixaMB.excluir()}" rendered="#{baixaMB.baixa.edicao}" />
+                        <p:separator/>
+                        <p:menuitem value="Voltar" action="listarBaixa?faces-redirect=true" process="@this" icon="fa fa-close"/>
+                    </p:splitButton>
+
+                    <p:separator/>
+
+                    <div class="ui-fluid">
+						<p:panelGrid id="capaPanel1" columns="6" style="width:100%;">
+						
+							<p:outputLabel value="Data da Criação" for="dataCriacao" />
+							<p:calendar id="dataCriacao" value="#{baixaMB.baixa.dataCriacao}" pattern="dd/MM/yyyy" mask="true" disabled="#{baixaMB.baixa.id ne null}"/>
+							
+							<p:outputLabel value="Valor Total" for="valorTotal"/>
+							<p:inputText id="valorTotal" value="#{baixaMB.baixa.valorTotal}" disabled="true"/>
+							
+							<p:outputLabel value="Status" for="statusBaixa"/>
+							<p:inputText id="statusBaixa" value="#{baixaMB.baixa.status.descricao}" disabled="true" />
+							
+						</p:panelGrid>
+						
+						 <p:spacer />
+						
+						<p:panelGrid id="capaPanel2" columns="2" style="width:100%;">
+						
+							<p:outputLabel value="Descrição" for="descricaoBaixa"/>
+							<p:inputText id="descricaoBaixa" value="#{baixaMB.baixa.descricao}" disabled="#{baixaMB.baixa.id ne null}"/>
+						
+						</p:panelGrid>
+						
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            <p:panel rendered="#{baixaMB.baixa.edicao}">
+	            <div class="box box-primary">
+	            	<div class="box-header with-border">
+	            		<div id="main-buttons" class="hidden-sm hidden-xs">
+	                        <p:commandButton value="Salvar" update="@form" icon="fa fa-check" action="#{baixaMB.salvarItem()}" styleClass="btn-primary"/>
+                           	<p:spacer width="5" />
+		                    <p:commandButton value="Excluir" update="@form" icon="fa fa-trash" action="#{baixaMB.excluirItensBaixaSelecionados}" 
+		                    	process="@form" styleClass="btn-danger" rendered="#{baixaMB.itensBaixa.size() > 0}"/>
+	            		</div>
+	            		
+                    	<p:splitButton value="Salvar" update="@form" icon="fa fa-check" action="#{baixaMB.salvarItem()}" 
+                    		styleClass="hidden-md hidden-lg btn-primary">
+	                        <p:menuitem value="Excluir" process="@this" icon="fa fa-trash" action="#{baixaMB.excluirItensBaixaSelecionados}" 
+	                        	rendered="#{baixaMB.itensBaixa.size() > 0}" />
+                    	</p:splitButton>
+	            		
+                    	<p:separator/>
+	
+	                    <div class="ui-fluid">
+							<p:panelGrid id="itemPanel1" columns="4" style="width:100%;">
+							
+								<p:outputLabel value="Despesa" for="itensDespesa"/>
+								<p:selectOneMenu id="itensDespesa" value="#{baixaMB.itemBaixa.itemDespesa}" converter="itemDespesaConverter" var="i" filter="true" filterMatchMode="contains">
+									<f:selectItem itemLabel="Selecione..."/>
+						            <f:selectItems value="#{baixaMB.itensDespesa}" var="itemDespesa" itemLabel="#{itemDespesa.despesa.dataDespesaFormatada} | #{itemDespesa.tipo.descricao} | #{itemDespesa.valor}" itemValue="#{produto}" />
+						        
+  						            <p:column>
+						                <h:outputText value="#{i.despesa.dataDespesaFormatada}" />
+						            </p:column>
+						 
+						            <p:column>
+						                <h:outputText value="#{i.tipo.descricao}" />
+						            </p:column>
+						            
+  						            <p:column>
+						                <h:outputText value="#{i.valor}" />
+						            </p:column>
+						            
+						            <p:ajax event="change" update="itemPanel3" listener="#{baixaMB.setarValor()}"/>
+						        </p:selectOneMenu>
+						        
+	   							<p:outputLabel value="Caixa" for="caixa"/>
+								<p:selectOneMenu id="caixa" value="#{baixaMB.itemBaixa.caixa}" converter="caixaConverter" var="c" filter="true" filterMatchMode="contains">
+									<f:selectItem itemLabel="Selecione..."/>
+						            <f:selectItems value="#{baixaMB.caixas}" var="caixa" itemLabel="#{caixa.conta.nome} | #{caixa.conta.tipo.descricao} | #{caixa.conta.instituicao.descricao} | #{caixa.conta.funcionario.nome} | #{caixa.valor}" itemValue="#{caixa}" />
+						        
+					            	<p:column>
+						                <h:outputText value="#{c.conta.nome}" />
+						            </p:column>
+						            
+						            <p:column>
+						                <h:outputText value="#{c.conta.tipo.descricao}" />
+						            </p:column>
+						 
+					            	<p:column>
+						                <h:outputText value="#{c.conta.instituicao.descricao}" />
+						            </p:column>
+						            
+						            <p:column>
+						                <h:outputText value="#{c.conta.funcionario.nome}" />
+						            </p:column>
+						            
+						           <p:column>
+						                <h:outputText value="#{c.valor}">
+						                	<f:convertNumber type="currency" currencySymbol="R$"/>
+						                </h:outputText>
+						            </p:column>
+						        </p:selectOneMenu>
+						        
+					        </p:panelGrid>
+					        
+					         <p:spacer />
+					         
+					         <p:panelGrid id="itemPanel2" columns="2" style="width:100%;">
+					         
+   								<p:outputLabel value="Descrição" for="descricaoItem"/>
+								<p:inputText id="descricaoItem" value="#{baixaMB.itemBaixa.descricao}"/>
+					         
+					         </p:panelGrid>
+					         
+					         <p:spacer />
+						        
+					         <p:panelGrid id="itemPanel3" columns="8" style="width:100%;">
+						        
+								<p:outputLabel value="Valor" for="valor"/>
+				                <p:inputNumber id="valor" value="#{baixaMB.itemBaixa.valor}"/>
+				                
+  								<p:outputLabel value="Acréscimo" for="acrescimo"/>
+				                <p:inputNumber id="acrescimo" value="#{baixaMB.itemBaixa.acrescimo}"/>
+				                
+       							<p:outputLabel value="Data da Baixa" for="dataBaixa" />
+								<p:calendar id="dataBaixa" value="#{baixaMB.itemBaixa.data}" pattern="dd/MM/yyyy" mask="true"/>
+								
+								<p:outputLabel value="Tipo Baixa" for="tipo"/>
+								<p:selectOneMenu id="tipo" value="#{baixaMB.itemBaixa.tipo}" style="width:100%;">
+									<f:selectItem itemLabel="Selecione..."/>
+									<f:selectItem itemLabel="Baixa Parcial" itemValue="BAIXAPARCIAL"/>
+									<f:selectItem itemLabel="Baixa Integral" itemValue="BAIXAINTEGRAL"/>
+								</p:selectOneMenu>
+								
+							</p:panelGrid>
+							
+	                    </div>
+	                    
+	                    <p:separator />
+	                    
+	                    <div class="ui-fluid">
+	                    
+	   	                    <p:dataTable id="itemBaixaTable" widgetVar="itemBaixaTable" rows="5"	 
+		                    			 value="#{baixaMB.itensBaixa}" var="item" rowKey="#{item.id}"
+		                    			 selection="#{baixaMB.itensBaixaSelecionados}"   
+		                                 paginator="true" 	                                 
+		                                 paginatorPosition="bottom"	                                 
+		                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+		                                 currentPageReportTemplate=""
+		                                 rowsPerPageTemplate="5,10,15,20,30">
+		                                 
+                                <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>	
+		                        
+	   	                        <p:column headerText="Descrição">
+		                        	<h:outputText value="#{item.descricao}" />
+		                        </p:column>
+		                        
+		                      	<p:column headerText="Debitar de">
+		                        	<h:outputText value="#{item.caixa.conta.nome} | #{item.caixa.conta.funcionario.nome} | #{item.caixa.valor}" />
+		                        </p:column>
+		                        
+   	   	                        <p:column headerText="Valor R$">
+		                        	<h:outputText value="#{item.valor}">
+		                        		<f:convertNumber type="currency" currencySymbol="R$"/>
+		                        	</h:outputText>
+		                        </p:column>
+		                        
+  	   	                        <p:column headerText="Acréscimo R$">
+		                        	<h:outputText value="#{item.acrescimo}">
+		                        		<f:convertNumber type="currency" currencySymbol="R$"/>
+		                        	</h:outputText>
+		                        </p:column>
+		                        
+                              	<p:column headerText="Data da Baixa">
+									<h:outputText value="#{item.data}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>	
+			                    </p:column>
+		                        
+   	   	                        <p:column headerText="Tipo Baixa">
+		                        	<h:outputText value="#{item.tipo.descricao}" />
+		                        </p:column>
+		                        
+			                    <p:column headerText="Baixado?" width="10%">
+									<p:commandButton value="#{item.baixado ? 'Sim' : 'Não'}" update="@form" 
+										styleClass="#{item.baixado ? 'btn-success' : 'btn-danger'}" action="#{baixaMB.confirmarBaixa()}">
+										<f:setPropertyActionListener value="#{item}" target="#{baixaMB.itemBaixa}" />
+									</p:commandButton>	
+			                    </p:column>
+                    
+                               	<p:column styleClass="align-center" width="10%">
+						             <p:commandButton update="@form" icon="fa fa-pencil" title="Editar" styleClass="btn-primary" disabled="#{item.baixado}">
+						                <f:setPropertyActionListener value="true" target="#{baixaMB.edicaoItem}" />
+						                <f:setPropertyActionListener value="#{item}" target="#{baixaMB.itemBaixa}" />
+						                <f:setPropertyActionListener value="#{item.valor}" target="#{baixaMB.valorAtual}" />
+						            </p:commandButton>
+						        </p:column>
+		                        	
+		                    </p:dataTable>
+	                    
+	                    </div>
+	            		
+	            	</div>
+	            	
+	            </div>
+            
+             </p:panel>
+            
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
