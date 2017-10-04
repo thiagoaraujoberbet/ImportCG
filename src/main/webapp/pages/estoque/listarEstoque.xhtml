@@ -44,7 +44,7 @@
 	                    <p:separator/>
 	                    
 	                    <p:dataTable id="estoqueTable" widgetVar="estoqueTable" rows="10"	 
-	                    			 value="#{listaEstoqueMB.estoques}" var="estoque" rowKey="#{estoque.id}"
+	                    			 value="#{listaEstoqueMB.estoques}" var="estoque" rowKey="#{estoque.idEstoque}"
 	                    			 selection="#{listaEstoqueMB.estoquesSelecionados}"                   			 
 	                                 paginator="true" 	                                 
 	                                 paginatorPosition="bottom"	                                 
@@ -54,24 +54,28 @@
 	
 	                        <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>	                        
 	                        
-	                        <p:column headerText="Produto" filterBy="#{estoque.produto.nome}" sortBy="#{estoque.produto.nome}">
-								<h:outputText value="#{estoque.produto.nome}"/>
+	                        <p:column headerText="Produto" filterBy="#{estoque.nomeProduto}" sortBy="#{estoque.nomeProduto}">
+								<h:outputText value="#{estoque.nomeProduto}"/>
 	                        </p:column>
 	                        
-  	                        <p:column headerText="Categoria" filterBy="#{estoque.produto.categoria.descricao}" sortBy="#{estoque.produto.categoria.descricao}">
-	                        	<h:outputText value="#{estoque.produto.categoria.descricao}"/>
+  	                        <p:column headerText="Categoria" filterBy="#{estoque.categoriaProduto.descricao}" sortBy="#{estoque.categoriaProduto.descricao}">
+	                        	<h:outputText value="#{estoque.categoriaProduto.descricao}"/>
 	                        </p:column>
 	                        
-	                        <p:column headerText="Marca" filterBy="#{estoque.produto.marca}" sortBy="#{estoque.produto.marca}">
-	                        	<h:outputText value="#{estoque.produto.marca}"/>
+	                        <p:column headerText="Marca" filterBy="#{estoque.marcaProduto}" sortBy="#{estoque.marcaProduto}">
+	                        	<h:outputText value="#{estoque.marcaProduto}"/>
 	                        </p:column>
 	                        
-	                        <p:column headerText="Modelo" filterBy="#{estoque.produto.modelo}" sortBy="#{estoque.produto.modelo}">
-	                        	<h:outputText value="#{estoque.produto.modelo}"/>
+	                        <p:column headerText="Modelo" filterBy="#{estoque.modeloProduto}" sortBy="#{estoque.modeloProduto}">
+	                        	<h:outputText value="#{estoque.modeloProduto}"/>
 	                        </p:column>
 	                        
-                        	<p:column headerText="Qtde"  width="10%">
+                        	<p:column headerText="Em Estoque"  width="10%">
 	                        	<h:outputText value="#{estoque.quantidade}"/>
+	                        </p:column>
+	                        
+                           	<p:column headerText="Qtde Vendida"  width="10%">
+	                        	<h:outputText value="#{estoque.quantidadeTotalVenda}"/>
 	                        </p:column>
 	                        	
 	                    </p:dataTable>
@@ -83,7 +87,7 @@
                   	  width="400" responsive="true" styleClass="box-success">
 	            <p:dataList id="listaEstoquesSelecionados" value="#{listaEstoqueMB.estoquesSelecionados}" var="estoque"
 	                        type="definition">
-							ID: #{estoque.id} - PRODUTO: #{estoque.produto.nome} - DESCRIÇÃO: #{estoque.produto.descricao} 
+							PRODUTO: #{estoque.nomeProduto} - DESCRIÇÃO: #{estoque.descricaoProduto} 
 	            </p:dataList>
 			</p:dialog>
 

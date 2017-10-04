@@ -43,4 +43,8 @@ public class PessoaService implements Serializable {
 	public Pessoa porId(Long id) {
 		return pessoaDAO.porId(id);
 	}
+
+	public List<Pessoa> buscarInformacoesFuncionario() {
+		return pessoaDAO.buscarInformacoesFuncionario();
+	}
 }

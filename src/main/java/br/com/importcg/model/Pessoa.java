@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -51,6 +52,12 @@ public class Pessoa implements Serializable {
 	private Date dataCriacao;
 	
 	private Date dataAlteracao;	
+	
+	@Transient
+	private Integer quantidadeComprada;
+	
+	@Transient
+	private Integer quantidadeVendida;
 
 	public Pessoa() {
 		super();
@@ -136,6 +143,22 @@ public class Pessoa implements Serializable {
 		this.dataAlteracao = dataAlteracao;
 	}
 	
+	public Integer getQuantidadeComprada() {
+		return quantidadeComprada;
+	}
+
+	public void setQuantidadeComprada(Integer quantidadeComprada) {
+		this.quantidadeComprada = quantidadeComprada;
+	}
+
+	public Integer getQuantidadeVendida() {
+		return quantidadeVendida;
+	}
+
+	public void setQuantidadeVendida(Integer quantidadeVendida) {
+		this.quantidadeVendida = quantidadeVendida;
+	}
+
 	public boolean isInclusao() {
 		return getId() == null ? true : false;
 	}

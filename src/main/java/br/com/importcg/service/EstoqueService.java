@@ -9,6 +9,7 @@ import br.com.importcg.dao.EstoqueDAO;
 import br.com.importcg.model.Estoque;
 import br.com.importcg.model.Produto;
 import br.com.importcg.util.Transacional;
+import br.com.importcg.wrapper.EstoqueWrapper;
 
 public class EstoqueService implements Serializable {
 
@@ -70,5 +71,9 @@ public class EstoqueService implements Serializable {
 
 	public Estoque verificarProdutoEmEstoque(Long idProduto) {
 		return estoqueDAO.verificarProdutoEmEstoque(idProduto);
+	}
+
+	public List<EstoqueWrapper> buscarInformacoesEstoque() {
+		return estoqueDAO.buscarInformacoesEstoque();
 	}
 }

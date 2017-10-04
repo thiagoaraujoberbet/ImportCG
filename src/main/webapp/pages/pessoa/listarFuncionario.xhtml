@@ -74,22 +74,26 @@
 	                        	</h:link>
 	                        </p:column>
 	                        
-  	                        <p:column headerText="Cargo" filterBy="#{funcionario.cargo}" sortBy="#{funcionario.cargo}">
+  	                        <p:column headerText="Cargo">
 	                        	<h:outputText value="#{funcionario.cargo.descricao}"/>
 	                        </p:column>
 	                        
-	                        <p:column headerText="Data de Nasc." filterBy="#{funcionario.dataNascimento}" sortBy="#{funcionario.dataNascimento}">
+	                        <p:column headerText="Data de Nasc.">
 	                        	<h:outputText value="#{funcionario.dataNascimento}">
 	                        		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	                        	</h:outputText>
 	                        </p:column>
 	                        
-	                        <p:column headerText="Celular" filterBy="#{funcionario.celular}" sortBy="#{funcionario.celular}">
+	                        <p:column headerText="Celular">
 	                        	<h:outputText value="#{funcionario.celular}">
 	                        	</h:outputText>
 	                        </p:column>
 	                        
-  	                       	<p:column headerText="Desde" filterBy="#{funcionario.dataCriacao}" sortBy="#{funcionario.dataCriacao}">
+   	                        <p:column headerText="Qtde Vendida">
+	                        	<h:outputText value="#{funcionario.quantidadeVendida}"/>
+	                        </p:column>
+	                        
+  	                       	<p:column headerText="Desde">
 	                        	<h:outputText value="#{funcionario.dataCriacao}">
 	                        		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	                        	</h:outputText>

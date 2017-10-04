@@ -9,7 +9,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.importcg.enumeration.EnumTipoPessoa;
 import br.com.importcg.model.Pessoa;
 import br.com.importcg.service.PessoaService;
 import br.com.importcg.util.FacesUtil;
@@ -32,7 +31,7 @@ public class ListaFuncionarioMB implements Serializable {
 	
 	@PostConstruct
 	public void inicializar() {
-		funcionarios = pessoaService.listarTodos(EnumTipoPessoa.FUNCIONARIO);
+		funcionarios = pessoaService.buscarInformacoesFuncionario();
 	}
 	
 	public void excluirSelecionados() {
