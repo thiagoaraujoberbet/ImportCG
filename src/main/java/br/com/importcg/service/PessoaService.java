@@ -47,4 +47,8 @@ public class PessoaService implements Serializable {
 	public List<Pessoa> buscarInformacoesFuncionario() {
 		return pessoaDAO.buscarInformacoesFuncionario();
 	}
+
+	public List<Pessoa> buscarInformacoesCliente() {
+		return pessoaDAO.buscarInformacoesCliente();
+	}
 }

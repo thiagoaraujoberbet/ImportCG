@@ -54,7 +54,8 @@ public class PessoaDAO implements Serializable {
 	public List<Pessoa> buscarInformacoesFuncionario() {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT p.idPessoa, p.nome, p.cargo, p.cpf, p.dataNascimento, p.celular, p.email, p.tipo, p.dataCriacao, p.dataAlteracao, ");
-		sql.append("    (select SUM(iv.quantidade) from importcg.itemVenda iv JOIN importcg.venda v ON iv.idVenda = v.idVenda where v.idFuncionario = p.idPessoa) quantidadeVendida "); 
+		sql.append("    case when (select SUM(iv.quantidade) from importcg.itemVenda iv JOIN importcg.venda v ON iv.idVenda = v.idVenda where v.idFuncionario = p.idPessoa) is null then 0 else ");
+		sql.append("    (select SUM(iv.quantidade) from importcg.itemVenda iv JOIN importcg.venda v ON iv.idVenda = v.idVenda where v.idFuncionario = p.idPessoa) end quantidadeVendida ");
 		sql.append("FROM importcg.pessoa p "); 
 		sql.append("WHERE p.tipo = 'FUNCIONARIO' ");  
 		sql.append("ORDER BY p.nome "); 
@@ -110,6 +111,75 @@ public class PessoaDAO implements Serializable {
 			
 			if (item[10] != null) {
 				pessoa.setQuantidadeVendida(new Integer(item[10].toString()));
+			}
+			
+			itens.add(pessoa);
+		}
+		
+		return itens;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Pessoa> buscarInformacoesCliente() {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT p.idPessoa, p.nome, p.cargo, p.cpf, p.dataNascimento, p.celular, p.email, p.tipo, p.dataCriacao, p.dataAlteracao, ");
+		sql.append("    case when (select SUM(iv.quantidade) from importcg.itemVenda iv JOIN importcg.venda v ON iv.idVenda = v.idVenda where v.idCliente = p.idPessoa) is null then 0 else ");
+		sql.append("    (select SUM(iv.quantidade) from importcg.itemVenda iv JOIN importcg.venda v ON iv.idVenda = v.idVenda where v.idCliente = p.idPessoa) end quantidadeComprada ");
+		sql.append("FROM importcg.pessoa p "); 
+		sql.append("WHERE p.tipo = 'CLIENTE' ");  
+		sql.append("ORDER BY p.nome "); 
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		List<Object[]> objects = query.getResultList();
+		
+		List<Pessoa> itens = new ArrayList<>();
+		
+		for (Object[] item : objects) {
+			Pessoa pessoa = new Pessoa();
+			
+			if (item[0] != null) {
+				pessoa.setId(Long.parseLong(item[0].toString()));
+			}
+			
+			if (item[1] != null) {
+				pessoa.setNome(item[1].toString());
+			}
+			
+			if (item[2] != null) {
+				pessoa.setCargo(Enum.valueOf(EnumCargo.class, item[2].toString()));
+			}
+			
+			if (item[3] != null) {
+				pessoa.setCpf(item[3].toString());
+			}
+			
+			if (item[4] != null) {
+				pessoa.setDataNascimento((Date) item[4]);
+			}
+			
+			if (item[5] != null) {
+				pessoa.setCelular(item[5].toString());
+			}
+			
+			if (item[6] != null) {
+				pessoa.setEmail(item[6].toString());
+			}
+			
+			if (item[7] != null) {
+				pessoa.setTipo(Enum.valueOf(EnumTipoPessoa.class, item[7].toString()));
+			}
+			
+			if (item[8] != null) {
+				pessoa.setDataCriacao((Date) item[8]);
+			}	
+			
+			if (item[9] != null) {
+				pessoa.setDataAlteracao((Date) item[9]);
+			}
+			
+			if (item[10] != null) {
+				pessoa.setQuantidadeComprada(new Integer(item[10].toString()));
 			}
 			
 			itens.add(pessoa);
