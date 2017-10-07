@@ -27,12 +27,12 @@ public class PrincipalDAO implements Serializable {
 		
 		sql.append("SELECT ");
 		sql.append("(SELECT SUM(e.valorTotal) from importcg.entrada e ");
-		sql.append("	where e.dataCompra between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate())) entradas, ");
+		sql.append("	where e.dataCompra between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) entradas, ");
 		sql.append("(SELECT SUM(iv.valor) from importcg.itemVenda iv ");
 		sql.append("	JOIN importcg.venda v ON iv.idVenda = v.idVenda ");
-		sql.append("	where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate())) saidas, ");
+		sql.append("	where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) saidas, ");
 		sql.append("(SELECT SUM(p.saldo) from importcg.pagamento p ");
-		sql.append("	where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate()) and p.pago = 1) recebido; ");
+		sql.append("	where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and p.pago = 1) recebido; ");
 		
 		Query query = manager.createNativeQuery(sql.toString());
 		
