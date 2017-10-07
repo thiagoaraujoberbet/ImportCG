@@ -46,7 +46,7 @@ public class ItemBaixa implements Serializable {
 	
 	private String descricao;
 	
-	private BigDecimal valor= BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
+	private BigDecimal valor = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
 	private BigDecimal acrescimo = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
