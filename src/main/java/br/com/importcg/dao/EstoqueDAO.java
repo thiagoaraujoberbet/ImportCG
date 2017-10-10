@@ -65,7 +65,7 @@ public class EstoqueDAO implements Serializable {
 		sql.append("		(select SUM(iv.quantidade) FROM importcg.itemVenda iv WHERE iv.idProduto = p.idProduto) end quantidadeTotalVenda ");
 		sql.append("FROM importcg.estoque e ");
 		sql.append("JOIN importcg.produto p ON e.idProduto = p.idProduto ");
-		sql.append("ORDER BY p.nome, p.marca, p.modelo ");
+		sql.append("ORDER BY e.quantidade DESC, p.nome, p.marca, p.modelo ");
 		
 		Query query = manager.createNativeQuery(sql.toString());
 		
