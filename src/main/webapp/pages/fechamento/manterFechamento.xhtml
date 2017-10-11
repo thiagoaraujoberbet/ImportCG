@@ -76,16 +76,24 @@
 						<p:panelGrid id="capaPanel2" columns="8" style="width:100%;">
 						
 							<p:outputLabel value="Valor Recebido" for="valorRecebido"/>
-							<p:inputText id="valorRecebido" value="#{fechamentoMB.fechamento.valorRecebido}" disabled="true" />
+							<p:inputText id="valorRecebido" value="#{fechamentoMB.fechamento.valorRecebido}" disabled="true">
+								<f:convertNumber type="currency" currencySymbol="R$"/>
+							</p:inputText>
 							
 							<p:outputLabel value="Valor Entradas" for="valorEntradas"/>
-							<p:inputText id="valorEntradas" value="#{fechamentoMB.fechamento.valorEntradas}" disabled="true" />
+							<p:inputText id="valorEntradas" value="#{fechamentoMB.fechamento.valorEntradas}" disabled="true">
+								<f:convertNumber type="currency" currencySymbol="R$"/>
+							</p:inputText>
 							
 							<p:outputLabel value="Valor Despesas" for="valorDespesas"/>
-							<p:inputText id="valorDespesas" value="#{fechamentoMB.fechamento.valorDespesas}" disabled="true" />
+							<p:inputText id="valorDespesas" value="#{fechamentoMB.fechamento.valorDespesas}" disabled="true">
+								<f:convertNumber type="currency" currencySymbol="R$"/>
+							</p:inputText>
 							
 							<p:outputLabel value="Saldo Mensal" for="saldoMensal"/>
-							<p:inputText id="saldoMensal" value="#{fechamentoMB.fechamento.saldo}" disabled="true" />
+							<p:inputText id="saldoMensal" value="#{fechamentoMB.fechamento.saldo}" disabled="true">
+								<f:convertNumber type="currency" currencySymbol="R$"/>
+							</p:inputText>
 							
 						</p:panelGrid>
 						

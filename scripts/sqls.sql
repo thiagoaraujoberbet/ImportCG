@@ -67,10 +67,13 @@ select
     
     
 select 
-		(select SUM(e.valorTotal) from importcg.entrada e
-			where e.dataCompra between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) entradas,
+		(select SUM(ib.valor) from importcg.itemBaixa ib
+			JOIN importcg.baixa b ON ib.idBaixa = b.idBaixa
+			where b.dataCriacao between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and ib.baixado = 1) entradas,
 		(select SUM(id.valor) from importcg.itemDespesa id
 			JOIN importcg.despesa d ON id.idDespesa = d.idDespesa
 			where id.idEntrada is null and d.dataDespesa between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) despesas,
 		(select SUM(p.saldo) from importcg.pagamento p
-			where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and p.pago = 1) recebido
+			where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and p.pago = 1) recebido,
+		(select SUM(ib.valor) from importcg.itemBaixa ib
+			where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and ib.baixado = 0) despesasAPagar

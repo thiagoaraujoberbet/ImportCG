@@ -60,9 +60,17 @@ public class FechamentoDAO implements Serializable {
 		
 		Object[] objects = (Object[]) query.getSingleResult();
 		
-		fechamento.setValorEntradas(new BigDecimal(objects[0].toString()));
-		fechamento.setValorDespesas(new BigDecimal(objects[1].toString()));
-		fechamento.setValorRecebido(new BigDecimal(objects[2].toString()));
+		if (objects[0] != null) {
+			fechamento.setValorEntradas(new BigDecimal(objects[0].toString()));
+		} else fechamento.setValorEntradas(new BigDecimal(0));
+		
+		if (objects[0] != null) {
+			fechamento.setValorDespesas(new BigDecimal(objects[1].toString()));
+		} else fechamento.setValorDespesas(new BigDecimal(0));
+		
+		if (objects[0] != null) {
+			fechamento.setValorRecebido(new BigDecimal(objects[2].toString()));
+		} else fechamento.setValorRecebido(new BigDecimal(0));
 			
 		return fechamento;
 	}
