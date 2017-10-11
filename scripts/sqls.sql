@@ -64,3 +64,13 @@ select
     FROM importcg.pessoa p 
     WHERE p.tipo = 'CLIENTE'
     ORDER BY p.nome; 
+    
+    
+select 
+		(select SUM(e.valorTotal) from importcg.entrada e
+			where e.dataCompra between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) entradas,
+		(select SUM(id.valor) from importcg.itemDespesa id
+			JOIN importcg.despesa d ON id.idDespesa = d.idDespesa
+			where id.idEntrada is null and d.dataDespesa between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) despesas,
+		(select SUM(p.saldo) from importcg.pagamento p
+			where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and p.pago = 1) recebido
