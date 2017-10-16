@@ -4,7 +4,7 @@ USE `importcg`;
 --
 -- Host: localhost    Database: importcg
 -- ------------------------------------------------------
--- Server version	5.7.19-0ubuntu0.17.04.1
+-- Server version	5.7.19-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -55,10 +55,10 @@ CREATE TABLE `baixa` (
   `descricao` varchar(200) DEFAULT NULL,
   `valorTotal` decimal(9,2) NOT NULL DEFAULT '0.00',
   `dataCriacao` date NOT NULL,
-  `status` varchar(20) NOT NULL,
+  `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`idBaixa`),
   UNIQUE KEY `idBaixa_UNIQUE` (`idBaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +67,7 @@ CREATE TABLE `baixa` (
 
 LOCK TABLES `baixa` WRITE;
 /*!40000 ALTER TABLE `baixa` DISABLE KEYS */;
-INSERT INTO `baixa` VALUES (1,'Viagem realizada dia 23/09/2017',3100.70,'2017-09-27','BAIXAPARCIALMENTE');
+INSERT INTO `baixa` VALUES (1,'Viagem realizada dia 23/09/2017',3100.70,'2017-09-27','BAIXAPARCIALMENTE'),(2,'Viagem realizada dia 12/10/2017',5516.61,'2017-10-13','BAIXAPARCIALMENTE');
 /*!40000 ALTER TABLE `baixa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +95,7 @@ CREATE TABLE `caixa` (
 
 LOCK TABLES `caixa` WRITE;
 /*!40000 ALTER TABLE `caixa` DISABLE KEYS */;
-INSERT INTO `caixa` VALUES (1,6,4691.01),(2,7,340.00),(3,4,0.00),(4,8,0.00),(5,1,0.00);
+INSERT INTO `caixa` VALUES (1,6,1073.05),(2,7,0.00),(3,4,0.00),(4,8,0.00),(5,1,0.00);
 /*!40000 ALTER TABLE `caixa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +123,7 @@ CREATE TABLE `catalogoInternacional` (
   CONSTRAINT `FKbkk2fjqfm3tr4bv7ala0jcq9n` FOREIGN KEY (`idFornecedor`) REFERENCES `fornecedor` (`idFornecedor`),
   CONSTRAINT `FKcg9wpjqhw2l2dpkb5bj0y1jh3` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKxmtseedf86cau3qthkv58uji` FOREIGN KEY (`idItemEntrada`) REFERENCES `itemEntrada` (`idItemEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,7 +132,7 @@ CREATE TABLE `catalogoInternacional` (
 
 LOCK TABLES `catalogoInternacional` WRITE;
 /*!40000 ALTER TABLE `catalogoInternacional` DISABLE KEYS */;
-INSERT INTO `catalogoInternacional` VALUES (1,6,1,'2017-09-07',3.28,21.00,68.88,NULL),(4,29,1,'2017-09-23',3.30,100.00,330.00,NULL),(5,24,1,'2017-09-23',3.30,18.50,61.05,NULL),(6,7,6,'2017-09-23',3.30,85.00,280.50,NULL),(7,30,5,'2017-09-23',3.30,185.00,610.50,NULL),(8,6,4,'2017-09-23',3.29,24.66,81.13,NULL),(9,31,2,'2017-09-23',3.29,7.60,25.00,NULL),(10,32,2,'2017-09-23',3.29,10.64,35.01,NULL),(11,33,2,'2017-09-23',3.29,10.64,35.01,NULL),(12,34,2,'2017-09-23',3.29,28.88,95.02,NULL),(13,13,3,'2017-09-23',3.28,24.39,80.00,NULL),(15,7,1,'2017-09-07',3.28,80.00,262.40,NULL),(16,11,1,'2017-09-07',3.28,41.00,134.48,NULL),(17,12,2,'2017-09-07',3.28,23.48,77.01,NULL),(18,13,3,'2017-09-07',3.28,24.39,80.00,NULL),(19,14,1,'2017-09-07',3.28,680.00,2230.40,NULL);
+INSERT INTO `catalogoInternacional` VALUES (1,6,1,'2017-09-07',3.28,21.00,68.88,NULL),(4,29,1,'2017-09-23',3.30,100.00,330.00,NULL),(5,24,1,'2017-09-23',3.30,18.50,61.05,NULL),(6,7,6,'2017-09-23',3.30,85.00,280.50,NULL),(7,30,5,'2017-09-23',3.30,185.00,610.50,NULL),(8,6,4,'2017-09-23',3.29,24.66,81.13,NULL),(9,31,2,'2017-09-23',3.29,7.60,25.00,NULL),(10,32,2,'2017-09-23',3.29,10.64,35.01,NULL),(11,33,2,'2017-09-23',3.29,10.64,35.01,NULL),(12,34,2,'2017-09-23',3.29,28.88,95.02,NULL),(13,13,3,'2017-09-23',3.28,24.39,80.00,NULL),(15,7,1,'2017-09-07',3.28,80.00,262.40,NULL),(16,11,1,'2017-09-07',3.28,41.00,134.48,NULL),(17,12,2,'2017-09-07',3.28,23.48,77.01,NULL),(18,13,3,'2017-09-07',3.28,24.39,80.00,NULL),(19,14,1,'2017-09-07',3.28,680.00,2230.40,NULL),(20,6,4,'2017-10-12',3.29,24.60,80.93,30),(21,7,1,'2017-10-12',3.32,88.00,292.16,31),(22,11,1,'2017-10-12',3.32,45.00,149.40,32),(23,35,5,'2017-10-12',3.32,7.00,23.24,33),(24,36,1,'2017-10-12',3.32,107.00,355.24,34),(25,37,1,'2017-10-12',3.32,36.00,119.52,35),(26,38,1,'2017-10-12',3.32,42.00,139.44,36),(27,39,1,'2017-10-12',3.32,10.95,36.35,37),(28,40,1,'2017-10-12',3.32,3.99,13.25,38),(29,41,7,'2017-10-12',3.30,30.00,99.00,39),(30,42,2,'2017-10-12',3.30,36.36,119.99,40),(31,43,2,'2017-10-12',3.30,22.73,75.01,41),(32,44,7,'2017-10-12',3.30,969.70,3200.01,42);
 /*!40000 ALTER TABLE `catalogoInternacional` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,10 +207,10 @@ CREATE TABLE `despesa` (
   `descricao` varchar(200) NOT NULL,
   `valorTotal` decimal(9,2) NOT NULL DEFAULT '0.00',
   `dataDespesa` date NOT NULL,
-  `status` varchar(20) NOT NULL,
+  `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`idDespesa`),
   UNIQUE KEY `idDespesa_UNIQUE` (`idDespesa`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +219,7 @@ CREATE TABLE `despesa` (
 
 LOCK TABLES `despesa` WRITE;
 /*!40000 ALTER TABLE `despesa` DISABLE KEYS */;
-INSERT INTO `despesa` VALUES (2,'Lançamento de despesas',3100.70,'2017-09-23','NAOBAIXADO');
+INSERT INTO `despesa` VALUES (2,'Lançamento de despesas',3100.70,'2017-09-23','NAOBAIXADO'),(3,'Lançamento de Despesas',5516.61,'2017-10-12',NULL);
 /*!40000 ALTER TABLE `despesa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,7 +238,7 @@ CREATE TABLE `entrada` (
   `despesaLancada` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idEntrada`),
   UNIQUE KEY `idEntrada_UNIQUE` (`idEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,7 +247,7 @@ CREATE TABLE `entrada` (
 
 LOCK TABLES `entrada` WRITE;
 /*!40000 ALTER TABLE `entrada` DISABLE KEYS */;
-INSERT INTO `entrada` VALUES (6,'2017-09-07',3446.85,9,1),(8,'2017-09-23',2804.73,13,1);
+INSERT INTO `entrada` VALUES (6,'2017-09-07',3446.85,9,1),(8,'2017-09-23',2804.73,13,1),(9,'2017-10-12',5285.11,19,0);
 /*!40000 ALTER TABLE `entrada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -305,7 +305,7 @@ CREATE TABLE `estoque` (
   UNIQUE KEY `id_UNIQUE` (`idEstoque`),
   KEY `fk_produto_idx` (`idProduto`),
   CONSTRAINT `FKgumrkw95wo8v0tvdwjmor525w` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -314,7 +314,7 @@ CREATE TABLE `estoque` (
 
 LOCK TABLES `estoque` WRITE;
 /*!40000 ALTER TABLE `estoque` DISABLE KEYS */;
-INSERT INTO `estoque` VALUES (26,6,0),(27,7,1),(28,11,0),(29,12,0),(30,13,0),(31,14,0),(32,29,0),(33,24,0),(34,30,0),(35,31,1),(36,32,0),(37,33,1),(38,34,0);
+INSERT INTO `estoque` VALUES (26,6,2),(27,7,2),(28,11,1),(29,12,0),(30,13,0),(31,14,0),(32,29,0),(33,24,0),(34,30,0),(35,31,1),(36,32,0),(37,33,1),(38,34,0),(39,35,1),(40,36,2),(41,37,1),(42,38,1),(43,39,5),(44,40,1),(45,41,0),(46,42,1),(47,43,1),(48,44,0);
 /*!40000 ALTER TABLE `estoque` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -329,7 +329,8 @@ CREATE TABLE `fechamento` (
   `idFechamento` int(11) NOT NULL AUTO_INCREMENT,
   `valorRecebido` decimal(9,2) NOT NULL DEFAULT '0.00',
   `valorEntradas` decimal(9,2) NOT NULL DEFAULT '0.00',
-  `valorDespesas` decimal(9,2) NOT NULL DEFAULT '0.00',
+  `valorDespesasBaixadas` decimal(9,2) NOT NULL DEFAULT '0.00',
+  `valorDespesasABaixar` decimal(9,2) NOT NULL DEFAULT '0.00',
   `saldo` decimal(9,2) NOT NULL DEFAULT '0.00' COMMENT '	',
   `mes` varchar(20) NOT NULL,
   `ano` int(4) NOT NULL,
@@ -407,7 +408,7 @@ CREATE TABLE `itemBaixa` (
   CONSTRAINT `FK2llrqykmcs3dy6paxfb6q2701` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`),
   CONSTRAINT `FK9djmbja444w8w9qagfoci68c3` FOREIGN KEY (`idItemDespesa`) REFERENCES `itemDespesa` (`idItemDespesa`),
   CONSTRAINT `FKr2f43md20jss1j4r3m2dmvaas` FOREIGN KEY (`idBaixa`) REFERENCES `baixa` (`idBaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -416,7 +417,7 @@ CREATE TABLE `itemBaixa` (
 
 LOCK TABLES `itemBaixa` WRITE;
 /*!40000 ALTER TABLE `itemBaixa` DISABLE KEYS */;
-INSERT INTO `itemBaixa` VALUES (1,1,1,1,'Produtos para venda comprados em dinheiro',2014.73,0.00,'2017-10-02','BAIXAPARCIAL',1),(2,1,1,1,'Produtos para venda comprados no cartão de credito',790.00,0.00,'2017-11-10','BAIXAINTEGRAL',0),(3,1,2,1,'Abastecimento realizado no Paraguai',142.00,0.00,'2017-10-02','BAIXAINTEGRAL',1),(4,1,3,1,'Abastecimento realizado em Campo Grande com cartão de crédito Santander fechamento 10/10',153.97,0.00,'2017-11-10','BAIXAINTEGRAL',0);
+INSERT INTO `itemBaixa` VALUES (1,1,1,1,'Produtos para venda comprados em dinheiro',2014.73,0.00,'2017-09-27','BAIXAPARCIAL',1),(2,1,1,1,'Produtos para venda comprados no cartão de credito',790.00,0.00,'2017-11-10','BAIXAINTEGRAL',0),(3,1,2,1,'Abastecimento realizado no Paraguai',142.00,0.00,'2017-09-27','BAIXAINTEGRAL',1),(4,1,3,1,'Abastecimento realizado em Campo Grande com cartão de crédito Santander fechamento 10/10',153.97,0.00,'2017-10-10','BAIXAINTEGRAL',0),(5,2,4,1,'Produtos para venda comprados em dinheiro',5126.46,0.00,'2017-10-13','BAIXAPARCIAL',1),(6,2,4,1,'Produtos para venda comprados no cartão de credito',158.65,0.00,'2017-11-10','BAIXAPARCIAL',0),(7,2,5,1,'Abastecimento realizado em Campo Grande',100.00,0.00,'2017-10-13','BAIXAINTEGRAL',1),(8,2,6,1,'Abastecimento realizado no Paraguai',100.00,0.00,'2017-10-13','BAIXAINTEGRAL',1),(9,2,7,1,'Almoço Self Service MR. Grill (Thiago e Luana)',31.50,0.00,'2017-10-13','BAIXAINTEGRAL',1);
 /*!40000 ALTER TABLE `itemBaixa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -434,14 +435,14 @@ CREATE TABLE `itemDespesa` (
   `descricao` varchar(1000) DEFAULT NULL,
   `tipo` varchar(45) NOT NULL,
   `valor` decimal(9,2) NOT NULL DEFAULT '0.00',
-  `status` varchar(20) NOT NULL,
+  `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`idItemDespesa`),
   UNIQUE KEY `idItemDespesa_UNIQUE` (`idItemDespesa`),
   KEY `FKrdr2v8kaimdegi71g1gwe4kq` (`idDespesa`),
   KEY `FKi5g91vg4lf0rnsnou9ot12gcb` (`idEntrada`),
   CONSTRAINT `FKi5g91vg4lf0rnsnou9ot12gcb` FOREIGN KEY (`idEntrada`) REFERENCES `entrada` (`idEntrada`),
   CONSTRAINT `FKrdr2v8kaimdegi71g1gwe4kq` FOREIGN KEY (`idDespesa`) REFERENCES `despesa` (`idDespesa`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -450,7 +451,7 @@ CREATE TABLE `itemDespesa` (
 
 LOCK TABLES `itemDespesa` WRITE;
 /*!40000 ALTER TABLE `itemDespesa` DISABLE KEYS */;
-INSERT INTO `itemDespesa` VALUES (1,2,8,'Produtos para venda','COMPRAPRODUTO',2804.73,'NAOBAIXADO'),(2,2,NULL,'Abastecimento realizado no Paraguai','COMBUSTIVEL',142.00,'NAOBAIXADO'),(3,2,NULL,'Abastecimento realizado em Campo Grande com cartão de crédito Santander fechamento 10/10','COMBUSTIVEL',153.97,'NAOBAIXADO');
+INSERT INTO `itemDespesa` VALUES (1,2,8,'Produtos para venda','COMPRAPRODUTO',2804.73,'NAOBAIXADO'),(2,2,NULL,'Abastecimento realizado no Paraguai','COMBUSTIVEL',142.00,'NAOBAIXADO'),(3,2,NULL,'Abastecimento realizado em Campo Grande com cartão de crédito Santander fechamento 10/10','COMBUSTIVEL',153.97,'NAOBAIXADO'),(4,3,9,'Produtos para venda','COMPRAPRODUTO',5285.11,NULL),(5,3,NULL,'Abastecimento realizado em Campo Grande','COMBUSTIVEL',100.00,NULL),(6,3,NULL,'Abastecimento realizado no Paraguai','COMBUSTIVEL',100.00,NULL),(7,3,NULL,'Almoço Self Service MR. Grill (Thiago e Luana)','ALIMENTACAO',31.50,NULL);
 /*!40000 ALTER TABLE `itemDespesa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -478,7 +479,7 @@ CREATE TABLE `itemEntrada` (
   CONSTRAINT `FKjyakb0b8tpnhe763ijq096ssh` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKle7ytd45iqwof5gwxm47d3284` FOREIGN KEY (`idFornecedor`) REFERENCES `fornecedor` (`idFornecedor`),
   CONSTRAINT `FKx2pq54u6nqee1ct3guex6bnr` FOREIGN KEY (`idEntrada`) REFERENCES `entrada` (`idEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -487,7 +488,7 @@ CREATE TABLE `itemEntrada` (
 
 LOCK TABLES `itemEntrada` WRITE;
 /*!40000 ALTER TABLE `itemEntrada` DISABLE KEYS */;
-INSERT INTO `itemEntrada` VALUES (12,6,6,1,21.00,68.88,3.28,2),(13,6,7,1,80.00,262.40,3.28,3),(14,6,11,1,41.00,134.48,3.28,1),(15,6,12,2,23.48,77.01,3.28,1),(16,6,13,3,24.39,80.00,3.28,1),(17,6,14,1,680.00,2230.40,3.28,1),(20,8,29,1,100.00,330.00,3.30,1),(21,8,24,1,18.50,61.05,3.30,1),(22,8,7,6,85.00,280.50,3.30,3),(23,8,30,5,185.00,610.50,3.30,2),(24,8,6,4,24.66,81.13,3.29,1),(25,8,31,2,7.60,25.00,3.29,1),(26,8,32,2,10.64,35.01,3.29,1),(27,8,33,2,10.64,35.01,3.29,1),(28,8,34,2,28.88,95.02,3.29,1),(29,8,13,3,24.32,80.01,3.29,1);
+INSERT INTO `itemEntrada` VALUES (12,6,6,1,21.00,68.88,3.28,2),(13,6,7,1,80.00,262.40,3.28,3),(14,6,11,1,41.00,134.48,3.28,1),(15,6,12,2,23.48,77.01,3.28,1),(16,6,13,3,24.39,80.00,3.28,1),(17,6,14,1,680.00,2230.40,3.28,1),(20,8,29,1,100.00,330.00,3.30,1),(21,8,24,1,18.50,61.05,3.30,1),(22,8,7,6,85.00,280.50,3.30,3),(23,8,30,5,185.00,610.50,3.30,2),(24,8,6,4,24.66,81.13,3.29,1),(25,8,31,2,7.60,25.00,3.29,1),(26,8,32,2,10.64,35.01,3.29,1),(27,8,33,2,10.64,35.01,3.29,1),(28,8,34,2,28.88,95.02,3.29,1),(29,8,13,3,24.32,80.01,3.29,1),(30,9,6,4,24.60,80.93,3.29,2),(31,9,7,5,88.00,292.16,3.32,1),(32,9,11,1,45.00,149.40,3.32,1),(33,9,35,5,7.00,23.24,3.32,1),(34,9,36,1,107.00,355.24,3.32,2),(35,9,37,1,36.00,119.52,3.32,1),(36,9,38,1,42.00,139.44,3.32,1),(37,9,39,1,10.95,36.35,3.32,5),(38,9,40,1,3.99,13.25,3.32,1),(39,9,41,7,30.00,99.00,3.30,1),(40,9,42,2,36.36,119.99,3.30,1),(41,9,43,2,22.73,75.01,3.30,1),(42,9,44,7,969.70,3200.01,3.30,1);
 /*!40000 ALTER TABLE `itemEntrada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -540,7 +541,7 @@ CREATE TABLE `itemVenda` (
   CONSTRAINT `FK5eyxa71d0qvmircij2jqhtajl` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKq0wpxloynk627fqxtuykjxuur` FOREIGN KEY (`idVenda`) REFERENCES `venda` (`idVenda`),
   CONSTRAINT `FKq99iiopsfwkm3rskreq6cg7qh` FOREIGN KEY (`idItemEntrada`) REFERENCES `itemEntrada` (`idItemEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -549,7 +550,7 @@ CREATE TABLE `itemVenda` (
 
 LOCK TABLES `itemVenda` WRITE;
 /*!40000 ALTER TABLE `itemVenda` DISABLE KEYS */;
-INSERT INTO `itemVenda` VALUES (40,25,6,12,150.00,1),(41,26,6,12,160.00,1),(42,27,7,22,450.00,2),(43,29,7,13,450.00,1),(44,30,12,15,140.00,1),(45,31,13,16,160.00,1),(46,32,14,17,3200.00,1),(47,33,11,14,200.00,1),(48,34,30,23,750.00,2),(49,35,29,20,410.00,1),(50,36,7,22,450.00,1),(51,37,24,21,130.00,1),(52,38,34,28,175.00,1),(53,39,13,29,150.00,1),(54,40,7,13,410.00,1),(55,41,32,26,65.00,1),(56,41,6,24,85.00,1);
+INSERT INTO `itemVenda` VALUES (40,25,6,12,150.00,1),(41,26,6,12,160.00,1),(42,27,7,22,450.00,2),(43,29,7,13,450.00,1),(44,30,12,15,140.00,1),(45,31,13,16,160.00,1),(46,32,14,17,3200.00,1),(47,33,11,14,200.00,1),(48,34,30,23,750.00,2),(49,35,29,20,410.00,1),(50,36,7,22,450.00,1),(51,37,24,21,130.00,1),(52,38,34,28,175.00,1),(53,39,13,29,150.00,1),(54,40,7,13,410.00,1),(55,41,32,26,65.00,1),(56,41,6,24,85.00,1),(57,42,44,42,4100.00,1),(58,43,41,39,150.00,1);
 /*!40000 ALTER TABLE `itemVenda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -576,7 +577,7 @@ CREATE TABLE `pagamento` (
   UNIQUE KEY `idPagamento_UNIQUE` (`idPagamento`),
   KEY `fk_pagamento_venda_idx` (`idVenda`),
   CONSTRAINT `FK2jyyepu1tqd46buhn0pcs78q3` FOREIGN KEY (`idVenda`) REFERENCES `venda` (`idVenda`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -585,7 +586,7 @@ CREATE TABLE `pagamento` (
 
 LOCK TABLES `pagamento` WRITE;
 /*!40000 ALTER TABLE `pagamento` DISABLE KEYS */;
-INSERT INTO `pagamento` VALUES (7,25,'DINHEIRO','2017-10-10',80.00,1,NULL,NULL,80.00,NULL,NULL),(15,26,'CREDITO','2017-09-09',160.00,1,3,56.56,151.06,8.94,'2017-09-10'),(16,27,'DINHEIRO','2017-09-07',300.00,1,0,0.00,300.00,0.00,NULL),(17,27,'DINHEIRO','2017-10-07',200.00,1,0,0.00,200.00,0.00,NULL),(18,27,'DINHEIRO','2017-11-07',200.00,0,0,0.00,200.00,0.00,NULL),(19,29,'DINHEIRO','2017-09-07',150.00,1,0,0.00,150.00,0.00,NULL),(20,29,'DINHEIRO','2017-10-07',150.00,0,0,0.00,150.00,0.00,NULL),(21,29,'DINHEIRO','2017-11-07',150.00,0,0,0.00,150.00,0.00,NULL),(22,30,'DINHEIRO','2017-09-19',70.00,1,0,0.00,70.00,0.00,NULL),(23,30,'DINHEIRO','2017-10-19',70.00,0,0,0.00,70.00,0.00,NULL),(26,32,'DINHEIRO','2017-09-07',1600.00,1,0,0.00,1600.00,0.00,NULL),(27,32,'DINHEIRO','2017-10-08',1600.00,1,0,0.00,1600.00,0.00,NULL),(28,33,'DINHEIRO','2017-09-25',200.00,1,0,0.00,200.00,0.00,NULL),(29,34,'DINHEIRO','2017-09-25',1500.00,1,0,0.00,1500.00,0.00,NULL),(30,35,'DINHEIRO','2017-09-23',410.00,1,0,0.00,410.00,0.00,NULL),(31,36,'DINHEIRO','2017-09-26',100.00,1,0,0.00,100.00,0.00,NULL),(32,36,'DINHEIRO','2017-10-26',175.00,0,0,0.00,175.00,0.00,NULL),(33,36,'DINHEIRO','2017-11-26',175.00,0,0,0.00,175.00,0.00,NULL),(34,37,'DINHEIRO','2017-10-09',130.00,1,0,0.00,130.00,0.00,NULL),(35,38,'DINHEIRO','2017-09-28',175.00,1,0,0.00,175.00,0.00,NULL),(36,39,'DINHEIRO','2017-10-13',150.00,0,0,0.00,150.00,0.00,NULL),(37,40,'DINHEIRO','2017-09-25',410.00,1,0,0.00,410.00,0.00,NULL),(38,31,'DINHEIRO','2017-09-28',100.00,1,0,0.00,100.00,0.00,NULL),(39,31,'DINHEIRO','2017-10-28',60.00,1,0,0.00,60.00,0.00,NULL),(40,41,'DINHEIRO','2017-10-04',75.00,1,0,0.00,75.00,0.00,NULL),(41,41,'DINHEIRO','2017-11-10',75.00,0,0,0.00,75.00,0.00,NULL),(42,27,'DINHEIRO','2017-12-07',200.00,0,0,0.00,200.00,0.00,NULL),(43,25,'DINHEIRO','2017-11-10',70.00,0,0,0.00,70.00,0.00,NULL);
+INSERT INTO `pagamento` VALUES (7,25,'DINHEIRO','2017-10-10',80.00,1,NULL,NULL,80.00,NULL,NULL),(15,26,'CREDITO','2017-09-09',160.00,1,3,56.56,151.06,8.94,'2017-09-10'),(16,27,'DINHEIRO','2017-09-07',300.00,1,0,0.00,300.00,0.00,NULL),(17,27,'DINHEIRO','2017-10-07',200.00,1,0,0.00,200.00,0.00,NULL),(18,27,'DINHEIRO','2017-11-07',200.00,0,0,0.00,200.00,0.00,NULL),(19,29,'DINHEIRO','2017-09-07',150.00,1,0,0.00,150.00,0.00,NULL),(20,29,'DINHEIRO','2017-10-11',300.00,1,0,0.00,300.00,0.00,NULL),(22,30,'DINHEIRO','2017-09-19',70.00,1,0,0.00,70.00,0.00,NULL),(23,30,'DINHEIRO','2017-10-19',70.00,0,0,0.00,70.00,0.00,NULL),(26,32,'DINHEIRO','2017-09-07',1600.00,1,0,0.00,1600.00,0.00,NULL),(27,32,'DINHEIRO','2017-10-08',1600.00,1,0,0.00,1600.00,0.00,NULL),(28,33,'DINHEIRO','2017-09-25',200.00,1,0,0.00,200.00,0.00,NULL),(29,34,'DINHEIRO','2017-09-25',1500.00,1,0,0.00,1500.00,0.00,NULL),(30,35,'DINHEIRO','2017-09-23',410.00,1,0,0.00,410.00,0.00,NULL),(31,36,'DINHEIRO','2017-09-26',100.00,1,0,0.00,100.00,0.00,NULL),(32,36,'DINHEIRO','2017-10-26',175.00,0,0,0.00,175.00,0.00,NULL),(33,36,'DINHEIRO','2017-11-26',175.00,0,0,0.00,175.00,0.00,NULL),(34,37,'DINHEIRO','2017-10-09',130.00,1,0,0.00,130.00,0.00,NULL),(35,38,'DINHEIRO','2017-09-28',175.00,1,0,0.00,175.00,0.00,NULL),(36,39,'DINHEIRO','2017-10-13',150.00,0,0,0.00,150.00,0.00,NULL),(37,40,'DINHEIRO','2017-09-25',410.00,1,0,0.00,410.00,0.00,NULL),(38,31,'DINHEIRO','2017-09-28',100.00,1,0,0.00,100.00,0.00,NULL),(39,31,'DINHEIRO','2017-10-28',60.00,1,0,0.00,60.00,0.00,NULL),(40,41,'DINHEIRO','2017-10-04',75.00,1,0,0.00,75.00,0.00,NULL),(41,41,'DINHEIRO','2017-11-10',75.00,0,0,0.00,75.00,0.00,NULL),(42,27,'DINHEIRO','2017-12-07',200.00,0,0,0.00,200.00,0.00,NULL),(43,25,'DINHEIRO','2017-11-10',70.00,0,0,0.00,70.00,0.00,NULL),(44,42,'DINHEIRO','2017-10-12',950.00,1,0,0.00,950.00,0.00,NULL),(45,42,'DINHEIRO','2017-10-27',3150.00,0,0,0.00,3150.00,0.00,NULL),(46,43,'DINHEIRO','2017-10-14',150.00,1,0,0.00,150.00,0.00,NULL);
 /*!40000 ALTER TABLE `pagamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -609,7 +610,7 @@ CREATE TABLE `pessoa` (
   `dataAlteracao` date DEFAULT NULL,
   PRIMARY KEY (`idPessoa`),
   UNIQUE KEY `idPessoa_UNIQUE` (`idPessoa`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -618,7 +619,7 @@ CREATE TABLE `pessoa` (
 
 LOCK TABLES `pessoa` WRITE;
 /*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
-INSERT INTO `pessoa` VALUES (3,'Thiago Araujo Berbet','SOCIO','006.288.131-04','1983-08-18','67991060530','thiagoaraujoberbet@gmail.com','FUNCIONARIO','2017-09-02',NULL),(4,'Luana Alves Teixeira','SOCIO',NULL,'1989-01-24','67993078871','luanaalves144@hotmail.com','FUNCIONARIO','2017-09-02',NULL),(6,'Thays Brites',NULL,NULL,NULL,'','','CLIENTE','2017-09-04',NULL),(7,'Juliana Souza',NULL,NULL,NULL,'(67) 99228-8607','','CLIENTE','2017-09-14',NULL),(8,'Juliane',NULL,NULL,NULL,'','','CLIENTE','2017-09-20',NULL),(9,'Lays Ortiz',NULL,NULL,NULL,'','','CLIENTE','2017-09-20','2017-09-22'),(10,'Diogo Ortiz',NULL,NULL,NULL,'','','CLIENTE','2017-09-20','2017-09-22'),(11,'Cida',NULL,NULL,NULL,'(67) 99912-8142','','CLIENTE','2017-09-20','2017-09-22'),(12,'Bete',NULL,NULL,NULL,'','','CLIENTE','2017-09-20','2017-10-04'),(13,'Franciele',NULL,NULL,NULL,'','','CLIENTE','2017-09-20',NULL),(14,'Thainara',NULL,NULL,NULL,'','','CLIENTE','2017-09-24',NULL),(15,'Matheus',NULL,NULL,NULL,'(67) 99100-9715','','CLIENTE','2017-10-02',NULL),(16,'Helio Makoto',NULL,NULL,NULL,'(67) 99865-4475','','CLIENTE','2017-10-02',NULL),(17,'Lorena Alves',NULL,NULL,NULL,'(67) 99325-2324','','CLIENTE','2017-10-02','2017-10-02'),(18,'Patrão da Izabel',NULL,NULL,NULL,'','','CLIENTE','2017-10-02',NULL),(19,'Carina Fuzitani',NULL,NULL,NULL,'(67) 99283-7125','','CLIENTE','2017-10-02',NULL),(20,'Suely',NULL,NULL,NULL,'','','CLIENTE','2017-10-02',NULL),(21,'Flip4 Julio Barone 607',NULL,NULL,NULL,'','','CLIENTE','2017-10-02',NULL),(22,'Fernando Araujo Berbet',NULL,NULL,'1989-12-24','(67) 99214-2290','fernandoberbet@gmail.com','CLIENTE','2017-10-04','2017-10-04'),(23,'Camila',NULL,NULL,NULL,'','','CLIENTE','2017-10-07',NULL);
+INSERT INTO `pessoa` VALUES (3,'Thiago Araujo Berbet','SOCIO','006.288.131-04','1983-08-18','67991060530','thiagoaraujoberbet@gmail.com','FUNCIONARIO','2017-09-02',NULL),(4,'Luana Alves Teixeira','SOCIO',NULL,'1989-01-24','67993078871','luanaalves144@hotmail.com','FUNCIONARIO','2017-09-02',NULL),(6,'Thays Brites',NULL,NULL,NULL,'','','CLIENTE','2017-09-04',NULL),(7,'Juliana Souza',NULL,NULL,NULL,'(67) 99228-8607','','CLIENTE','2017-09-14',NULL),(8,'Juliane',NULL,NULL,NULL,'','','CLIENTE','2017-09-20',NULL),(9,'Lays Ortiz',NULL,NULL,NULL,'','','CLIENTE','2017-09-20','2017-09-22'),(10,'Diogo Ortiz',NULL,NULL,NULL,'','','CLIENTE','2017-09-20','2017-09-22'),(11,'Cida',NULL,NULL,NULL,'(67) 99912-8142','','CLIENTE','2017-09-20','2017-09-22'),(12,'Bete',NULL,NULL,NULL,'','','CLIENTE','2017-09-20','2017-10-04'),(13,'Franciele',NULL,NULL,NULL,'','','CLIENTE','2017-09-20',NULL),(14,'Thainara',NULL,NULL,NULL,'','','CLIENTE','2017-09-24',NULL),(15,'Matheus',NULL,NULL,NULL,'(67) 99100-9715','','CLIENTE','2017-10-02',NULL),(16,'Helio Makoto',NULL,NULL,NULL,'(67) 99865-4475','','CLIENTE','2017-10-02',NULL),(17,'Lorena Alves',NULL,NULL,NULL,'(67) 99325-2324','','CLIENTE','2017-10-02','2017-10-02'),(18,'Patrão da Izabel',NULL,NULL,NULL,'','','CLIENTE','2017-10-02',NULL),(19,'Carina Fuzitani',NULL,NULL,NULL,'(67) 99283-7125','','CLIENTE','2017-10-02',NULL),(20,'Suely',NULL,NULL,NULL,'','','CLIENTE','2017-10-02',NULL),(21,'Flip4 Julio Barone 607',NULL,NULL,NULL,'','','CLIENTE','2017-10-02',NULL),(22,'Fernando Araujo Berbet',NULL,NULL,'1989-12-24','(67) 99214-2290','fernandoberbet@gmail.com','CLIENTE','2017-10-04','2017-10-04'),(23,'Camila',NULL,NULL,NULL,'','','CLIENTE','2017-10-07',NULL),(24,'Jean',NULL,NULL,NULL,'','','CLIENTE','2017-10-12',NULL),(25,'Rose',NULL,NULL,NULL,'','','CLIENTE','2017-10-15',NULL);
 /*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -640,7 +641,7 @@ CREATE TABLE `produto` (
   `dataAlteracao` date DEFAULT NULL,
   PRIMARY KEY (`idProduto`),
   UNIQUE KEY `id_UNIQUE` (`idProduto`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -649,7 +650,7 @@ CREATE TABLE `produto` (
 
 LOCK TABLES `produto` WRITE;
 /*!40000 ALTER TABLE `produto` DISABLE KEYS */;
-INSERT INTO `produto` VALUES (6,'Caixa de Som','Criado para os apaixonados por música e praticidade, a JBL GO transmite música via Bluetooth a partir de dispositivos móveis. É alimentado por uma bateria recarregável com até 5 horas de reprodução, e viva-voz com cancelamento de ruído, permitindo que você atenda chamadas sem desligar sua caixa de som.','ELETRONICOS','JBL','GO','2017-08-22','2017-09-18'),(7,'Caixa de Som','O JBL Flip 4 é a última geração da premiada série Flip, uma caixa de som portátil com Bluetooth que oferece um som estéreo surpreendentemente poderoso. Esta caixa de som compacta é alimentada por uma bateria de íons de lítio recarregável de 3.000 mAh, que oferece 12 horas contínuas de áudio de alta qualidade. ','ELETRONICOS','JBL','FLIP4','2017-08-22','2017-08-22'),(8,'Caixa de Som','A Caixa Bluetooth à prova d´agua Charge 3 agora vem com carregador portátil e deixa o som ainda mais potente. Escute suas músicas sem fios, por muito mais tempo e ainda leve sua festa para todo o lugar. Graças ao seu design à prova d´água, tecido durável e carcaça resistente, ela pode até cair na piscina. ','ELETRONICOS','JBL','CHARGE3','2017-08-22','2017-08-22'),(9,'Perfume Masculino','O Perfume Ferrari Masculino possui aroma cítrico amadeirado, ideal para homens misteriosos e sensuais. Em sua fragrância, notas que combinam bergamota, maçã, ameixa, canela, jasmim, rosa, cedro e baunilha.','COSMETICOS','Ferrari','Black 125ml','2017-08-30','2017-09-14'),(10,'Fone de Ouvido Wireless','Possui entrada auxiliar onde você pode ouvir musicas de celulares que não tem a tecnologia bluetooth. O fone de ouvido é carregado através da porta USB do seu computador ou carregador de 5v (não incluído). É possível receber e fazer chamadas pelo fone, sem tirar ele da orelha, possui microfone para que possa ouvir suas chamadas com nitidez.','ELETRONICOS','Ewtto','ET-A4260B','2017-08-30',NULL),(11,'Chromecast','O Chromecast é um dispositivo de streaming de mídia que é conectado à porta HDMI da sua TV. Use o dispositivo móvel e a TV que você já possui para transmitir seus programas de TV, filmes, músicas, esportes e jogos favoritos e muito mais. O Chromecast funciona com iPhone®, iPad®, smartphones e tablets Android, laptops Mac® e Windows® e Chromebooks.','ELETRONICOS','Google','2','2017-09-14',NULL),(12,'Perfume Feminino','Tommy Girl é um bouquet de puro frescor, um mix de flores que associa a refrescância da camélia com a luminosidade da flor de maçã, e acordes brilhantes da flor do cassis. Uma fragrância energizante com toques cítricos da tangerina, de madeiras frescas e uma nuance de hortelã verde. Uma mistura envolvente de madressilva e pétalas de violeta, que aliadas ao jasmim do deserto, o lírio, rosas frescas, pétalas de magnólia, proporcionam uma inebriante sensação, deixando para o fundo da composição, uma combinação de cedro, sândalo, e magnólias selvagens.','COSMETICOS','Tommy','Girl 100ml','2017-09-14','2017-09-14'),(13,'Tapete','Tapete','CASA','Tapete','Tapete 3x2','2017-09-14','2017-09-24'),(14,'Smartphone','Ele já vem com o novo iOS 10, o sistema operacional móvel mais avançado do mundo que deixa seu aparelho ainda mais pessoal, de uma forma poderosa. A interface é bonita e fácil de usar. Sugestões inteligentes aparecem quando você mais precisa e as tecnologias avançadas protegem sua privacidade e segurança. Além disso, conta com a excelente câmera iSight de 12MP, FaceTime de 7MP e grava vídeos com tecnologia 4K. Seu Chip A10 Fusion com arquitetura de 64 bits e coprocessador de movimento M10 integrado é o mais poderoso até hoje em um smartphone. Com ele, o iPhone 7 é mais rápido do que qualquer iPhone – e mais eficiente. Isso porque a arquitetura totalmente nova aumenta o processamento quando você precisa e diminui quando não precisa, oferecendo a maior duração de bateria em um iPhone e o dobro da velocidade do iPhone 6.','ELETRONICOS','Iphone','7 32GB','2017-09-14',NULL),(15,'Smartphone','...','ELETRONICOS','Iphone','6 32GB','2017-09-21',NULL),(16,'Smartphone','...','ELETRONICOS','Iphone','6s 32GB','2017-09-21',NULL),(17,'Tablet','...','ELETRONICOS','Ipad','32GB Wi-Fi','2017-09-22','2017-09-22'),(18,'Smartphone','...','ELETRONICOS','Iphone','7 Plus 32GB','2017-09-22',NULL),(19,'Relógio','..','JOIASERELOGIOS','Curren','Masculino','2017-09-22',NULL),(20,'Carregador Portátil','...','ELETRONICOS','Ecopower','EP-C813 5600mAh','2017-09-22',NULL),(21,'Carregador Portátil','...','ELETRONICOS','Ecopower','EP-C883 9000mAh','2017-09-22',NULL),(22,'Máscara Ultra Hidratante','A Máscara Ultra Hidratante Desmaia Cabelo da Forever Liss possui ação instantânea Anti Volume e Frizz, super eficaz que age suavizando os fios, deixando os super sedosos, macios e com brilho. A Máscara Desmaia Cabelo Forever Liss possui que recupera os fios agredidos pela química realizando uma hidratação profunda nos fios garantindo assim a redução do volume e alinhamento capilar. É um produto sem química que promove sensação de cabelos lisos, pois alinha a fibra capilar.\r\n\r\nINDICAÇÃO:\r\nTodos os tipos de cabelo, cabelos volumosos, cabelos com frizz. Pode ser usado por gestantes e lactantes.\r\n\r\nCOMPOSIÇÃO:\r\nKeratina Brasileira (Origem Vegetal, Milho e Soja), D\'Pantenol, Colágeno e Sinergia de Aminoácidos. \r\n\r\nMODO DE USAR:\r\nAplique a Máscara Desmaia Cabelo Forever Liss com os cabelos úmidos em toda área do fio. Pentear com um pente até que perceba uniformidade na aplicação. Deixe em repouso por 5 minutos. Enxágue normalmente e finalize como desejar.\r\n\r\nRESULTADOS:\r\n- Efeito Redução de Volume;\r\n- Anti Frizz;\r\n- Cabelos Alinhados;\r\n- Maciez Extrema;\r\n- Brilho Intenso;\r\n- Sedosidade;\r\n- Alinhamento da Fibra Capilar;\r\n- Sensação de Leveza Instantaneamente nos Fios.','COSMETICOS','Desmaia Cabelo','350g','2017-09-22',NULL),(23,'Perfume Feminino','Calvin Klein inicia uma nova era na perfumaria! CKIN2U foi especialmente elaborado para uma geração que se define pela troca de experiências por meio de uma rede de comunicação virtual. A qualquer hora, em qualquer lugar e com qualquer pessoa... Jovens antenados, agitados e tecnosexuais!\r\nPela primeira vez, uma fragrância especial de Calvin Klein não é apenas um fragmento. As notas especiais do perfume capturam a sedução espontânea de uma geração fascinada por tecnologia. Esta geração que tem habilidade para conectar-se a qualquer hora, a qualquer momento, ao redor do mundo, com a possibilidade de aflorar emoções revolucionárias.\r\nA mulher de CKIN2U é uma jovem espontânea e sedutora. CKIN2U her tem a saída picante da grapefruit e bergamota da Sicília, seguidas pela orquídea doce cactus branco e cedra vermelho. A base em âmbar neón com souffle de baunilha asseguram a sedução e a satisfação imediata.','COSMETICOS','Calvin Klein','CKin2u 100ml','2017-09-22',NULL),(24,'Garrafa Térmica','...','CASA','Travel & Leisure','5,8L','2017-09-22','2017-09-22'),(25,'Creme Hidratante','...','COSMETICOS','Victoria\'s Secret','Temptation 200ml','2017-09-22',NULL),(26,'Smartphone','...','ELETRONICOS','Iphone','7 Plus 128GB','2017-09-22',NULL),(27,'Smartphone','...','ELETRONICOS','Iphone','7 Red 128GB','2017-09-22',NULL),(28,'Smartphone','...','ELETRONICOS','Iphone','7 128 GB','2017-09-22',NULL),(29,'HD SSD','...','INFORMATICA','Sandisk','240GB','2017-09-23',NULL),(30,'IPTV','...','ELETRONICOS','HTV','5','2017-09-23',NULL),(31,'Creme Capilar','...','COSMETICOS','Revlon','Uniq One','2017-09-23',NULL),(32,'Creme Hidratante','...','COSMETICOS','Victoria’s Secret','Pure Seduction 236ml','2017-09-23',NULL),(33,'Creme Hidratante ','...','COSMETICOS','Victoria’s Secret','Coconut Passion 236ml','2017-09-24',NULL),(34,'Perfume Feminino ','...','COSMETICOS','Calvin Klein','CKin2u 150ml','2017-09-24',NULL);
+INSERT INTO `produto` VALUES (6,'Caixa de Som','Criado para os apaixonados por música e praticidade, a JBL GO transmite música via Bluetooth a partir de dispositivos móveis. É alimentado por uma bateria recarregável com até 5 horas de reprodução, e viva-voz com cancelamento de ruído, permitindo que você atenda chamadas sem desligar sua caixa de som.','ELETRONICOS','JBL','GO','2017-08-22','2017-09-18'),(7,'Caixa de Som','O JBL Flip 4 é a última geração da premiada série Flip, uma caixa de som portátil com Bluetooth que oferece um som estéreo surpreendentemente poderoso. Esta caixa de som compacta é alimentada por uma bateria de íons de lítio recarregável de 3.000 mAh, que oferece 12 horas contínuas de áudio de alta qualidade. ','ELETRONICOS','JBL','FLIP4','2017-08-22','2017-08-22'),(8,'Caixa de Som','A Caixa Bluetooth à prova d´agua Charge 3 agora vem com carregador portátil e deixa o som ainda mais potente. Escute suas músicas sem fios, por muito mais tempo e ainda leve sua festa para todo o lugar. Graças ao seu design à prova d´água, tecido durável e carcaça resistente, ela pode até cair na piscina. ','ELETRONICOS','JBL','CHARGE3','2017-08-22','2017-08-22'),(9,'Perfume Masculino','O Perfume Ferrari Masculino possui aroma cítrico amadeirado, ideal para homens misteriosos e sensuais. Em sua fragrância, notas que combinam bergamota, maçã, ameixa, canela, jasmim, rosa, cedro e baunilha.','COSMETICOS','Ferrari','Black 125ml','2017-08-30','2017-09-14'),(10,'Fone de Ouvido Wireless','Possui entrada auxiliar onde você pode ouvir musicas de celulares que não tem a tecnologia bluetooth. O fone de ouvido é carregado através da porta USB do seu computador ou carregador de 5v (não incluído). É possível receber e fazer chamadas pelo fone, sem tirar ele da orelha, possui microfone para que possa ouvir suas chamadas com nitidez.','ELETRONICOS','Ewtto','ET-A4260B','2017-08-30',NULL),(11,'Chromecast','O Chromecast é um dispositivo de streaming de mídia que é conectado à porta HDMI da sua TV. Use o dispositivo móvel e a TV que você já possui para transmitir seus programas de TV, filmes, músicas, esportes e jogos favoritos e muito mais. O Chromecast funciona com iPhone®, iPad®, smartphones e tablets Android, laptops Mac® e Windows® e Chromebooks.','ELETRONICOS','Google','2','2017-09-14',NULL),(12,'Perfume Feminino','Tommy Girl é um bouquet de puro frescor, um mix de flores que associa a refrescância da camélia com a luminosidade da flor de maçã, e acordes brilhantes da flor do cassis. Uma fragrância energizante com toques cítricos da tangerina, de madeiras frescas e uma nuance de hortelã verde. Uma mistura envolvente de madressilva e pétalas de violeta, que aliadas ao jasmim do deserto, o lírio, rosas frescas, pétalas de magnólia, proporcionam uma inebriante sensação, deixando para o fundo da composição, uma combinação de cedro, sândalo, e magnólias selvagens.','COSMETICOS','Tommy','Girl 100ml','2017-09-14','2017-09-14'),(13,'Tapete','Tapete','CASA','Tapete','Tapete 3x2','2017-09-14','2017-09-24'),(14,'Smartphone','Ele já vem com o novo iOS 10, o sistema operacional móvel mais avançado do mundo que deixa seu aparelho ainda mais pessoal, de uma forma poderosa. A interface é bonita e fácil de usar. Sugestões inteligentes aparecem quando você mais precisa e as tecnologias avançadas protegem sua privacidade e segurança. Além disso, conta com a excelente câmera iSight de 12MP, FaceTime de 7MP e grava vídeos com tecnologia 4K. Seu Chip A10 Fusion com arquitetura de 64 bits e coprocessador de movimento M10 integrado é o mais poderoso até hoje em um smartphone. Com ele, o iPhone 7 é mais rápido do que qualquer iPhone – e mais eficiente. Isso porque a arquitetura totalmente nova aumenta o processamento quando você precisa e diminui quando não precisa, oferecendo a maior duração de bateria em um iPhone e o dobro da velocidade do iPhone 6.','ELETRONICOS','Iphone','7 32GB','2017-09-14',NULL),(15,'Smartphone','...','ELETRONICOS','Iphone','6 32GB','2017-09-21',NULL),(16,'Smartphone','...','ELETRONICOS','Iphone','6s 32GB','2017-09-21',NULL),(17,'Tablet','...','ELETRONICOS','Ipad','32GB Wi-Fi','2017-09-22','2017-09-22'),(18,'Smartphone','...','ELETRONICOS','Iphone','7 Plus 32GB','2017-09-22',NULL),(19,'Relógio','..','JOIASERELOGIOS','Curren','Masculino','2017-09-22',NULL),(20,'Carregador Portátil','...','ELETRONICOS','Ecopower','EP-C813 5600mAh','2017-09-22',NULL),(21,'Carregador Portátil','...','ELETRONICOS','Ecopower','EP-C883 9000mAh','2017-09-22',NULL),(22,'Máscara Ultra Hidratante','A Máscara Ultra Hidratante Desmaia Cabelo da Forever Liss possui ação instantânea Anti Volume e Frizz, super eficaz que age suavizando os fios, deixando os super sedosos, macios e com brilho. A Máscara Desmaia Cabelo Forever Liss possui que recupera os fios agredidos pela química realizando uma hidratação profunda nos fios garantindo assim a redução do volume e alinhamento capilar. É um produto sem química que promove sensação de cabelos lisos, pois alinha a fibra capilar.\r\n\r\nINDICAÇÃO:\r\nTodos os tipos de cabelo, cabelos volumosos, cabelos com frizz. Pode ser usado por gestantes e lactantes.\r\n\r\nCOMPOSIÇÃO:\r\nKeratina Brasileira (Origem Vegetal, Milho e Soja), D\'Pantenol, Colágeno e Sinergia de Aminoácidos. \r\n\r\nMODO DE USAR:\r\nAplique a Máscara Desmaia Cabelo Forever Liss com os cabelos úmidos em toda área do fio. Pentear com um pente até que perceba uniformidade na aplicação. Deixe em repouso por 5 minutos. Enxágue normalmente e finalize como desejar.\r\n\r\nRESULTADOS:\r\n- Efeito Redução de Volume;\r\n- Anti Frizz;\r\n- Cabelos Alinhados;\r\n- Maciez Extrema;\r\n- Brilho Intenso;\r\n- Sedosidade;\r\n- Alinhamento da Fibra Capilar;\r\n- Sensação de Leveza Instantaneamente nos Fios.','COSMETICOS','Desmaia Cabelo','350g','2017-09-22',NULL),(23,'Perfume Feminino','Calvin Klein inicia uma nova era na perfumaria! CKIN2U foi especialmente elaborado para uma geração que se define pela troca de experiências por meio de uma rede de comunicação virtual. A qualquer hora, em qualquer lugar e com qualquer pessoa... Jovens antenados, agitados e tecnosexuais!\r\nPela primeira vez, uma fragrância especial de Calvin Klein não é apenas um fragmento. As notas especiais do perfume capturam a sedução espontânea de uma geração fascinada por tecnologia. Esta geração que tem habilidade para conectar-se a qualquer hora, a qualquer momento, ao redor do mundo, com a possibilidade de aflorar emoções revolucionárias.\r\nA mulher de CKIN2U é uma jovem espontânea e sedutora. CKIN2U her tem a saída picante da grapefruit e bergamota da Sicília, seguidas pela orquídea doce cactus branco e cedra vermelho. A base em âmbar neón com souffle de baunilha asseguram a sedução e a satisfação imediata.','COSMETICOS','Calvin Klein','CKin2u 100ml','2017-09-22',NULL),(24,'Garrafa Térmica','...','CASA','Travel & Leisure','5,8L','2017-09-22','2017-09-22'),(25,'Creme Hidratante','...','COSMETICOS','Victoria\'s Secret','Temptation 200ml','2017-09-22',NULL),(26,'Smartphone','...','ELETRONICOS','Iphone','7 Plus 128GB','2017-09-22',NULL),(27,'Smartphone','...','ELETRONICOS','Iphone','7 Red 128GB','2017-09-22',NULL),(28,'Smartphone','...','ELETRONICOS','Iphone','7 128 GB','2017-09-22',NULL),(29,'HD SSD','...','INFORMATICA','Sandisk','240GB','2017-09-23',NULL),(30,'IPTV','...','ELETRONICOS','HTV','5','2017-09-23',NULL),(31,'Creme Capilar','...','COSMETICOS','Revlon','Uniq One','2017-09-23',NULL),(32,'Creme Hidratante','...','COSMETICOS','Victoria’s Secret','Pure Seduction 236ml','2017-09-23',NULL),(33,'Creme Hidratante ','...','COSMETICOS','Victoria’s Secret','Coconut Passion 236ml','2017-09-24',NULL),(34,'Perfume Feminino ','...','COSMETICOS','Calvin Klein','CKin2u 150ml','2017-09-24',NULL),(35,'Carregador Portatil','...','ELETRONICOS','EcoPower','EP-C808 5200mAh','2017-10-12',NULL),(36,'Tablet','...','ELETRONICOS','Samsung','SM-T113','2017-10-12',NULL),(37,'Cinta','...','ESPORTEFITNESS','Sweet Sweat','Waist Trimmer','2017-10-12',NULL),(38,'Gel','...','ESPORTEFITNESS','Sweet Sweat','Workout Enhancer','2017-10-12',NULL),(39,'Creme Hidratante','...','COSMETICOS','Victoria\'s Secret','Amber Romance 200ml','2017-10-12',NULL),(40,'Carregador Portátil','...','ELETRONICOS','MOX','P250 3000mAh','2017-10-12',NULL),(41,'Fone de Ouvido','...','ELETRONICOS','Iphone','Com Fio','2017-10-12',NULL),(42,'Perfume Feminino','...','COSMETICOS','Bvlgari','65ml','2017-10-12',NULL),(43,'Perfume Feminino','...','COSMETICOS','Calvin Klein','One 100ml','2017-10-12',NULL),(44,'Smartphone','...','ELETRONICOS','Iphone','8 Plus 64GB','2017-10-12',NULL);
 /*!40000 ALTER TABLE `produto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -699,7 +700,7 @@ CREATE TABLE `tramite` (
   UNIQUE KEY `idTramite_UNIQUE` (`idTramite`),
   KEY `FKwenqm1061y3eq8n296w73njr` (`idCaixa`),
   CONSTRAINT `FKwenqm1061y3eq8n296w73njr` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -708,7 +709,7 @@ CREATE TABLE `tramite` (
 
 LOCK TABLES `tramite` WRITE;
 /*!40000 ALTER TABLE `tramite` DISABLE KEYS */;
-INSERT INTO `tramite` VALUES (7,3,'CREDITO',130.28,'2017-09-19',NULL),(8,4,'DEBITO',130.28,'2017-09-19',NULL),(9,1,'CREDITO',130.28,'2017-09-19',NULL),(10,3,'DEBITO',130.28,'2017-09-19',NULL),(11,1,'CREDITO',300.00,'2017-09-27',NULL),(12,2,'DEBITO',300.00,'2017-09-27',NULL),(13,3,'CREDITO',122.74,'2017-10-01',NULL),(14,4,'DEBITO',122.74,'2017-10-01',NULL),(15,1,'CREDITO',2285.00,'2017-10-02',NULL),(16,2,'DEBITO',2285.00,'2017-10-02',NULL),(17,1,'CREDITO',120.00,'2017-10-02',NULL),(18,1,'CREDITO',122.74,'2017-10-03',NULL),(19,3,'DEBITO',122.74,'2017-10-03',NULL),(20,1,'CREDITO',200.00,'2017-10-03',NULL),(22,1,'CREDITO',275.00,'2017-10-07',''),(23,2,'DEBITO',275.00,'2017-10-07',''),(24,1,'CREDITO',175.00,'2017-10-07','100,00 Flip4 (Tati); 55,00 Carregador Portátil 5600mAh (Camila); 20,00 Dois Desodorante Dove (Luana);'),(25,2,'DEBITO',1500.00,'2017-10-09','Devolução para o Paulinho'),(26,1,'CREDITO',100.00,'2017-10-09','Tramite entre contas'),(27,2,'DEBITO',100.00,'2017-10-09','Tramite entre contas'),(28,2,'CREDITO',110.00,'2017-10-10','Pagamento Daniele'),(29,1,'CREDITO',130.00,'2017-10-10',''),(30,2,'DEBITO',130.00,'2017-10-10',''),(31,2,'CREDITO',90.00,'2017-10-11','Creme e Perfume (Camila)');
+INSERT INTO `tramite` VALUES (7,3,'CREDITO',130.28,'2017-09-19',NULL),(8,4,'DEBITO',130.28,'2017-09-19',NULL),(9,1,'CREDITO',130.28,'2017-09-19',NULL),(10,3,'DEBITO',130.28,'2017-09-19',NULL),(11,1,'CREDITO',300.00,'2017-09-27',NULL),(12,2,'DEBITO',300.00,'2017-09-27',NULL),(13,3,'CREDITO',122.74,'2017-10-01',NULL),(14,4,'DEBITO',122.74,'2017-10-01',NULL),(15,1,'CREDITO',2285.00,'2017-10-02',NULL),(16,2,'DEBITO',2285.00,'2017-10-02',NULL),(17,1,'CREDITO',120.00,'2017-10-02',NULL),(18,1,'CREDITO',122.74,'2017-10-03',NULL),(19,3,'DEBITO',122.74,'2017-10-03',NULL),(20,1,'CREDITO',200.00,'2017-10-03',NULL),(22,1,'CREDITO',275.00,'2017-10-07',''),(23,2,'DEBITO',275.00,'2017-10-07',''),(24,1,'CREDITO',175.00,'2017-10-07','100,00 Flip4 (Tati); 55,00 Carregador Portátil 5600mAh (Camila); 20,00 Dois Desodorante Dove (Luana);'),(25,2,'DEBITO',1500.00,'2017-10-09','Devolução para o Paulinho'),(26,1,'CREDITO',100.00,'2017-10-09','Tramite entre contas'),(27,2,'DEBITO',100.00,'2017-10-09','Tramite entre contas'),(28,2,'CREDITO',110.00,'2017-10-10','Pagamento Daniele'),(29,1,'CREDITO',130.00,'2017-10-10',''),(30,2,'DEBITO',130.00,'2017-10-10',''),(31,2,'CREDITO',90.00,'2017-10-11','Creme e Perfume (Camila)'),(32,1,'CREDITO',1590.00,'2017-10-12',''),(33,2,'DEBITO',1590.00,'2017-10-12',''),(34,1,'CREDITO',150.00,'2017-10-14',''),(35,2,'DEBITO',150.00,'2017-10-14','');
 /*!40000 ALTER TABLE `tramite` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -733,7 +734,7 @@ CREATE TABLE `venda` (
   KEY `FK2l1gbv70y170sammw1guliyj8` (`idFuncionario`),
   CONSTRAINT `FK2l1gbv70y170sammw1guliyj8` FOREIGN KEY (`idFuncionario`) REFERENCES `pessoa` (`idPessoa`),
   CONSTRAINT `FK6eyxfbxmeg9tn95pob30peuev` FOREIGN KEY (`idCliente`) REFERENCES `pessoa` (`idPessoa`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -742,7 +743,7 @@ CREATE TABLE `venda` (
 
 LOCK TABLES `venda` WRITE;
 /*!40000 ALTER TABLE `venda` DISABLE KEYS */;
-INSERT INTO `venda` VALUES (25,7,4,'2017-09-08',150.00,1,'PAGAMENTOPARCIAL'),(26,8,4,'2017-09-09',160.00,1,'VENDACONCLUIDA'),(27,9,4,'2017-09-07',900.00,2,'PAGAMENTOPARCIAL'),(29,10,4,'2017-09-07',450.00,1,'AGUARDANDOPAGAMENTO'),(30,11,4,'2017-09-07',140.00,1,'AGUARDANDOPAGAMENTO'),(31,12,4,'2017-09-07',160.00,1,'VENDACONCLUIDA'),(32,13,4,'2017-09-07',3200.00,1,'VENDACONCLUIDA'),(33,14,4,'2017-09-23',200.00,1,'VENDACONCLUIDA'),(34,15,4,'2017-09-23',1500.00,2,'VENDACONCLUIDA'),(35,16,3,'2017-09-23',410.00,1,'VENDACONCLUIDA'),(36,17,4,'2017-09-26',450.00,1,'AGUARDANDOPAGAMENTO'),(37,18,4,'2017-09-23',130.00,1,'VENDACONCLUIDA'),(38,19,4,'2017-09-28',175.00,1,'VENDACONCLUIDA'),(39,20,4,'2017-09-23',150.00,1,'AGUARDANDOPAGAMENTO'),(40,21,4,'2017-09-23',410.00,1,'VENDACONCLUIDA'),(41,22,4,'2017-10-04',150.00,2,'PAGAMENTOPARCIAL');
+INSERT INTO `venda` VALUES (25,7,4,'2017-09-08',150.00,1,'PAGAMENTOPARCIAL'),(26,8,4,'2017-09-09',160.00,1,'VENDACONCLUIDA'),(27,9,4,'2017-09-07',900.00,2,'PAGAMENTOPARCIAL'),(29,10,4,'2017-09-07',450.00,1,'VENDACONCLUIDA'),(30,11,4,'2017-09-07',140.00,1,'AGUARDANDOPAGAMENTO'),(31,12,4,'2017-09-07',160.00,1,'VENDACONCLUIDA'),(32,13,4,'2017-09-07',3200.00,1,'VENDACONCLUIDA'),(33,14,4,'2017-09-23',200.00,1,'VENDACONCLUIDA'),(34,15,4,'2017-09-23',1500.00,2,'VENDACONCLUIDA'),(35,16,3,'2017-09-23',410.00,1,'VENDACONCLUIDA'),(36,17,4,'2017-09-26',450.00,1,'AGUARDANDOPAGAMENTO'),(37,18,4,'2017-09-23',130.00,1,'VENDACONCLUIDA'),(38,19,4,'2017-09-28',175.00,1,'VENDACONCLUIDA'),(39,20,4,'2017-09-23',150.00,1,'AGUARDANDOPAGAMENTO'),(40,21,4,'2017-09-23',410.00,1,'VENDACONCLUIDA'),(41,22,4,'2017-10-04',150.00,2,'PAGAMENTOPARCIAL'),(42,24,4,'2017-10-12',4100.00,1,'PAGAMENTOPARCIAL'),(43,25,4,'2017-10-14',150.00,1,'VENDACONCLUIDA');
 /*!40000 ALTER TABLE `venda` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -755,4 +756,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-11 15:03:01
+-- Dump completed on 2017-10-15 22:34:08
