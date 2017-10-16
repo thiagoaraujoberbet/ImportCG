@@ -39,7 +39,9 @@ public class Fechamento implements Serializable {
 	
 	private BigDecimal valorEntradas = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
-	private BigDecimal valorDespesas = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
+	private BigDecimal valorDespesasBaixadas = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
+	
+	private BigDecimal valorDespesasABaixar = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
 	private BigDecimal saldo = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
@@ -83,12 +85,20 @@ public class Fechamento implements Serializable {
 		this.valorEntradas = valorEntradas;
 	}
 
-	public BigDecimal getValorDespesas() {
-		return valorDespesas;
+	public BigDecimal getValorDespesasBaixadas() {
+		return valorDespesasBaixadas;
 	}
 
-	public void setValorDespesas(BigDecimal valorDespesas) {
-		this.valorDespesas = valorDespesas;
+	public void setValorDespesasBaixadas(BigDecimal valorDespesasBaixadas) {
+		this.valorDespesasBaixadas = valorDespesasBaixadas;
+	}
+	
+	public BigDecimal getValorDespesasABaixar() {
+		return valorDespesasABaixar;
+	}
+
+	public void setValorDespesasABaixar(BigDecimal valorDespesasABaixar) {
+		this.valorDespesasABaixar = valorDespesasABaixar;
 	}
 
 	public BigDecimal getSaldo() {

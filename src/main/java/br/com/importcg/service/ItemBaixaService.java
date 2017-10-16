@@ -40,4 +40,12 @@ public class ItemBaixaService implements Serializable {
 	public List<ItemBaixa> porIdBaixa(Long idBaixa) {
 		return itemBaixaDAO.porIdBaixa(idBaixa);
 	}
+
+	public List<ItemBaixa> buscarDespesasBaixadas() {
+		return itemBaixaDAO.buscarDespesasBaixadas();
+	}
+
+	public List<ItemBaixa> buscarDespesasABaixar() {
+		return itemBaixaDAO.buscarDespesasABaixar();
+	}
 }

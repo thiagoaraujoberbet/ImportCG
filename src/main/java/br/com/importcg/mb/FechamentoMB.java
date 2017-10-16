@@ -1,6 +1,8 @@
 package br.com.importcg.mb;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,8 +14,10 @@ import javax.inject.Named;
 
 import br.com.importcg.enumeration.EnumMes;
 import br.com.importcg.model.Fechamento;
+import br.com.importcg.model.ItemBaixa;
 import br.com.importcg.model.ItemFechamento;
 import br.com.importcg.service.FechamentoService;
+import br.com.importcg.service.ItemBaixaService;
 import br.com.importcg.service.ItemFechamentoService;
 import br.com.importcg.util.FacesUtil;
 
@@ -32,6 +36,9 @@ public class FechamentoMB implements Serializable {
 	private List<ItemFechamento> itensFechamento = new ArrayList<>();
 	private List<ItemFechamento> itensFechamentoSelecionados = new ArrayList<>();
 	
+	private List<ItemBaixa> despesasBaixadas = new ArrayList<>();
+	private List<ItemBaixa> despesasABaixar = new ArrayList<>();
+	
 	private boolean edicaoItem = false;
 	
 	private Long idFechamento;
@@ -41,6 +48,9 @@ public class FechamentoMB implements Serializable {
 	
 	@Inject
 	private ItemFechamentoService itemFechamentoService;
+	
+	@Inject
+	private ItemBaixaService itemBaixaService;
 	
 	public void inicializar() {
 		if (idFechamento != null) {
@@ -53,13 +63,41 @@ public class FechamentoMB implements Serializable {
 			fechamento.setMes(tratarEnumMes(setarMesReferente()));
 
 			fechamento = fechamentoService.buscarValoresFechamento(fechamento);
+			despesasBaixadas = itemBaixaService.buscarDespesasBaixadas();
+			despesasABaixar = itemBaixaService.buscarDespesasABaixar();
 			
 			this.calcularSaldo();
 		}
 	}
 	
 	private void calcularSaldo() {
-		fechamento.setSaldo(fechamento.getValorRecebido().subtract(fechamento.getValorEntradas().add(fechamento.getValorDespesas())));
+		fechamento.setSaldo(fechamento.getValorRecebido().subtract(fechamento.getValorDespesasABaixar().add(fechamento.getValorDespesasBaixadas())));
+	}
+	
+	public String totalizarDespesasBaixadas() {
+		BigDecimal total = new BigDecimal(0);
+		
+		for (ItemBaixa itemBaixa : despesasBaixadas) {
+			total = total.add(itemBaixa.getValor());
+		}
+		
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		String formatado = nf.format(total);
+		
+		return formatado;
+	}
+	
+	public String totalizarDespesasABaixar() {
+		BigDecimal total = new BigDecimal(0);
+		
+		for (ItemBaixa itemBaixa : despesasABaixar) {
+			total = total.add(itemBaixa.getValor());
+		}
+		
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		String formatado = nf.format(total);
+		
+		return formatado;
 	}
 
 	private int setarAnoReferente() {
@@ -147,6 +185,22 @@ public class FechamentoMB implements Serializable {
 
 	public void setItensFechamentoSelecionados(List<ItemFechamento> itensFechamentoSelecionados) {
 		this.itensFechamentoSelecionados = itensFechamentoSelecionados;
+	}
+
+	public List<ItemBaixa> getDespesasBaixadas() {
+		return despesasBaixadas;
+	}
+
+	public void setDespesasBaixadas(List<ItemBaixa> despesasBaixadas) {
+		this.despesasBaixadas = despesasBaixadas;
+	}
+
+	public List<ItemBaixa> getDespesasABaixar() {
+		return despesasABaixar;
+	}
+
+	public void setDespesasABaixar(List<ItemBaixa> despesasABaixar) {
+		this.despesasABaixar = despesasABaixar;
 	}
 
 	public boolean isEdicaoItem() {

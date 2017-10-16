@@ -50,11 +50,12 @@ public class FechamentoDAO implements Serializable {
 		sql.append("SELECT ");
 		sql.append("(SELECT SUM(e.valorTotal) from importcg.entrada e ");
 		sql.append("	where e.dataCompra between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) entradas, ");
-		sql.append("(SELECT SUM(id.valor) from importcg.itemDespesa id ");
-		sql.append("	JOIN importcg.despesa d ON id.idDespesa = d.idDespesa ");
-		sql.append("	where id.idEntrada is null and d.dataDespesa between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) despesas, ");
+		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and ib.baixado = 1) despesasBaixadas, ");
+		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and ib.baixado = 0) despesasABaixar, ");
 		sql.append("(SELECT SUM(p.saldo) from importcg.pagamento p ");
-		sql.append("	where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and p.pago = 1) recebido; ");
+		sql.append("	where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and p.pago = 1) recebido ");
 		
 		Query query = manager.createNativeQuery(sql.toString());
 		
@@ -64,12 +65,16 @@ public class FechamentoDAO implements Serializable {
 			fechamento.setValorEntradas(new BigDecimal(objects[0].toString()));
 		} else fechamento.setValorEntradas(new BigDecimal(0));
 		
-		if (objects[0] != null) {
-			fechamento.setValorDespesas(new BigDecimal(objects[1].toString()));
-		} else fechamento.setValorDespesas(new BigDecimal(0));
+		if (objects[1] != null) {
+			fechamento.setValorDespesasBaixadas(new BigDecimal(objects[1].toString()));
+		} else fechamento.setValorDespesasBaixadas(new BigDecimal(0));
 		
-		if (objects[0] != null) {
-			fechamento.setValorRecebido(new BigDecimal(objects[2].toString()));
+		if (objects[2] != null) {
+			fechamento.setValorDespesasABaixar(new BigDecimal(objects[2].toString()));
+		} else fechamento.setValorDespesasABaixar(new BigDecimal(0));
+		
+		if (objects[3] != null) {
+			fechamento.setValorRecebido(new BigDecimal(objects[3].toString()));
 		} else fechamento.setValorRecebido(new BigDecimal(0));
 			
 		return fechamento;

@@ -4,6 +4,7 @@ public enum EnumCategoria {
 	CASA("Casa"),
 	COSMETICOS("Cosméticos"),
 	ELETRONICOS("Eletrônicos"),
+	ESPORTEFITNESS("Esporte/Fitness"),
 	INFORMATICA("Informática"),
 	JOIASERELOGIOS("Jóias e Relógios"),
 	VESTUARIO("Vestuário");

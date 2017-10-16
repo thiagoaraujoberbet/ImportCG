@@ -40,12 +40,12 @@
                     <p:separator/>
 
                     <div class="ui-fluid">
-						<p:panelGrid id="capaPanel1" columns="6" style="width:100%;">
+						<p:panelGrid id="capaPanel1" columns="10" style="width:100%;">
 						
-							<p:outputLabel value="Data da Compra" for="dataFechamento"/>
+							<p:outputLabel value="Data" for="dataFechamento"/>
 							<p:calendar id="dataFechamento" value="#{fechamentoMB.fechamento.data}" pattern="dd/MM/yyyy" mask="true" disabled="true"/>
 							
-							<p:outputLabel value="Mês de Referência" for="mes"/>
+							<p:outputLabel value="Mês" for="mes"/>
 							<p:selectOneMenu id="mes" value="#{fechamentoMB.fechamento.mes}" style="width:100%;" disabled="true">
 								<f:selectItem itemLabel="Selecione..."/>
 								<f:selectItem itemLabel="Janeiro"   itemValue="JANEIRO"/>
@@ -62,31 +62,15 @@
 								<f:selectItem itemLabel="Dezembro" 	itemValue="DEZEMBRO"/>
 							</p:selectOneMenu>
 							
-							<p:outputLabel value="Ano de Referência" for="ano"/>
+							<p:outputLabel value="Ano" for="ano"/>
 							<p:selectOneMenu id="ano" value="#{fechamentoMB.fechamento.ano}" style="width:100%;" disabled="true">
 								<f:selectItem itemLabel="Selecione..."/>
 								<f:selectItem itemLabel="2017" itemValue="2017"/>
 								<f:selectItem itemLabel="2018" itemValue="2018"/>
 							</p:selectOneMenu>
 							
-						</p:panelGrid>
-						
-						<p:spacer />
-						
-						<p:panelGrid id="capaPanel2" columns="8" style="width:100%;">
-						
 							<p:outputLabel value="Valor Recebido" for="valorRecebido"/>
 							<p:inputText id="valorRecebido" value="#{fechamentoMB.fechamento.valorRecebido}" disabled="true">
-								<f:convertNumber type="currency" currencySymbol="R$"/>
-							</p:inputText>
-							
-							<p:outputLabel value="Valor Entradas" for="valorEntradas"/>
-							<p:inputText id="valorEntradas" value="#{fechamentoMB.fechamento.valorEntradas}" disabled="true">
-								<f:convertNumber type="currency" currencySymbol="R$"/>
-							</p:inputText>
-							
-							<p:outputLabel value="Valor Despesas" for="valorDespesas"/>
-							<p:inputText id="valorDespesas" value="#{fechamentoMB.fechamento.valorDespesas}" disabled="true">
 								<f:convertNumber type="currency" currencySymbol="R$"/>
 							</p:inputText>
 							
@@ -102,6 +86,112 @@
                 </div>
                 
             </div>
+            
+          	<div class="box box-primary">
+            	
+              	<div class="box-header with-border">
+              	
+		              <p:dataTable id="despesasBaixadasTable" widgetVar="despesasBaixadasTable" rows="10"
+		              			 value="#{fechamentoMB.despesasBaixadas}" var="despesasBaixadas" rowKey="#{despesasBaixadas.id}"
+		                           paginator="true" 	                                 
+		                           paginatorPosition="bottom"	                                 
+		                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+		                           currentPageReportTemplate=""
+		                           rowsPerPageTemplate="5,10,15,20,30">
+		
+		                  <p:column headerText="Descrição de Despesas Baixadas" width="40%">
+			                  <h:outputText value="#{despesasBaixadas.descricao}">
+		                  	  		<f:param name="id" value="#{despesasBaixadas.id}"/>
+		                  	  </h:outputText>
+		                  </p:column>
+		                  
+		                  <p:column headerText="Valor">
+				              <h:outputText value="#{despesasBaixadas.valor}">
+              				  		<f:convertNumber type="currency" currencySymbol="R$"/>
+				              </h:outputText>
+		                  </p:column>
+		                  
+  		                  <p:column headerText="Acréscimo">
+				              <h:outputText value="#{despesasBaixadas.acrescimo}">
+              				  		<f:convertNumber type="currency" currencySymbol="R$"/>
+				              </h:outputText>
+		                  </p:column>
+		                  
+  		                  <p:column headerText="Data da Baixa">
+				              <h:outputText value="#{despesasBaixadas.data}">
+              				  		<f:convertDateTime pattern="dd/MM/yyyy"/>
+				              </h:outputText>
+		                  </p:column>
+		                  
+  		                  <p:column headerText="Tipo da Baixa">
+				              <h:outputText value="#{despesasBaixadas.tipo.descricao}" />
+		                  </p:column>
+		                  
+						<p:columnGroup type="footer">
+							<p:row>
+								<p:column footerText="Total:" style="text-align:right" />
+								<p:column footerText="#{fechamentoMB.totalizarDespesasBaixadas()}" style="text-align:left"/>
+							</p:row>
+						</p:columnGroup>
+		                  
+		              </p:dataTable>
+              	
+              	</div>
+              	
+           	</div>
+           	
+         	<div class="box box-primary">
+            	
+              	<div class="box-header with-border">
+              	
+		              <p:dataTable id="despesasABaixarTable" widgetVar="despesasABaixarTable" rows="10"
+		              			 value="#{fechamentoMB.despesasABaixar}" var="despesasABaixar" rowKey="#{despesasABaixar.id}"
+		                           paginator="true" 	                                 
+		                           paginatorPosition="bottom"	                                 
+		                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+		                           currentPageReportTemplate=""
+		                           rowsPerPageTemplate="5,10,15,20,30">
+		
+		                  <p:column headerText="Descrição de Despesas a Baixar" width="40%">
+			                  <h:outputText value="#{despesasABaixar.descricao}">
+		                  	  		<f:param name="id" value="#{despesasABaixar.id}"/>
+		                  	  </h:outputText>
+		                  </p:column>
+		                  
+		                  <p:column headerText="Valor">
+				              <h:outputText value="#{despesasABaixar.valor}">
+              				  		<f:convertNumber type="currency" currencySymbol="R$"/>
+				              </h:outputText>
+		                  </p:column>
+		                  
+  		                  <p:column headerText="Acréscimo">
+				              <h:outputText value="#{despesasABaixar.acrescimo}">
+              				  		<f:convertNumber type="currency" currencySymbol="R$"/>
+				              </h:outputText>
+		                  </p:column>
+		                  
+  		                  <p:column headerText="Data da Baixa">
+				              <h:outputText value="#{despesasABaixar.data}">
+              				  		<f:convertDateTime pattern="dd/MM/yyyy"/>
+				              </h:outputText>
+		                  </p:column>
+		                  
+  		                  <p:column headerText="Tipo da Baixa">
+				              <h:outputText value="#{despesasABaixar.tipo.descricao}" />
+		                  </p:column>
+		                  
+   						  <p:columnGroup type="footer">
+								<p:row>
+									<p:column footerText="Total:" style="text-align:right" />
+									<p:column footerText="#{fechamentoMB.totalizarDespesasABaixar()}" style="text-align:left"/>
+								</p:row>
+						  </p:columnGroup>
+		                  
+		              </p:dataTable>
+              	
+              	</div>
+              	
+           	</div>
             
             <p:panel rendered="#{fechamentoMB.fechamento.edicao}">
 	            <div class="box box-primary">
