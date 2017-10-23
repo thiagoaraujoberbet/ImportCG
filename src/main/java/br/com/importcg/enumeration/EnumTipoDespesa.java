@@ -5,7 +5,9 @@ public enum EnumTipoDespesa {
 	ALMOXARIFADO("Almoxarifado"),
 	COMBUSTIVEL("Combustível"),
 	COMPRAPRODUTO("Compra de Produtos"),
-	MARKETING("Marketing");
+	FRETE("Frete"),
+	MARKETING("Marketing"),
+	OUTROS("Outros");
 	
 	private String descricao;
 	
