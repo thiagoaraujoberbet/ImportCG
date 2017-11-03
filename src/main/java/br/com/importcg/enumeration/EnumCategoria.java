@@ -1,6 +1,7 @@
 package br.com.importcg.enumeration;
 
 public enum EnumCategoria {
+	ACESSORIOS("Acessórios"),
 	CASA("Casa"),
 	COSMETICOS("Cosméticos"),
 	ELETRONICOS("Eletrônicos"),
