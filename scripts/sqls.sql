@@ -89,8 +89,16 @@ where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MON
 
 /*buscar Despesa a serem Baixadas no mes*/
 select * from importcg.itemBaixa ib
-where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and ib.baixado = 0
+where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and ib.baixado = 0;
 
 
-
-
+select 	
+-- A receber no mes atual
+(select SUM(p.saldo) from importcg.pagamento p
+			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate())) AReceberMesAtual,
+-- A receber no proximo mês            
+(select SUM(p.saldo) from importcg.pagamento p
+			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 0 MONTH)), 1)) and last_day(sysdate() + INTERVAL 1 MONTH)) AReceberProximoMes,
+-- A receber em todos os meses
+(select SUM(p.saldo) from importcg.pagamento p
+			where p.pago = 0) AReceberTodosMeses;            

@@ -26,6 +26,14 @@
                <p:chart type="pie" model="#{listaPrincipalMB.pieModelGeral}" responsive="true" />
           </p:panelGrid>
           
+          <p:panelGrid columns="1" style="width: 100%;">
+          	   <p:chart type="pie" model="#{listaPrincipalMB.pieModelAReceber}" responsive="true" />
+          </p:panelGrid>
+          
+          <p:panelGrid columns="1" style="width: 100%;">
+          	   <p:chart type="bar" model="#{listaPrincipalMB.barModelBalanco}" responsive="true" />
+          </p:panelGrid>
+          
            </div>
           
    		</div>

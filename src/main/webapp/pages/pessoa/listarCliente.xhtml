@@ -61,22 +61,26 @@
 	                        		<f:param name="id" value="#{cliente.id}"/>
 	                        	</h:link>
 	                        </p:column>
+                        
+  	                        <p:column headerText="E-mail">
+	                        	<h:outputText value="#{cliente.email}" />
+	                        </p:column>
 	                        
-	                        <p:column headerText="Data de Nasc." filterBy="#{cliente.dataNascimento}" sortBy="#{cliente.dataNascimento}">
+	                        <p:column headerText="Data de Nasc." filterBy="#{cliente.dataNascimento}" sortBy="#{cliente.dataNascimento}" style="width:10%; text-align:center;">
 	                        	<h:outputText value="#{cliente.dataNascimento}">
 	                        		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	                        	</h:outputText>
 	                        </p:column>
 	                        
-	                        <p:column headerText="Celular">
+	                        <p:column headerText="Celular" style="width:11%; text-align:center;">
 	                        	<h:outputText value="#{cliente.celular}"/>
 	                        </p:column>
 	                        
-   	                        <p:column headerText="Qtde Comprada">
+   	                        <p:column headerText="Qtde Comprada" style="width:7%; text-align:center;">
 	                        	<h:outputText value="#{cliente.quantidadeComprada}"/>
 	                        </p:column>
-	                        
-	                       	<p:column headerText="Desde">
+	                         
+	                       	<p:column headerText="Desde" style="width:10%; text-align:center;">
 	                        	<h:outputText value="#{cliente.dataCriacao}">
 	                        		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	                        	</h:outputText>

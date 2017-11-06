@@ -60,7 +60,7 @@
 	
 	                        <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>	                        
 	                        
-	                        <p:column headerText="Data da Venda" filterBy="#{venda.dataVendaFormatada}" sortBy="#{venda.dataVendaFormatada}">
+	                        <p:column headerText="Data da Venda" filterBy="#{venda.dataVendaFormatada}" sortBy="#{venda.dataVendaFormatada}" style="width:10%; text-align:center;">
  	                        	<h:link value="#{venda.dataVendaFormatada}" outcome="manterVenda.xhtml">
 	                        		<f:param name="id" value="#{venda.id}"/>
 	                        	</h:link>
@@ -70,17 +70,17 @@
 	                        	<h:outputText value="#{venda.cliente.nome}" />
 	                        </p:column>
 	                        
-   	                        <p:column headerText="Valor Venda">
+   	                        <p:column headerText="Valor Venda" style="width:10%; text-align:center;">
 	                        	<h:outputText value="#{venda.valorTotal}">
 	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 	                        	</h:outputText>
 	                        </p:column>
 	                        
-  	                        <p:column headerText="Qtde">
+  	                        <p:column headerText="Qtde" style="width:5%; text-align:center;">
 	                        	<h:outputText value="#{venda.quantidadeTotal}" />
 	                        </p:column>
 	                        
-   	                        <p:column headerText="Vendedor" filterBy="#{venda.funcionario.nome}" sortBy="#{venda.funcionario.nome}">
+   	                        <p:column headerText="Vendedor" filterBy="#{venda.funcionario.nome}" sortBy="#{venda.funcionario.nome}" style="text-align:center;">
 	                        	<h:outputText value="#{venda.funcionario.nome}" />
 	                        </p:column>
 	                        

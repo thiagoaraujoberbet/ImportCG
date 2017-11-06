@@ -58,17 +58,17 @@
 	
 	                        <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>	                        
 	                        
-	                        <p:column headerText="Fornecedor" filterBy="#{fornecedor.nome}" sortBy="#{fornecedor.nome}">
+	                        <p:column headerText="Fornecedor" filterBy="#{fornecedor.nome}" sortBy="#{fornecedor.nome}" style="width:20%;">
 	                        	<h:link value="#{fornecedor.nome}" outcome="manterFornecedor.xhtml">
 	                        		<f:param name="id" value="#{fornecedor.id}"/>
 	                        	</h:link>
 	                        </p:column>
 	                        
-  	                        <p:column headerText="Endereço" filterBy="#{fornecedor.endereco}" sortBy="#{fornecedor.endereco}" width="50%">
+  	                        <p:column headerText="Endereço" filterBy="#{fornecedor.endereco}" sortBy="#{fornecedor.endereco}">
 	                        	<h:outputText value="#{fornecedor.endereco}"/>
 	                        </p:column>
 	                        
-	                        <p:column headerText="Telefone" filterBy="#{fornecedor.telefone}" sortBy="#{fornecedor.telefone}">
+	                        <p:column headerText="Telefone" filterBy="#{fornecedor.telefone}" sortBy="#{fornecedor.telefone}" style="width:11%; text-align:center;">
 	                        	<h:outputText value="#{fornecedor.telefone}"/>
 	                        </p:column>
 	                        
