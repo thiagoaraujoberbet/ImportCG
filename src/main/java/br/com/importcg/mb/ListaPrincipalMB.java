@@ -2,8 +2,12 @@ package br.com.importcg.mb;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -18,8 +22,8 @@ import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
 import br.com.importcg.service.PrincipalService;
-import br.com.importcg.wrapper.AReceberWrapper;
 import br.com.importcg.wrapper.BalancoWrapper;
+import br.com.importcg.wrapper.CalculoMensalWrapper;
 
 @Named
 @ViewScoped
@@ -39,15 +43,15 @@ public class ListaPrincipalMB implements Serializable {
 	
 	List<BalancoWrapper> geral = new ArrayList<>();
 	
-	List<AReceberWrapper> receber = new ArrayList<>();
+	List<CalculoMensalWrapper> receber = new ArrayList<>();
+	
+	List<CalculoMensalWrapper> pagar = new ArrayList<>();
 
 	private PieChartModel pieModelMesAnterior;
 	
 	private PieChartModel pieModelMesAtual;
 	
 	private PieChartModel pieModelGeral;
-	
-	private PieChartModel pieModelAReceber;
 	
 	private BarChartModel barModelBalanco;
 	
@@ -58,123 +62,29 @@ public class ListaPrincipalMB implements Serializable {
 		geral = principalService.buscarBalancoGeral();
 		
 		receber = principalService.buscarValoresAReceber();
-		
-		this.createBarModelBalanco();
+		pagar = principalService.buscarValoresAPagar();
 		
 		this.createPieModelMesAnterior();
 		this.createPieModelMesAtual();
 		this.createPieModelGeral();
-		
-		this.createPieModelAReceber();
+		this.createBarModelBalanco();
 	}
 	
-	private void createBarModelBalanco() {
-		barModelBalanco = initBarModelBalanco();
-		
-		barModelBalanco.setTitle("Bar Chart");
-		barModelBalanco.setLegendPosition("ne");
-         
-        Axis xAxis = barModelBalanco.getAxis(AxisType.X);
-        xAxis.setLabel("Meses");
-         
-        Axis yAxis = barModelBalanco.getAxis(AxisType.Y);
-        yAxis.setLabel("Valores");
-        yAxis.setMin(0);
-        yAxis.setMax(100000);
-	}
-
-	private BarChartModel initBarModelBalanco() {
-		BarChartModel model = new BarChartModel();
-		
-		ChartSeries mesAnterior = new ChartSeries();
-		mesAnterior.setLabel("Mês Anterior");
-		
-		NumberFormat nf = NumberFormat.getCurrencyInstance();
-	       
-        for (BalancoWrapper item : this.mesAnterior) {
-        	String entrada  = (item.getValoresEntrada() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresEntrada()));
-        	String saida    = (item.getValoresSaida() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresSaida()));
-        	String recebido = (item.getValoresRecebido() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresRecebido()));
-        	
-        	mesAnterior.set("Entradas: " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
-        	mesAnterior.set("Saidas  : " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
-        	mesAnterior.set("Recebido: " + recebido, item.getValoresRecebido() == null ? new BigDecimal(0) : item.getValoresRecebido());
-        }
-        
-        model.addSeries(mesAnterior);
-        
-		ChartSeries mesAtual = new ChartSeries();
-		mesAtual.setLabel("Mês Atual");
-		
-		nf = NumberFormat.getCurrencyInstance();
-	       
-        for (BalancoWrapper item : this.mesAtual) {
-        	String entrada  = (item.getValoresEntrada() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresEntrada()));
-        	String saida    = (item.getValoresSaida() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresSaida()));
-        	String recebido = (item.getValoresRecebido() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresRecebido()));
-        	
-        	mesAtual.set("Entradas: " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
-        	mesAtual.set("Saidas  : " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
-        	mesAtual.set("Recebido: " + recebido, item.getValoresRecebido() == null ? new BigDecimal(0) : item.getValoresRecebido());
-        }
-        
-        model.addSeries(mesAtual);
-        
-		ChartSeries geral = new ChartSeries();
-		geral.setLabel("Geral");
-		
-		nf = NumberFormat.getCurrencyInstance();
-	       
-        for (BalancoWrapper item : this.geral) {
-        	String entrada  = (item.getValoresEntrada() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresEntrada()));
-        	String saida    = (item.getValoresSaida() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresSaida()));
-        	String recebido = (item.getValoresRecebido() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresRecebido()));
-        	
-        	geral.set("Entradas: " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
-        	geral.set("Saidas  : " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
-        	geral.set("Recebido: " + recebido, item.getValoresRecebido() == null ? new BigDecimal(0) : item.getValoresRecebido());
-        }
-        
-        model.addSeries(geral);
-        
-        return model;
-	}
-
 	private void createPieModelMesAnterior() {
     	pieModelMesAnterior = new PieChartModel();
     	
-		NumberFormat nf = NumberFormat.getCurrencyInstance();
-       
-        for (BalancoWrapper item : mesAnterior) {
-        	String entrada  = (item.getValoresEntrada() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresEntrada()));
-        	String saida    = (item.getValoresSaida() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresSaida()));
-        	String recebido = (item.getValoresRecebido() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresRecebido()));
-        	
-        	pieModelMesAnterior.set("Entradas: " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
-        	pieModelMesAnterior.set("Saidas  : " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
-        	pieModelMesAnterior.set("Recebido: " + recebido, item.getValoresRecebido() == null ? new BigDecimal(0) : item.getValoresRecebido());
-        }
+		this.montarPieChartModel(pieModelMesAnterior);
         
         pieModelMesAnterior.setTitle("Mês Anterior");
         pieModelMesAnterior.setLegendPosition("w");
         pieModelMesAnterior.setShowDataLabels(true);
-        pieModelMesAnterior.setSeriesColors("93ABCD,FFCC33,58BA27");  //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
+        pieModelMesAnterior.setSeriesColors("93ABCD,FFCC33,58BA27"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
-    
+	
     private void createPieModelMesAtual() {
     	pieModelMesAtual = new PieChartModel();
     	
-    	NumberFormat nf = NumberFormat.getCurrencyInstance();
-       
-        for (BalancoWrapper item : mesAtual) {
-        	String entrada  = (item.getValoresEntrada() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresEntrada()));
-        	String saida    = (item.getValoresSaida() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresSaida()));
-        	String recebido = (item.getValoresRecebido() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresRecebido()));
-        	
-        	pieModelMesAtual.set("Entradas: " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
-        	pieModelMesAtual.set("Saidas  : " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
-        	pieModelMesAtual.set("Recebido: " + recebido, item.getValoresRecebido() == null ? new BigDecimal(0) : item.getValoresRecebido());
-        }
+    	this.montarPieChartModel(pieModelMesAtual);
         
         pieModelMesAtual.setTitle("Mês Atual");
         pieModelMesAtual.setLegendPosition("w");
@@ -185,17 +95,7 @@ public class ListaPrincipalMB implements Serializable {
     private void createPieModelGeral() {
     	pieModelGeral = new PieChartModel();
     	
-    	NumberFormat nf = NumberFormat.getCurrencyInstance();
-       
-        for (BalancoWrapper item : geral) {
-        	String entrada  = (item.getValoresEntrada() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresEntrada()));
-        	String saida    = (item.getValoresSaida() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresSaida()));
-        	String recebido = (item.getValoresRecebido() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresRecebido()));
-        	
-        	pieModelGeral.set("Entradas: " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
-        	pieModelGeral.set("Saidas  : " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
-        	pieModelGeral.set("Recebido: " + recebido, item.getValoresRecebido() == null ? new BigDecimal(0) : item.getValoresRecebido());
-        }
+    	this.montarPieChartModel(pieModelGeral);
         
         pieModelGeral.setTitle("Geral");
         pieModelGeral.setLegendPosition("w");
@@ -203,27 +103,76 @@ public class ListaPrincipalMB implements Serializable {
         pieModelGeral.setSeriesColors("93ABCD,FFCC33,58BA27"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
     
-    private void createPieModelAReceber() {
-    	pieModelAReceber = new PieChartModel();
-    	
-    	NumberFormat nf = NumberFormat.getCurrencyInstance();
-       
-        for (AReceberWrapper item : receber) {
-        	String aReceberMesAtual   = (item.getValoresAReceberMesAtual() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresAReceberMesAtual()));
-        	String aReceberProximoMes = (item.getValoresAReceberProximoMes() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresAReceberProximoMes()));
-        	String aReceberTodosMeses = (item.getValoresAReceberTodosMeses() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresAReceberTodosMeses()));
+	private PieChartModel montarPieChartModel(PieChartModel pieModel) {
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		
+        for (BalancoWrapper item : mesAnterior) {
+        	String entrada  = (item.getValoresEntrada() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresEntrada()));
+        	String saida    = (item.getValoresSaida() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresSaida()));
+        	String recebido = (item.getValoresRecebido() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresRecebido()));
         	
-        	pieModelAReceber.set("Mês Atual: " + aReceberMesAtual, (item.getValoresAReceberMesAtual() == null ? new BigDecimal(0) : item.getValoresAReceberMesAtual()));
-        	pieModelAReceber.set("Proximo Mês: " + aReceberProximoMes, item.getValoresAReceberProximoMes() == null ? new BigDecimal(0) : item.getValoresAReceberProximoMes());
-        	pieModelAReceber.set("Todos os Meses: " + aReceberTodosMeses, item.getValoresAReceberTodosMeses() == null ? new BigDecimal(0) : item.getValoresAReceberTodosMeses());
+        	pieModel.set("Entradas: " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
+        	pieModel.set("Saidas  : " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
+        	pieModel.set("Recebido: " + recebido, item.getValoresRecebido() == null ? new BigDecimal(0) : item.getValoresRecebido());
         }
         
-        pieModelAReceber.setTitle("Valores a Receber");
-        pieModelAReceber.setLegendPosition("w");
-        pieModelAReceber.setShowDataLabels(true); 
-        pieModelAReceber.setSeriesColors("93ABCD,FFCC33,58BA27"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
+        return pieModel;
 	}
-
+	
+	private void createBarModelBalanco() {
+		barModelBalanco = initBarModelBalanco();
+		
+		barModelBalanco.setTitle("Receber/Pagar");
+		barModelBalanco.setLegendPosition("ne");
+         
+        Axis xAxis = barModelBalanco.getAxis(AxisType.X);
+        xAxis.setLabel("Meses");
+         
+        Axis yAxis = barModelBalanco.getAxis(AxisType.Y);
+        yAxis.setLabel("Valores");
+        yAxis.setMin(0);
+        yAxis.setMax(10000);
+	}	
+	
+	private BarChartModel initBarModelBalanco() {
+		BarChartModel model = new BarChartModel();
+		
+		ChartSeries receber = new ChartSeries();
+		receber.setLabel("A Receber");
+		
+        for (CalculoMensalWrapper item : this.receber) {
+        	receber.set(this.formatarData(0), (item.getValoresMesAtual() == null ? new BigDecimal(0) : item.getValoresMesAtual()));
+        	receber.set(this.formatarData(1), item.getValoresProximoMes1() == null ? new BigDecimal(0) : item.getValoresProximoMes1());
+        	receber.set(this.formatarData(2), item.getValoresProximoMes2() == null ? new BigDecimal(0) : item.getValoresProximoMes2());
+        }
+        
+        model.addSeries(receber);
+        
+		ChartSeries pagar = new ChartSeries();
+		pagar.setLabel("A Pagar");
+		
+       for (CalculoMensalWrapper item : this.pagar) {
+        	pagar.set(this.formatarData(0), (item.getValoresMesAtual() == null ? new BigDecimal(0) : item.getValoresMesAtual()));
+        	pagar.set(this.formatarData(1), item.getValoresProximoMes1() == null ? new BigDecimal(0) : item.getValoresProximoMes1());
+        	pagar.set(this.formatarData(2), item.getValoresProximoMes2() == null ? new BigDecimal(0) : item.getValoresProximoMes2());
+        }
+        
+        model.addSeries(pagar);
+        
+        return model;
+	}
+    
+    private String formatarData(int mes) {
+        Calendar c = Calendar.getInstance();
+        
+        c.setTime(new Date());
+        c.add(Calendar.MONTH, mes);
+         
+        DateFormat df = new SimpleDateFormat("MMMM 'de' yyyy");
+        
+        return df.format(c.getTime());
+    }
+    
 	public List<BalancoWrapper> getMesAnterior() {
 		return mesAnterior;
 	}
@@ -248,12 +197,20 @@ public class ListaPrincipalMB implements Serializable {
 		this.geral = geral;
 	}
 	
-	public List<AReceberWrapper> getReceber() {
+	public List<CalculoMensalWrapper> getReceber() {
 		return receber;
 	}
 
-	public void setReceber(List<AReceberWrapper> receber) {
+	public void setReceber(List<CalculoMensalWrapper> receber) {
 		this.receber = receber;
+	}
+	
+	public List<CalculoMensalWrapper> getPagar() {
+		return pagar;
+	}
+
+	public void setPagar(List<CalculoMensalWrapper> pagar) {
+		this.pagar = pagar;
 	}
 
 	public PieChartModel getPieModelMesAnterior() {
@@ -278,14 +235,6 @@ public class ListaPrincipalMB implements Serializable {
 
 	public void setPieModelGeral(PieChartModel pieModelGeral) {
 		this.pieModelGeral = pieModelGeral;
-	}
-
-	public PieChartModel getPieModelAReceber() {
-		return pieModelAReceber;
-	}
-
-	public void setPieModelAReceber(PieChartModel pieModelAReceber) {
-		this.pieModelAReceber = pieModelAReceber;
 	}
 
 	public BarChartModel getBarModelBalanco() {

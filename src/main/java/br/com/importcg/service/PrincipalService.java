@@ -6,7 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.importcg.dao.PrincipalDAO;
-import br.com.importcg.wrapper.AReceberWrapper;
+import br.com.importcg.wrapper.CalculoMensalWrapper;
 import br.com.importcg.wrapper.BalancoWrapper;
 
 public class PrincipalService implements Serializable {
@@ -31,7 +31,11 @@ public class PrincipalService implements Serializable {
 		return principalDAO.buscarBalancoGeral();
 	}
 
-	public List<AReceberWrapper> buscarValoresAReceber() {
+	public List<CalculoMensalWrapper> buscarValoresAReceber() {
 		return principalDAO.buscarValoresAReceber();
+	}
+
+	public List<CalculoMensalWrapper> buscarValoresAPagar() {
+		return principalDAO.buscarValoresAPagar();
 	}
 }

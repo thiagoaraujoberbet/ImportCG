@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import br.com.importcg.wrapper.AReceberWrapper;
+import br.com.importcg.wrapper.CalculoMensalWrapper;
 import br.com.importcg.wrapper.BalancoWrapper;
 
 public class PrincipalDAO implements Serializable {
@@ -139,7 +139,7 @@ public class PrincipalDAO implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<AReceberWrapper> buscarValoresAReceber() {
+	public List<CalculoMensalWrapper> buscarValoresAReceber() {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("select ");
@@ -148,33 +148,81 @@ public class PrincipalDAO implements Serializable {
 		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate())) AReceberMesAtual, ");
 		// A receber no proximo mês     
 		sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
-		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 0 MONTH)), 1)) and last_day(sysdate() + INTERVAL 1 MONTH)) AReceberProximoMes, ");
-		// A receber em todos os meses
+		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 0 MONTH)), 1)) and last_day(sysdate() + INTERVAL 1 MONTH)) AReceberProximoMes1, ");
+		// A receber no proximo mês     
 		sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
-		sql.append("			where p.pago = 0) AReceberTodosMeses ");
+		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -1 MONTH)), 1)) and last_day(sysdate() + INTERVAL 2 MONTH)) AReceberProximoMes2 ");
+		// A receber em todos os meses
+		// sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
+		// sql.append("			where p.pago = 0) AReceberTodosMeses ");
 		
 		Query query = manager.createNativeQuery(sql.toString());
 		
 		List<Object[]> objects = query.getResultList();
 		
-		List<AReceberWrapper> itens = new ArrayList<>();
+		List<CalculoMensalWrapper> itens = new ArrayList<>();
 		
 		for (Object[] item : objects) {
-			AReceberWrapper receber = new AReceberWrapper();
+			CalculoMensalWrapper receber = new CalculoMensalWrapper();
 			
 			if (item[0] != null) {
-				receber.setValoresAReceberMesAtual(new BigDecimal(item[0].toString()));
+				receber.setValoresMesAtual(new BigDecimal(item[0].toString()));
 			}
 			
 			if (item[1] != null) {
-				receber.setValoresAReceberProximoMes(new BigDecimal(item[1].toString()));
+				receber.setValoresProximoMes1(new BigDecimal(item[1].toString()));
 			}
 			
 			if (item[2] != null) {
-				receber.setValoresAReceberTodosMeses(new BigDecimal(item[2].toString()));
+				receber.setValoresProximoMes2(new BigDecimal(item[2].toString()));
 			}
 			
 			itens.add(receber);
+		}
+		
+		return itens;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<CalculoMensalWrapper> buscarValoresAPagar() {
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("select ");
+		// A receber no mes atual
+		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate())) APagarMesAtual, ");
+		// A receber no proximo mês     
+		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 0 MONTH)), 1)) and last_day(sysdate() + INTERVAL 1 MONTH)) APagarProximoMes1, ");
+		// A receber no proximo mês     
+		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -1 MONTH)), 1)) and last_day(sysdate() + INTERVAL 2 MONTH)) APagarProximoMes2 ");
+		// A receber em todos os meses
+		// sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
+		// sql.append("			where ib.baixado = 0) APagarTodosMeses ");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		List<Object[]> objects = query.getResultList();
+		
+		List<CalculoMensalWrapper> itens = new ArrayList<>();
+		
+		for (Object[] item : objects) {
+			CalculoMensalWrapper pagar = new CalculoMensalWrapper();
+			
+			if (item[0] != null) {
+				pagar.setValoresMesAtual(new BigDecimal(item[0].toString()));
+			}
+			
+			if (item[1] != null) {
+				pagar.setValoresProximoMes1(new BigDecimal(item[1].toString()));
+			}
+			
+			if (item[2] != null) {
+				pagar.setValoresProximoMes2(new BigDecimal(item[2].toString()));
+			}
+			
+			itens.add(pagar);
 		}
 		
 		return itens;

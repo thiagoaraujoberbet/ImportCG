@@ -99,6 +99,24 @@ select
 -- A receber no proximo mês            
 (select SUM(p.saldo) from importcg.pagamento p
 			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 0 MONTH)), 1)) and last_day(sysdate() + INTERVAL 1 MONTH)) AReceberProximoMes,
+-- A receber no proximo mês              
+(select SUM(p.saldo) from importcg.pagamento p
+			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -1 MONTH)), 1)) and last_day(sysdate() + INTERVAL 2 MONTH)) AReceberProximoProximoMes,            
 -- A receber em todos os meses
 (select SUM(p.saldo) from importcg.pagamento p
-			where p.pago = 0) AReceberTodosMeses;            
+			where p.pago = 0) AReceberTodosMeses;       
+            
+            
+select 	
+-- A receber no mes atual
+(select SUM(ib.valor) from importcg.itemBaixa ib
+			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate())) APagarMesAtual,
+-- A receber no proximo mês            
+(select SUM(ib.valor) from importcg.itemBaixa ib
+			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 0 MONTH)), 1)) and last_day(sysdate() + INTERVAL 1 MONTH)) APagarProximoMes,
+-- A receber no proximo mês              
+(select SUM(ib.valor) from importcg.itemBaixa ib
+			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -1 MONTH)), 1)) and last_day(sysdate() + INTERVAL 2 MONTH)) APagarProximoProximoMes,            
+-- A receber em todos os meses
+(select SUM(ib.valor) from importcg.itemBaixa ib
+			where ib.baixado = 0) APagarTodosMeses;    
