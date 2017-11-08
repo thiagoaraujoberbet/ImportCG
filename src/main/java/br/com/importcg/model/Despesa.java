@@ -10,12 +10,16 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import br.com.importcg.enumeration.EnumStatusBaixa;
 
 @Entity
 @Table(name = "despesa")
@@ -37,8 +41,8 @@ public class Despesa implements Serializable {
 	
 	private Date dataDespesa;
 	
-//	@Enumerated(EnumType.STRING)
-//	private EnumStatusBaixa status;
+	@Enumerated(EnumType.STRING)
+	private EnumStatusBaixa status;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "despesa", cascade = CascadeType.ALL)	
 	private List<ItemDespesa> itensDespesa;
@@ -85,13 +89,13 @@ public class Despesa implements Serializable {
 		this.dataDespesa = dataDespesa;
 	}
 	
-//	public EnumStatusBaixa getStatus() {
-//		return status;
-//	}
-//
-//	public void setStatus(EnumStatusBaixa status) {
-//		this.status = status;
-//	}
+	public EnumStatusBaixa getStatus() {
+		return status;
+	}
+
+	public void setStatus(EnumStatusBaixa status) {
+		this.status = status;
+	}
 
 	public List<ItemDespesa> getItensDespesa() {
 		return itensDespesa;

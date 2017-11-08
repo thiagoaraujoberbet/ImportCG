@@ -55,6 +55,10 @@ public class ListaPrincipalMB implements Serializable {
 	
 	private BarChartModel barModelBalanco;
 	
+	private BigDecimal valorReceber;
+	
+	private BigDecimal valorPagar;
+	
 	@PostConstruct
 	public void inicializar() {
 		mesAnterior = principalService.buscarBalancoMesAnterior();
@@ -111,8 +115,8 @@ public class ListaPrincipalMB implements Serializable {
         	String saida    = (item.getValoresSaida() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresSaida()));
         	String recebido = (item.getValoresRecebido() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresRecebido()));
         	
-        	pieModel.set("Entradas: " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
-        	pieModel.set("Saidas  : " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
+        	pieModel.set("Compras: " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
+        	pieModel.set("Vendas: " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
         	pieModel.set("Recebido: " + recebido, item.getValoresRecebido() == null ? new BigDecimal(0) : item.getValoresRecebido());
         }
         
@@ -122,7 +126,8 @@ public class ListaPrincipalMB implements Serializable {
 	private void createBarModelBalanco() {
 		barModelBalanco = initBarModelBalanco();
 		
-		barModelBalanco.setTitle("Receber/Pagar");
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		barModelBalanco.setTitle("Total a Receber: " + nf.format(valorReceber) + " / " + "Total a Pagar: " + nf.format(valorPagar));
 		barModelBalanco.setLegendPosition("ne");
          
         Axis xAxis = barModelBalanco.getAxis(AxisType.X);
@@ -144,6 +149,8 @@ public class ListaPrincipalMB implements Serializable {
         	receber.set(this.formatarData(0), (item.getValoresMesAtual() == null ? new BigDecimal(0) : item.getValoresMesAtual()));
         	receber.set(this.formatarData(1), item.getValoresProximoMes1() == null ? new BigDecimal(0) : item.getValoresProximoMes1());
         	receber.set(this.formatarData(2), item.getValoresProximoMes2() == null ? new BigDecimal(0) : item.getValoresProximoMes2());
+        	
+        	valorReceber = item.getValoresTodosMeses() == null ? new BigDecimal(0) : item.getValoresTodosMeses();
         }
         
         model.addSeries(receber);
@@ -155,6 +162,8 @@ public class ListaPrincipalMB implements Serializable {
         	pagar.set(this.formatarData(0), (item.getValoresMesAtual() == null ? new BigDecimal(0) : item.getValoresMesAtual()));
         	pagar.set(this.formatarData(1), item.getValoresProximoMes1() == null ? new BigDecimal(0) : item.getValoresProximoMes1());
         	pagar.set(this.formatarData(2), item.getValoresProximoMes2() == null ? new BigDecimal(0) : item.getValoresProximoMes2());
+        	
+        	valorPagar = item.getValoresTodosMeses() == null ? new BigDecimal(0) : item.getValoresTodosMeses();
         }
         
         model.addSeries(pagar);
@@ -243,6 +252,22 @@ public class ListaPrincipalMB implements Serializable {
 
 	public void setBarModelBalanco(BarChartModel barModelBalanco) {
 		this.barModelBalanco = barModelBalanco;
+	}
+
+	public BigDecimal getValorReceber() {
+		return valorReceber;
+	}
+
+	public void setValorReceber(BigDecimal valorReceber) {
+		this.valorReceber = valorReceber;
+	}
+
+	public BigDecimal getValorPagar() {
+		return valorPagar;
+	}
+
+	public void setValorPagar(BigDecimal valorPagar) {
+		this.valorPagar = valorPagar;
 	}
 	
 }

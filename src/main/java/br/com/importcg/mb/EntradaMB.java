@@ -198,7 +198,7 @@ public class EntradaMB implements Serializable {
 	}
 	
 	private void salvarDespesa() {
-		despesa = new Despesa(entrada.getDataCompra(), "Lançamento de despesas", entrada.getValorTotal());
+		despesa = new Despesa(entrada.getDataCompra(), "Lançamento de Despesas - Compra de Produtos ("+ entrada.getDataCompraFormatada() +")", entrada.getValorTotal());
 		despesa = despesaService.salvar(despesa);
 	}
 	

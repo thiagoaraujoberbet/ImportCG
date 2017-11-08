@@ -3,7 +3,7 @@ package br.com.importcg.enumeration;
 public enum EnumStatusBaixa {
 	NAOBAIXADO("Não Baixado"),
 	BAIXAPARCIALMENTE("Baixado Parcialmente"),
-	BAIXATOTALMENTE("Baixado Totalmente");
+	BAIXATOTALMENTE("Baixado");
 	
 	private String descricao;
 	

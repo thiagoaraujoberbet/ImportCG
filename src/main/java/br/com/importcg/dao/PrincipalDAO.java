@@ -151,10 +151,10 @@ public class PrincipalDAO implements Serializable {
 		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 0 MONTH)), 1)) and last_day(sysdate() + INTERVAL 1 MONTH)) AReceberProximoMes1, ");
 		// A receber no proximo mês     
 		sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
-		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -1 MONTH)), 1)) and last_day(sysdate() + INTERVAL 2 MONTH)) AReceberProximoMes2 ");
+		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -1 MONTH)), 1)) and last_day(sysdate() + INTERVAL 2 MONTH)) AReceberProximoMes2, ");
 		// A receber em todos os meses
-		// sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
-		// sql.append("			where p.pago = 0) AReceberTodosMeses ");
+		sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
+		sql.append("			where p.pago = 0) AReceberTodosMeses ");
 		
 		Query query = manager.createNativeQuery(sql.toString());
 		
@@ -177,6 +177,10 @@ public class PrincipalDAO implements Serializable {
 				receber.setValoresProximoMes2(new BigDecimal(item[2].toString()));
 			}
 			
+			if (item[3] != null) {
+				receber.setValoresTodosMeses(new BigDecimal(item[3].toString()));
+			}
+			
 			itens.add(receber);
 		}
 		
@@ -196,10 +200,10 @@ public class PrincipalDAO implements Serializable {
 		sql.append("			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 0 MONTH)), 1)) and last_day(sysdate() + INTERVAL 1 MONTH)) APagarProximoMes1, ");
 		// A receber no proximo mês     
 		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
-		sql.append("			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -1 MONTH)), 1)) and last_day(sysdate() + INTERVAL 2 MONTH)) APagarProximoMes2 ");
-		// A receber em todos os meses
-		// sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
-		// sql.append("			where ib.baixado = 0) APagarTodosMeses ");
+		sql.append("			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -1 MONTH)), 1)) and last_day(sysdate() + INTERVAL 2 MONTH)) APagarProximoMes2, ");
+		//A receber em todos os meses
+		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("			where ib.baixado = 0) APagarTodosMeses ");
 		
 		Query query = manager.createNativeQuery(sql.toString());
 		
@@ -220,6 +224,10 @@ public class PrincipalDAO implements Serializable {
 			
 			if (item[2] != null) {
 				pagar.setValoresProximoMes2(new BigDecimal(item[2].toString()));
+			}	
+			
+			if (item[3] != null) {
+				pagar.setValoresTodosMeses(new BigDecimal(item[3].toString()));
 			}
 			
 			itens.add(pagar);
