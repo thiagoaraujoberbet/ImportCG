@@ -73,7 +73,7 @@ public class ListaPrincipalMB implements Serializable {
 	private void createPieModelMesAnterior() {
     	pieModelMesAnterior = new PieChartModel();
     	
-		this.montarPieChartModel(pieModelMesAnterior);
+    	pieModelMesAnterior = this.montarPieChartModel(pieModelMesAnterior, mesAnterior);
         
         pieModelMesAnterior.setTitle("Mês Anterior");
         pieModelMesAnterior.setLegendPosition("w");
@@ -84,7 +84,7 @@ public class ListaPrincipalMB implements Serializable {
     private void createPieModelMesAtual() {
     	pieModelMesAtual = new PieChartModel();
     	
-    	this.montarPieChartModel(pieModelMesAtual);
+    	pieModelMesAtual = this.montarPieChartModel(pieModelMesAtual, mesAtual);
         
         pieModelMesAtual.setTitle("Mês Atual");
         pieModelMesAtual.setLegendPosition("w");
@@ -95,7 +95,7 @@ public class ListaPrincipalMB implements Serializable {
     private void createPieModelGeral() {
     	pieModelGeral = new PieChartModel();
     	
-    	this.montarPieChartModel(pieModelGeral);
+    	pieModelGeral = this.montarPieChartModel(pieModelGeral, geral);
         
         pieModelGeral.setTitle("Geral");
         pieModelGeral.setLegendPosition("w");
@@ -103,10 +103,10 @@ public class ListaPrincipalMB implements Serializable {
         pieModelGeral.setSeriesColors("93ABCD,FFCC33,58BA27"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
     
-	private PieChartModel montarPieChartModel(PieChartModel pieModel) {
+	private PieChartModel montarPieChartModel(PieChartModel pieModel, List<BalancoWrapper> lista) {
 		NumberFormat nf = NumberFormat.getCurrencyInstance();
 		
-        for (BalancoWrapper item : mesAnterior) {
+        for (BalancoWrapper item : lista) {
         	String entrada  = (item.getValoresEntrada() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresEntrada()));
         	String saida    = (item.getValoresSaida() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresSaida()));
         	String recebido = (item.getValoresRecebido() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresRecebido()));
