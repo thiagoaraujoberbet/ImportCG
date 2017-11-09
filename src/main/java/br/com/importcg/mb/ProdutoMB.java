@@ -15,6 +15,7 @@ import br.com.importcg.model.Produto;
 import br.com.importcg.model.ProdutoImagem;
 import br.com.importcg.service.CatalogoInternacionalService;
 import br.com.importcg.service.FornecedorService;
+import br.com.importcg.service.ItemVendaService;
 import br.com.importcg.service.ProdutoService;
 import br.com.importcg.util.FacesUtil;
 
@@ -31,7 +32,9 @@ public class ProdutoMB implements Serializable {
 	private CatalogoInternacional catalogoInternacional = new CatalogoInternacional();
 		
 	private Long idProduto;
+	
 	private boolean edicaoCatalogoInternacional = false;
+	private boolean vendido = false;
 	
 	private List<ProdutoImagem> imagens = new ArrayList<>();
 	private List<Fornecedor> fornecedores = new ArrayList<>();
@@ -46,19 +49,20 @@ public class ProdutoMB implements Serializable {
 	@Inject
 	private CatalogoInternacionalService catalogoInternacionalService;
 	
+	@Inject
+	private ItemVendaService itemVendaService;
+	
 	public void inicializar() {
-		if (idProduto != null) 
+		if (idProduto != null) {
 			produto = produtoService.porId(idProduto);
-		else
-			produto.setDataCriacao(new Date());
+			setVendido(itemVendaService.verificarProdutoVendido(produto.getId()));
+		} else produto.setDataCriacao(new Date());
 		
-		if (fornecedores.isEmpty()) {
+		if (fornecedores.isEmpty())
 			fornecedores = fornecedorService.listarTodos();
-		}
 		
-		if (catalogosInternacional.isEmpty()) {
+		if (catalogosInternacional.isEmpty())
 			catalogosInternacional = catalogoInternacionalService.porIdProduto(idProduto);
-		}
 	}
 
 	public String salvar() {
@@ -133,6 +137,14 @@ public class ProdutoMB implements Serializable {
 
 	public void setEdicaoCatalogoInternacional(boolean edicaoCatalogoInternacional) {
 		this.edicaoCatalogoInternacional = edicaoCatalogoInternacional;
+	}
+
+	public boolean isVendido() {
+		return vendido;
+	}
+
+	public void setVendido(boolean vendido) {
+		this.vendido = vendido;
 	}
 
 	public List<ProdutoImagem> getImagens() {

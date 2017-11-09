@@ -24,13 +24,13 @@
                     <div id="main-buttons" class="hidden-sm hidden-xs">
                         <p:commandButton value="Salvar" update="@form" icon="fa fa-check"  action="#{produtoMB.salvar()}" styleClass="btn-primary"/>
                         <p:spacer width="5"/>
-                        <p:commandButton value="Excluir" process="@this" rendered="#{produtoMB.produto.edicao}" icon="fa fa-trash" action="#{produtoMB.excluir()}" styleClass="btn-danger"/>
+                        <p:commandButton value="Excluir" process="@this" rendered="#{produtoMB.produto.edicao and !produtoMB.vendido}" icon="fa fa-trash" action="#{produtoMB.excluir()}" styleClass="btn-danger"/>
                         <p:spacer width="5"/>
                         <p:commandButton value="Voltar" immediate="true" action="listarProduto?faces-redirect=true" process="@this" icon="fa fa-close"/>
                     </div>
                     
                     <p:splitButton value="Salvar"  update="@form" icon="fa fa-check" action="#{produtoMB.salvar()}" styleClass="hidden-md hidden-lg btn-primary">
-                        <p:menuitem value="Excluir" process="@this" icon="fa fa-trash" action="#{produtoMB.excluir()}" rendered="#{produtoMB.produto.edicao}" />
+                        <p:menuitem value="Excluir" process="@this" icon="fa fa-trash" action="#{produtoMB.excluir()}" rendered="#{produtoMB.produto.edicao and !produtoMB.vendido}" />
                         <p:separator/>
                         <p:menuitem value="Voltar" action="listarProduto?faces-redirect=true" process="@this" icon="fa fa-close"/>
                     </p:splitButton>

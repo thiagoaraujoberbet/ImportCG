@@ -36,4 +36,8 @@ public class ItemVendaService implements Serializable {
 	public ItemVenda porId(Long id) {
 		return itemVendaDAO.porId(id);
 	}
+
+	public boolean verificarProdutoVendido(Long idProduto) {
+		return itemVendaDAO.verificarProdutoVendido(idProduto);
+	}
 }

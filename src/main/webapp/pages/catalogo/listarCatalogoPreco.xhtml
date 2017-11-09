@@ -45,8 +45,7 @@
                     	<p:commandButton action="manterCatalogoPreco?faces-redirect=true" ajax="false" icon="fa fa-plus" value="Novo" styleClass="btn-primary"/>
                     	<p:spacer width="5"/>
 	                    <p:commandButton value="Excluir" icon="fa fa-trash" styleClass="btn-danger" action="#{listaCatalogoPrecoMB.excluirSelecionados}" process="@form" update="@form"/>
-	                    <p:spacer width="5"/>
-	                    <p:commandButton value="" oncomplete="PF('catalogossSelecionados').show()" update="@(.ui-dialog)"  styleClass="btn-info" icon="fa fa-search"/>
+	                    
 	                    <p:separator/>
 	                    
 	                    <p:dataTable id="catalogoPrecoTable" widgetVar="catalogoPrecoTable" rows="10"

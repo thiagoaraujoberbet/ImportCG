@@ -46,11 +46,11 @@
                     	
 	                    <p:commandButton value="Excluir" icon="fa fa-trash" styleClass="btn-danger"
 	                    				 action="#{listaProdutoMB.excluirSelecionados}"
-	                                     process="@form" update="@form"/>
+	                                     process="@form" update="@form" rendered="false"/>
 	                                     
 	                    <p:spacer width="5"/>
 	                    
-	                    <p:commandButton value="" 
+	                    <p:commandButton value="Visualizar" 
 	                    				 oncomplete="PF('produtosSelecionados').show()"
 	                    				 update="@(.ui-dialog)" 
 	                    				 styleClass="btn-info"

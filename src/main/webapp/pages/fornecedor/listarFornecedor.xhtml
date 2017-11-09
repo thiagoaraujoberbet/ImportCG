@@ -41,9 +41,8 @@
                 	<div class="box-header with-border">
                     	<p:commandButton action="manterFornecedor?faces-redirect=true" ajax="false" icon="fa fa-plus" value="Novo" styleClass="btn-primary"/>
                     	<p:spacer width="5"/>
-	                    <p:commandButton value="Excluir" icon="fa fa-trash" styleClass="btn-danger" action="#{listaFornecedorMB.excluirSelecionados}" process="@form" update="@form"/>
-	                    <p:spacer width="5"/>
-	                    <p:commandButton value="" oncomplete="PF('fornecedoresSelecionados').show()" update="@(.ui-dialog)"  styleClass="btn-info" icon="fa fa-search"/>
+	                    <p:commandButton value="Excluir" icon="fa fa-trash" styleClass="btn-danger" action="#{listaFornecedorMB.excluirSelecionados}" 
+	                    	process="@form" update="@form" rendered="false"/>
 	                    
 	                    <p:separator/>
 	                    

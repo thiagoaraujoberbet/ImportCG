@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -45,6 +46,9 @@ public class Produto implements Serializable {
 	private Date dataCriacao;
 	
 	private Date dataAlteracao;	
+	
+	@Transient
+	private boolean vendido = false;
 
 	public Produto() {
 		super();
@@ -112,6 +116,14 @@ public class Produto implements Serializable {
 
 	public void setDataAlteracao(Date dataAlteracao) {
 		this.dataAlteracao = dataAlteracao;
+	}
+
+	public boolean isVendido() {
+		return vendido;
+	}
+
+	public void setVendido(boolean vendido) {
+		this.vendido = vendido;
 	}
 
 	public boolean isInclusao() {

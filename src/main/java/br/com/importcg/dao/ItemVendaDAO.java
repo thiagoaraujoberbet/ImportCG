@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import br.com.importcg.exception.NegocioException;
 import br.com.importcg.model.ItemVenda;
@@ -39,5 +40,15 @@ public class ItemVendaDAO implements Serializable {
 		} catch (Exception e) {
 			throw new NegocioException("O item de venda não pode ser excluído");
 		}
+	}
+
+	public boolean verificarProdutoVendido(Long idProduto) {
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("select count(iv) from ItemVenda iv where iv.produto.id = :idProduto");
+		Query query = manager.createQuery(sql.toString());
+		query.setParameter("idProduto", idProduto);
+		
+		return (Long) query.getSingleResult() > 0L ? true : false;
 	}
 }

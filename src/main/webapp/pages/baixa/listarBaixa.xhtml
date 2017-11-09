@@ -41,9 +41,10 @@
                 	<div class="box-header with-border">
                     	<p:commandButton action="manterBaixa?faces-redirect=true" ajax="false" icon="fa fa-plus" value="Novo" styleClass="btn-primary"/>
                     	<p:spacer width="5"/>
-	                    <p:commandButton value="Excluir" icon="fa fa-trash" styleClass="btn-danger" action="#{listaBaixaMB.excluirSelecionadas}" process="@form" update="@form" rendered="#{listaBaixaMB.baixas.size() > 0}"/>
+	                    <p:commandButton value="Excluir" icon="fa fa-trash" styleClass="btn-danger" action="#{listaBaixaMB.excluirSelecionadas}" 
+	                    	process="@form" update="@form" rendered="false"/>
 	                    <p:spacer width="5"/>
-	                    <p:commandButton value="" oncomplete="PF('baixasSelecionadas').show()" update="@(.ui-dialog)"  styleClass="btn-info" icon="fa fa-search" rendered="#{listaBaixaMB.baixas.size() > 0}"/>
+	                    <p:commandButton value="Visualizar" oncomplete="PF('baixasSelecionadas').show()" update="@(.ui-dialog)"  styleClass="btn-info" icon="fa fa-search" rendered="#{listaBaixaMB.baixas.size() > 0}"/>
 	                                     
 	                    <p:separator/>
 	                    
