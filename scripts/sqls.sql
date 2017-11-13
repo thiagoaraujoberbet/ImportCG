@@ -120,3 +120,6 @@ select
 -- A receber em todos os meses
 (select SUM(ib.valor) from importcg.itemBaixa ib
 			where ib.baixado = 0) APagarTodosMeses;    
+
+
+select count(*) from importcg.itemVenda iv where iv.idProduto = 12;
