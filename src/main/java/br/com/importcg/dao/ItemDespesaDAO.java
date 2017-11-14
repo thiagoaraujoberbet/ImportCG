@@ -6,7 +6,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import br.com.importcg.enumeration.EnumStatusBaixa;
 import br.com.importcg.exception.NegocioException;
 import br.com.importcg.model.ItemDespesa;
 
@@ -46,9 +45,9 @@ public class ItemDespesaDAO implements Serializable {
 		return manager.createQuery("SELECT i FROM ItemDespesa i WHERE i.despesa.id = :idDespesa", ItemDespesa.class).setParameter("idDespesa", idDespesa).getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<ItemDespesa> buscarItensDespesaNaoBaixadas() {
-		return manager.createQuery("SELECT i FROM ItemDespesa i ORDER BY i.despesa.dataDespesa DESC", ItemDespesa.class).getResultList();
-//		return manager.createQuery("SELECT i FROM ItemDespesa i WHERE i.status = :status ORDER BY i.despesa.dataDespesa DESC", ItemDespesa.class)
-//				.setParameter("status", EnumStatusBaixa.NAOBAIXADO).getResultList();
+		return manager.createNativeQuery("SELECT * FROM itemDespesa i WHERE i.idItemDespesa not in "
+				+ "(SELECT id.idItemDespesa FROM itemDespesa id JOIN itemBaixa ib ON id.idItemDespesa = ib.idItemDespesa)", ItemDespesa.class).getResultList();
 	}
 }

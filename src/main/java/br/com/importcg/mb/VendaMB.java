@@ -43,11 +43,12 @@ public class VendaMB implements Serializable {
 	private ItemVenda itemVenda = new ItemVenda();
 	private Pagamento pagamento = new Pagamento();
 	
+	private List<Caixa> caixas = new ArrayList<>();
 	private List<Pessoa> clientes = new ArrayList<>();
 	private List<Pessoa> funcionarios = new ArrayList<>();
 	private List<ItemVenda> itensVenda = new ArrayList<>();
-	private List<ItemEntrada> itensEntrada = new ArrayList<>();
 	private List<Pagamento> pagamentos = new ArrayList<>();
+	private List<ItemEntrada> itensEntrada = new ArrayList<>();
 	private List<ItemVenda> itensVendaSelecionados = new ArrayList<>();
 	
 	private boolean edicaoItem = false;
@@ -103,6 +104,10 @@ public class VendaMB implements Serializable {
 		
 		if (pagamentos.isEmpty()) {
 			pagamentos = pagamentoService.porIdVenda(idVenda);
+		}
+		
+		if (caixas.isEmpty()) {
+			caixas = caixaService.listarTodos();
 		}
 		
 		this.calcularValorPago();
@@ -185,7 +190,7 @@ public class VendaMB implements Serializable {
 	public void salvarPagamento() {
 		pagamento.setVenda(venda);
 		
-		if (EnumFormaPagamento.DINHEIRO.equals(pagamento.getForma()))
+		if (EnumFormaPagamento.DINHEIRO.equals(pagamento.getForma()) || EnumFormaPagamento.CHEQUE.equals(pagamento.getForma()))
 			pagamento.setSaldo(pagamento.getValor());
 		
 		pagamento = pagamentoService.salvar(pagamento);
@@ -257,6 +262,8 @@ public class VendaMB implements Serializable {
 		
 		if (EnumFormaPagamento.DINHEIRO.equals(pagamento.getForma())) {
 			this.confirmarRecebimentoCaixaFuncionarioEmDinheiro();
+		} else if (EnumFormaPagamento.CHEQUE.equals(pagamento.getForma())) {
+			this.confirmarRecebimentoCaixaCreditoEmCheque();
 		} else if (EnumFormaPagamento.DEBITO.equals(pagamento.getForma()) || EnumFormaPagamento.CREDITO.equals(pagamento.getForma())) {
 			this.confirmarRecebimentoCaixaPagSeguroNoCartao();
 		}
@@ -282,6 +289,17 @@ public class VendaMB implements Serializable {
 	
 	private void confirmarRecebimentoCaixaFuncionarioEmDinheiro() {
 		Caixa caixa = caixaService.porIdFuncionario(venda.getFuncionario().getId(), EnumTipoConta.CONTAMANUAL);
+		
+		if (pagamento.isPago())
+			caixa.setValor(caixa.getValor().add(pagamento.getValor()));
+		else 
+			caixa.setValor(caixa.getValor().subtract(pagamento.getValor()));
+		
+		caixaService.salvar(caixa);
+	}
+	
+	private void confirmarRecebimentoCaixaCreditoEmCheque() {
+		Caixa caixa = pagamento.getCaixa();
 		
 		if (pagamento.isPago())
 			caixa.setValor(caixa.getValor().add(pagamento.getValor()));
@@ -339,6 +357,10 @@ public class VendaMB implements Serializable {
 		return valorRestante;
 	}
 	
+	public void calcularTaxaCartao() {
+		pagamento.setTaxa(pagamento.getValor().subtract(pagamento.getSaldo()));
+	}
+	
 	public Venda getVenda() {
 		return venda;
 	}
@@ -371,6 +393,14 @@ public class VendaMB implements Serializable {
 		this.idVenda = idVenda;
 	}
 	
+	public List<Caixa> getCaixas() {
+		return caixas;
+	}
+
+	public void setCaixas(List<Caixa> caixas) {
+		this.caixas = caixas;
+	}
+
 	public List<Pessoa> getClientes() {
 		return clientes;
 	}

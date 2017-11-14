@@ -28,7 +28,9 @@
 					</p:selectOneMenu>
 					
 					<p:outputLabel value="Valor R$" for="valorPagamento"/>
-					<p:inputNumber id="valorPagamento" value="#{vendaMB.pagamento.valor}"/>
+					<p:inputNumber id="valorPagamento" value="#{vendaMB.pagamento.valor}">
+						<p:ajax event="change" listener="#{vendaMB.calcularTaxaCartao}" update="taxa"/>
+					</p:inputNumber>
 					
 					<p:outputLabel value="Data" for="dataPagamento"/>
 					<p:calendar id="dataPagamento" value="#{vendaMB.pagamento.data}" pattern="dd/MM/yyyy" mask="true"/>
@@ -50,7 +52,9 @@
 					<p:inputNumber id="valorParcela" value="#{vendaMB.pagamento.valorParcela}"/>
 					
 					<p:outputLabel value="Saldo R$" for="saldo"/>
-					<p:inputNumber id="saldo" value="#{vendaMB.pagamento.saldo}"/>
+					<p:inputNumber id="saldo" value="#{vendaMB.pagamento.saldo}">
+						<p:ajax event="change" listener="#{vendaMB.calcularTaxaCartao}" update="taxa"/>
+					</p:inputNumber>
 					
 					<p:outputLabel value="Taxa R$" for="taxa"/>
 					<p:inputNumber id="taxa" value="#{vendaMB.pagamento.taxa}"/>
@@ -61,6 +65,45 @@
 					<p:commandButton action="#{vendaMB.salvarPagamento()}" update="@form" icon="fa fa-plus" title="Adicionar" styleClass="btn-success"
 						rendered="#{vendaMB.pagamento.forma eq 'DEBITO' or vendaMB.pagamento.forma eq 'CREDITO'}"/>
 				
+				</p:panelGrid>
+				
+				<p:panelGrid id="cadastroCheque" columns="5" style="width:100%;" 
+					rendered="#{vendaMB.pagamento.forma eq 'CHEQUE' and vendaMB.venda.status ne 'VENDACONCLUIDA'}">
+					
+					<p:outputLabel value="Conta de Crédito" for="caixa"/>
+					<p:selectOneMenu id="caixa" value="#{vendaMB.pagamento.caixa}" converter="caixaConverter" var="c" filter="true" filterMatchMode="contains">
+						<f:selectItem itemLabel="Selecione..."/>
+			            <f:selectItems value="#{vendaMB.caixas}" var="caixa" 
+			            	itemLabel="#{caixa.conta.nome} | #{caixa.conta.tipo.descricao} | #{caixa.conta.instituicao.descricao} | #{caixa.conta.funcionario.nome} | #{caixa.valor}" itemValue="#{caixa}" />
+			        
+		            	<p:column>
+			                <h:outputText value="#{c.conta.nome}" />
+			            </p:column>
+			            
+			            <p:column>
+			                <h:outputText value="#{c.conta.tipo.descricao}" />
+			            </p:column>
+			 
+		            	<p:column>
+			                <h:outputText value="#{c.conta.instituicao.descricao}" />
+			            </p:column>
+			            
+			            <p:column>
+			                <h:outputText value="#{c.conta.funcionario.nome}" />
+			            </p:column>
+			            
+			            <p:column>
+			                <h:outputText value="#{c.valor}">
+			                	<f:convertNumber type="currency" currencySymbol="R$"/>
+			                </h:outputText>
+			            </p:column>
+			        </p:selectOneMenu>
+					
+					<p:outputLabel value="Data Compensação" for="dataCompensacao"/>
+					<p:calendar id="dataCompensacao" value="#{vendaMB.pagamento.dataCompensacao}" pattern="dd/MM/yyyy" mask="true"/>
+					
+					<p:commandButton action="#{vendaMB.salvarPagamento()}" update="@form" icon="fa fa-plus" title="Adicionar" styleClass="btn-success"
+						rendered="#{vendaMB.pagamento.forma eq 'CHEQUE'}"/>
 				</p:panelGrid>
 
 				<p:spacer />
@@ -85,7 +128,7 @@
                     </p:column>
                     
                     <p:column headerText="Saldo">
-                    	<h:outputText value="#{item.forma eq 'DINHEIRO' ? item.valor : item.saldo}">
+                    	<h:outputText value="#{item.forma eq 'DINHEIRO' or item.forma eq 'CHEQUE' ? item.valor : item.saldo}">
                     		<f:convertNumber type="currency" currencySymbol="R$"/>
                     	</h:outputText>
                     </p:column>

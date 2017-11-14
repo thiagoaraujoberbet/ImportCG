@@ -123,3 +123,7 @@ select
 
 
 select count(*) from importcg.itemVenda iv where iv.idProduto = 12;
+
+SELECT * FROM importcg.itemDespesa i WHERE i.idItemDespesa not in (SELECT id.idItemDespesa FROM importcg.itemDespesa id JOIN importcg.itemBaixa ib ON id.idItemDespesa = ib.idItemDespesa);
+
+select * from importcg.itemBaixa;

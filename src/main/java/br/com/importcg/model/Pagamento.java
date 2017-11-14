@@ -55,6 +55,12 @@ public class Pagamento implements Serializable {
 	
 	private Date dataRecebimento;
 	
+	private Date dataCompensacao;
+	
+	@ManyToOne
+	@JoinColumn(name="idCaixa")
+	private Caixa caixa;
+	
 	public Pagamento() {
 		super();
 	}
@@ -145,6 +151,22 @@ public class Pagamento implements Serializable {
 
 	public void setDataRecebimento(Date dataRecebimento) {
 		this.dataRecebimento = dataRecebimento;
+	}
+
+	public Date getDataCompensacao() {
+		return dataCompensacao;
+	}
+
+	public void setDataCompensacao(Date dataCompensacao) {
+		this.dataCompensacao = dataCompensacao;
+	}
+
+	public Caixa getCaixa() {
+		return caixa;
+	}
+
+	public void setCaixa(Caixa caixa) {
+		this.caixa = caixa;
 	}
 
 	@Override
