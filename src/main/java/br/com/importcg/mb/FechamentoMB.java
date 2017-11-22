@@ -13,9 +13,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.importcg.enumeration.EnumMes;
+import br.com.importcg.model.Entrada;
 import br.com.importcg.model.Fechamento;
 import br.com.importcg.model.ItemBaixa;
 import br.com.importcg.model.ItemFechamento;
+import br.com.importcg.service.EntradaService;
 import br.com.importcg.service.FechamentoService;
 import br.com.importcg.service.ItemBaixaService;
 import br.com.importcg.service.ItemFechamentoService;
@@ -38,6 +40,7 @@ public class FechamentoMB implements Serializable {
 	
 	private List<ItemBaixa> despesasBaixadas = new ArrayList<>();
 	private List<ItemBaixa> despesasABaixar = new ArrayList<>();
+	private List<Entrada> entradas = new ArrayList<>();
 	
 	private boolean edicaoItem = false;
 	
@@ -52,6 +55,9 @@ public class FechamentoMB implements Serializable {
 	@Inject
 	private ItemBaixaService itemBaixaService;
 	
+	@Inject
+	private EntradaService entradaService;
+	
 	public void inicializar() {
 		if (idFechamento != null) {
 			fechamento = fechamentoService.porId(idFechamento);
@@ -62,12 +68,19 @@ public class FechamentoMB implements Serializable {
 			fechamento.setAno(setarAnoReferente());
 			fechamento.setMes(tratarEnumMes(setarMesReferente()));
 
-			fechamento = fechamentoService.buscarValoresFechamento(fechamento);
-			despesasBaixadas = itemBaixaService.buscarDespesasBaixadas();
-			despesasABaixar = itemBaixaService.buscarDespesasABaixar();
+			fechamento = this.montarListas(fechamento);
 			
 			this.calcularSaldo();
 		}
+	}
+	
+	private Fechamento montarListas(Fechamento fechamento) {
+		fechamento = fechamentoService.buscarValoresFechamento(fechamento);
+		despesasBaixadas = itemBaixaService.buscarDespesasMensaisBaixadas();
+		despesasABaixar = itemBaixaService.buscarDespesasABaixar();
+		entradas = entradaService.buscarEntradasMensais();
+		
+		return fechamento;
 	}
 	
 	private void calcularSaldo() {
@@ -92,6 +105,19 @@ public class FechamentoMB implements Serializable {
 		
 		for (ItemBaixa itemBaixa : despesasABaixar) {
 			total = total.add(itemBaixa.getValor());
+		}
+		
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		String formatado = nf.format(total);
+		
+		return formatado;
+	}
+	
+	public String totalizarEntradas() {
+		BigDecimal total = new BigDecimal(0);
+		
+		for (Entrada entrada : entradas) {
+			total = total.add(entrada.getValorTotal());
 		}
 		
 		NumberFormat nf = NumberFormat.getCurrencyInstance();
@@ -201,6 +227,14 @@ public class FechamentoMB implements Serializable {
 
 	public void setDespesasABaixar(List<ItemBaixa> despesasABaixar) {
 		this.despesasABaixar = despesasABaixar;
+	}
+
+	public List<Entrada> getEntradas() {
+		return entradas;
+	}
+
+	public void setEntradas(List<Entrada> entradas) {
+		this.entradas = entradas;
 	}
 
 	public boolean isEdicaoItem() {

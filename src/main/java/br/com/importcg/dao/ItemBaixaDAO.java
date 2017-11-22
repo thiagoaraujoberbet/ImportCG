@@ -46,7 +46,7 @@ public class ItemBaixaDAO implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ItemBaixa> buscarDespesasBaixadas() {
+	public List<ItemBaixa> buscarDespesasMensaisBaixadas() {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("select * from importcg.itemBaixa ib ");

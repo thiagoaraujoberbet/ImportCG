@@ -40,4 +40,8 @@ public class EntradaService implements Serializable {
 	public List<Entrada> buscarEntradasNaoLancadas() {
 		return entradaDAO.buscarEntradasNaoLancadas();
 	}
+
+	public List<Entrada> buscarEntradasMensais() {
+		return entradaDAO.buscarEntradasMensais();
+	}
 }

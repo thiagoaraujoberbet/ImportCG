@@ -24,7 +24,7 @@ public class ItemFechamentoDAO implements Serializable {
 	}
 
 	public List<ItemFechamento> porIdEntrada(Long idFechamento) {
-		return manager.createQuery("SELECT i FROM ItemFechamento i WHERE i.fechamento.id = :idVenda", ItemFechamento.class).setParameter("idFechamento", idFechamento).getResultList();
+		return manager.createQuery("SELECT i FROM ItemFechamento i WHERE i.fechamento.id = :idFechamento", ItemFechamento.class).setParameter("idFechamento", idFechamento).getResultList();
 	}
 
 	public ItemFechamento porId(Long id) {
