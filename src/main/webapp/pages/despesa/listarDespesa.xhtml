@@ -76,7 +76,8 @@
 	                        </p:column>
 	                        
    	                        <p:column headerText="Status" filterBy="#{despesa.status.descricao}" sortBy="#{despesa.status.descricao}" style="width: 20%; text-align: center;">
-	                        	<h:outputText value="#{despesa.status.descricao}" />
+	                        	<h:outputText value="#{despesa.status.descricao}" 
+	                        		style="#{despesa.status eq 'BAIXATOTALMENTE' ? 'color: #238E23;' : (despesa.status eq 'BAIXAPARCIALMENTE' ? 'color: #FF7F00;' : 'color: #FF0000;')}"/> 
 	                        </p:column>
 	                        	
 	                    </p:dataTable>

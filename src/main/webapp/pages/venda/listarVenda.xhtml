@@ -86,7 +86,8 @@
 	                        </p:column>
 	                        
    	                        <p:column headerText="Status" filterBy="#{venda.status.descricao}" sortBy="#{venda.status.descricao}" style="text-align: center;">
-	                        	<h:outputText value="#{venda.status.descricao}"/>
+	                        	<h:outputText value="#{venda.status.descricao}"
+	                        		style="#{venda.status eq 'VENDACONCLUIDA' ? 'color: #238E23;' : (venda.status eq 'PAGAMENTOPARCIAL' ? 'color: #FF7F00;' : 'color: #FF0000;')}"/>
 	                        </p:column>
 	                        	
 	                    </p:dataTable>

@@ -39,6 +39,6 @@ public class VendaDAO implements Serializable {
 	
 	@SuppressWarnings("unchecked")
 	public List<Venda> listarTodos() {
-		return manager.createNativeQuery("SELECT * FROM venda ORDER BY dataVenda DESC", Venda.class).getResultList();
+		return manager.createNativeQuery("SELECT * FROM venda ORDER BY status ASC, dataVenda DESC", Venda.class).getResultList();
 	}
 }

@@ -74,6 +74,10 @@
   	                        <p:column headerText="Quantidade Total" filterBy="#{entrada.quantidadeTotal}" sortBy="#{entrada.quantidadeTotal}">
 	                        	<h:outputText value="#{entrada.quantidadeTotal}" />
 	                        </p:column>
+	                        
+    	                        <p:column headerText="Despesa Lançada?" filterBy="#{entrada.despesaLancada}" sortBy="#{entrada.despesaLancada}">
+	                        	<h:outputText value="#{entrada.despesaLancada eq true ? 'Sim' : 'Não'}" style="#{entrada.despesaLancada eq true ? 'color: #238E23;' : 'color: #FF0000;'}"/>
+	                        </p:column>
 	                        	
 	                    </p:dataTable>
 					</div>

@@ -10,6 +10,8 @@ public class CalculoMensalWrapper {
 	
 	private BigDecimal valoresProximoMes2;
 	
+	private BigDecimal valoresProximoMes3;
+	
 	private BigDecimal valoresTodosMeses;
 
 	public BigDecimal getValoresMesAtual() {
@@ -34,6 +36,14 @@ public class CalculoMensalWrapper {
 
 	public void setValoresProximoMes2(BigDecimal valoresProximoMes2) {
 		this.valoresProximoMes2 = valoresProximoMes2;
+	}
+
+	public BigDecimal getValoresProximoMes3() {
+		return valoresProximoMes3;
+	}
+
+	public void setValoresProximoMes3(BigDecimal valoresProximoMes3) {
+		this.valoresProximoMes3 = valoresProximoMes3;
 	}
 
 	public BigDecimal getValoresTodosMeses() {

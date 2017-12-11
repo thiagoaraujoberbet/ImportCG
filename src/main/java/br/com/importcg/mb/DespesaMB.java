@@ -11,6 +11,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.importcg.enumeration.EnumStatusBaixa;
 import br.com.importcg.model.Despesa;
 import br.com.importcg.model.Entrada;
 import br.com.importcg.model.ItemDespesa;
@@ -57,7 +58,7 @@ public class DespesaMB implements Serializable {
 			itensDespesa = itemDespesaService.porIdDespesa(idDespesa);
 		} else {
 			despesa.setDataDespesa(new Date());
-//			despesa.setStatus(EnumStatusBaixa.NAOBAIXADO);
+			despesa.setStatus(EnumStatusBaixa.NAOBAIXADO);
 			despesa.setValorTotal(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN));
 		}
 		

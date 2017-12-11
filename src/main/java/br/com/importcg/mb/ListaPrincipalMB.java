@@ -149,6 +149,7 @@ public class ListaPrincipalMB implements Serializable {
         	receber.set(this.formatarData(0), (item.getValoresMesAtual() == null ? new BigDecimal(0) : item.getValoresMesAtual()));
         	receber.set(this.formatarData(1), item.getValoresProximoMes1() == null ? new BigDecimal(0) : item.getValoresProximoMes1());
         	receber.set(this.formatarData(2), item.getValoresProximoMes2() == null ? new BigDecimal(0) : item.getValoresProximoMes2());
+        	receber.set(this.formatarData(3), item.getValoresProximoMes3() == null ? new BigDecimal(0) : item.getValoresProximoMes3());
         	
         	valorReceber = item.getValoresTodosMeses() == null ? new BigDecimal(0) : item.getValoresTodosMeses();
         }
@@ -162,6 +163,7 @@ public class ListaPrincipalMB implements Serializable {
         	pagar.set(this.formatarData(0), (item.getValoresMesAtual() == null ? new BigDecimal(0) : item.getValoresMesAtual()));
         	pagar.set(this.formatarData(1), item.getValoresProximoMes1() == null ? new BigDecimal(0) : item.getValoresProximoMes1());
         	pagar.set(this.formatarData(2), item.getValoresProximoMes2() == null ? new BigDecimal(0) : item.getValoresProximoMes2());
+        	pagar.set(this.formatarData(3), item.getValoresProximoMes3() == null ? new BigDecimal(0) : item.getValoresProximoMes3());
         	
         	valorPagar = item.getValoresTodosMeses() == null ? new BigDecimal(0) : item.getValoresTodosMeses();
         }

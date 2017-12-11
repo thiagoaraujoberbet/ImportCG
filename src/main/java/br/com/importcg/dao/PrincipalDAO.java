@@ -152,6 +152,9 @@ public class PrincipalDAO implements Serializable {
 		// A receber no proximo mês     
 		sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
 		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -1 MONTH)), 1)) and last_day(sysdate() + INTERVAL 2 MONTH)) AReceberProximoMes2, ");
+		// A receber no proximo mês     
+		sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
+		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -2 MONTH)), 1)) and last_day(sysdate() + INTERVAL 3 MONTH)) AReceberProximoMes3, ");
 		// A receber em todos os meses
 		sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
 		sql.append("			where p.pago = 0) AReceberTodosMeses ");
@@ -178,7 +181,11 @@ public class PrincipalDAO implements Serializable {
 			}
 			
 			if (item[3] != null) {
-				receber.setValoresTodosMeses(new BigDecimal(item[3].toString()));
+				receber.setValoresProximoMes3(new BigDecimal(item[3].toString()));
+			}
+			
+			if (item[4] != null) {
+				receber.setValoresTodosMeses(new BigDecimal(item[4].toString()));
 			}
 			
 			itens.add(receber);
@@ -201,6 +208,9 @@ public class PrincipalDAO implements Serializable {
 		// A receber no proximo mês     
 		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
 		sql.append("			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -1 MONTH)), 1)) and last_day(sysdate() + INTERVAL 2 MONTH)) APagarProximoMes2, ");
+		// A receber no proximo mês     
+		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -2 MONTH)), 1)) and last_day(sysdate() + INTERVAL 3 MONTH)) APagarProximoMes3, ");
 		//A receber em todos os meses
 		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
 		sql.append("			where ib.baixado = 0) APagarTodosMeses ");
@@ -224,10 +234,14 @@ public class PrincipalDAO implements Serializable {
 			
 			if (item[2] != null) {
 				pagar.setValoresProximoMes2(new BigDecimal(item[2].toString()));
-			}	
+			}
 			
 			if (item[3] != null) {
-				pagar.setValoresTodosMeses(new BigDecimal(item[3].toString()));
+				pagar.setValoresProximoMes3(new BigDecimal(item[3].toString()));
+			}
+			
+			if (item[4] != null) {
+				pagar.setValoresTodosMeses(new BigDecimal(item[4].toString()));
 			}
 			
 			itens.add(pagar);
