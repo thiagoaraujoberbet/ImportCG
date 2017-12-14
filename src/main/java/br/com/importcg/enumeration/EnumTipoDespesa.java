@@ -7,6 +7,7 @@ public enum EnumTipoDespesa {
 	COMPRAPRODUTO("Compra de Produtos"),
 	FRETE("Frete"),
 	MARKETING("Marketing"),
+	MANUTENCAOCARRO("Manutenção do Carro"),
 	OUTROS("Outros");
 	
 	private String descricao;

@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
                 template="WEB-INF/templates/template.xhtml">
 
     <ui:define name="head-end">
@@ -8,7 +9,20 @@
     </ui:define>
 
     <ui:define name="title">
-        <p:growl autoUpdate="true" life="4000"/>
+    		<h:form id="hForm">
+        		<p:growl id="growl" showDetail="true" sticky="true"/>
+        		<p:commandButton id="emitirAvisos" value="" update="growl" actionListener="#{listaPrincipalMB.emitirAvisos}"/>
+        		
+	    		<script type="text/javascript">
+	    			function initAvisos() {
+	    				$("hForm:emitirAvisos").click();
+	    			}
+	    			
+	    			window.onload = function () {
+	    				initAvisos();
+	    			}
+	    		</script>
+        </h:form>
 
         <h2 class="align-center">
             Bem vindo ao sistema de vendas <span class="text-aqua"> <i><a href="https://www.instagram.com/importcgms/?hl=pt-br" target="_blank"
@@ -35,6 +49,5 @@
    		</div>
 
     </ui:define>
-
 
 </ui:composition>

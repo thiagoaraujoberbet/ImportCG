@@ -3,7 +3,7 @@
                 xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
                 template="/WEB-INF/templates/template.xhtml">
-
+                
     <ui:define name="title">
         Cadastro Despesa
     </ui:define>
@@ -48,8 +48,8 @@
 							<p:outputLabel value="Descrição" for="descricaoDespesa"/>
 							<p:inputText id="descricaoDespesa" value="#{despesaMB.despesa.descricao}" disabled="#{despesaMB.despesa.id ne null}"/>
 							
-							<p:outputLabel value="Valor Total" for="valorTotal"/>
-							<p:inputText id="valorTotal" value="#{despesaMB.despesa.valorTotal}" disabled="true"/>
+							<p:outputLabel value="Valor Total" for="valorTotal" style="width: 50%"/>
+							<p:inputText id="valorTotal" value="#{despesaMB.despesa.valorTotal}" disabled="true" style="width: 50%"/>
 							
 						</p:panelGrid>
 						
@@ -89,6 +89,7 @@
 									<f:selectItem itemLabel="Combustível" itemValue="COMBUSTIVEL"/>
 									<f:selectItem itemLabel="Compra de Produtos" itemValue="COMPRAPRODUTO"/>
 									<f:selectItem itemLabel="Frete" itemValue="FRETE"/>
+									<f:selectItem itemLabel="Manutenção do Carro" itemValue="MANUTENCAOCARRO"/>
 									<f:selectItem itemLabel="Marketing" itemValue="MARKETING"/>
 									<f:selectItem itemLabel="Outros" itemValue="OUTROS"/>
 								</p:selectOneMenu>

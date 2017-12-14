@@ -1,4 +1,4 @@
-select IFNULL(sum(iv.quantidade), 0) from importcg.itemVenda iv where iv.idItemEntrada = 29;
+vendaselect IFNULL(sum(iv.quantidade), 0) from importcg.itemVenda iv where iv.idItemEntrada = 29;
 
 select sum(ie.quantidade) from importcg.itemEntrada ie where ie.idItemEntrada = 27;
 
@@ -127,3 +127,9 @@ select count(*) from importcg.itemVenda iv where iv.idProduto = 12;
 SELECT * FROM importcg.itemDespesa i WHERE i.idItemDespesa not in (SELECT id.idItemDespesa FROM importcg.itemDespesa id JOIN importcg.itemBaixa ib ON id.idItemDespesa = ib.idItemDespesa);
 
 select * from importcg.itemBaixa;
+
+select b.idBaixa, b.descricao, b.valorTotal, b.dataCriacao, b.status,
+(select case when sum(valor) is null then 0 else sum(valor) end from importcg.itemBaixa ib where ib.baixado = 1 and b.idBaixa = ib.idBaixa) as valorPago,
+(select case when sum(valor) is null then 0 else sum(valor) end from importcg.itemBaixa ib where ib.baixado = 0 and b.idBaixa = ib.idBaixa) as valorRestante 
+from importcg.baixa b
+order by b.dataCriacao DESC;

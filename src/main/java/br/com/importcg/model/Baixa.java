@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.importcg.enumeration.EnumStatusBaixa;
 
@@ -45,6 +46,12 @@ public class Baixa implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "baixa", cascade = CascadeType.ALL)	
 	private List<ItemBaixa> itensBaixa;
+	
+	@Transient
+	private BigDecimal valorPago;
+	
+	@Transient
+	private BigDecimal valorRestante;
 
 	public Baixa() {
 		super();
@@ -94,6 +101,22 @@ public class Baixa implements Serializable {
 		return getId() == null ? true : false;
 	}
 	
+	public BigDecimal getValorPago() {
+		return valorPago;
+	}
+
+	public void setValorPago(BigDecimal valorPago) {
+		this.valorPago = valorPago;
+	}
+
+	public BigDecimal getValorRestante() {
+		return valorRestante;
+	}
+
+	public void setValorRestante(BigDecimal valorRestante) {
+		this.valorRestante = valorRestante;
+	}
+
 	public boolean isEdicao() {
 		return !isInclusao();
 	}

@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -72,6 +74,11 @@ public class ListaPrincipalMB implements Serializable {
 		this.createPieModelMesAtual();
 		this.createPieModelGeral();
 		this.createBarModelBalanco();
+	}
+	
+	public void emitirAvisos() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("Sucesso!!", "TESTE"));
 	}
 	
 	private void createPieModelMesAnterior() {
