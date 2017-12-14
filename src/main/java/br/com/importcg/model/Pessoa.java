@@ -53,6 +53,10 @@ public class Pessoa implements Serializable {
 	
 	private Date dataAlteracao;	
 	
+	private String enderecoResidencial;
+	
+	private String enderecoComercial;
+	
 	@Transient
 	private Integer quantidadeComprada;
 	
@@ -157,6 +161,22 @@ public class Pessoa implements Serializable {
 
 	public void setQuantidadeVendida(Integer quantidadeVendida) {
 		this.quantidadeVendida = quantidadeVendida;
+	}
+
+	public String getEnderecoResidencial() {
+		return enderecoResidencial;
+	}
+
+	public void setEnderecoResidencial(String enderecoResidencial) {
+		this.enderecoResidencial = enderecoResidencial;
+	}
+
+	public String getEnderecoComercial() {
+		return enderecoComercial;
+	}
+
+	public void setEnderecoComercial(String enderecoComercial) {
+		this.enderecoComercial = enderecoComercial;
 	}
 
 	public boolean isInclusao() {

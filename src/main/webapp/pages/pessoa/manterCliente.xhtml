@@ -39,7 +39,7 @@
                     <p:separator/>
 
                     <div class="ui-fluid">
-						<p:panelGrid id="capaPanel" columns="4" style="width:100%;">
+						<p:panelGrid id="capaPanel1" columns="4" style="width:100%;">
 						
 							<p:outputLabel value="Nome" for="nome"/>
 							<p:inputText id="nome" value="#{clienteMB.cliente.nome}"/>	
@@ -52,12 +52,15 @@
 							
 							<p:outputLabel value="E-mail" for="email"/>
 							<p:inputText id="email" value="#{clienteMB.cliente.email}" />
-							
-<!-- 							<p:outputLabel value="Data de Criação" for="dataCriacao"/> -->
-<!-- 							<p:inputText id="dataCriacao" value="#{clienteMB.cliente.dataCriacao}" disabled="true" style="width:100%;"> -->
-<!-- 								<f:convertDateTime pattern="dd/MM/yyyy"/> -->
-<!-- 							</p:inputText> -->
 													
+						</p:panelGrid>
+						
+						<p:panelGrid id="capaPanel2" columns="2" style="width:100%;">
+							<p:outputLabel value="Endereço Residencial" for="endResidencial"/>
+							<p:inputText id="endResidencial" value="#{clienteMB.cliente.enderecoResidencial}" />
+							
+							<p:outputLabel value="Endereço Comercial" for="endComercial"/>
+							<p:inputText id="endComercial" value="#{clienteMB.cliente.enderecoComercial}" />
 						</p:panelGrid>
 						
                     </div>

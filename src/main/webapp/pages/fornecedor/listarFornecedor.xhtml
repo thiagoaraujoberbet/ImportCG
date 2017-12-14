@@ -71,9 +71,34 @@
 	                        	<h:outputText value="#{fornecedor.telefone}"/>
 	                        </p:column>
 	                        
+                        	<p:column headerText="Qtde Comprada" style="width:7%; text-align:center;">
+	                        	<h:outputText value="#{fornecedor.quantidadeVendida}"/>
+	                        </p:column>
+	                        
+                           	<p:column headerText="Valor Comprado" style="width:10%; text-align:center;">
+	                        	<h:outputText value="#{fornecedor.valorVendido}">
+	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
+	                        	</h:outputText>
+	                        </p:column>
+	                        
 	                    </p:dataTable>
 					</div>
 	            </div>
+	            
+                <div class="box box-primary">
+               
+                    <div class="box-header with-border">
+                    
+                    	<p:panelGrid columns="3" style="width: 100%;">
+                   
+                        	<p:chart type="pie" model="#{listaFornecedorMB.pieModel1}" responsive="true" />
+                        	<p:chart type="pie" model="#{listaFornecedorMB.pieModel2}" responsive="true" />
+                        
+                        </p:panelGrid>
+                   
+                    </div>
+                   
+            	</div>
         	</h:form>
         	
         	<p:dialog header="Fornecedores Selecionados" widgetVar="fornecedoresSelecionados" height="250"

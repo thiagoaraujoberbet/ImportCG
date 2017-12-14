@@ -154,11 +154,6 @@ public class DespesaMB implements Serializable {
 		baixa = baixaService.salvar(baixa);
 	}
 	
-	public String tramite() {
-		return "listarTramite.xhtml?faces-redirect=true";
-	}
-	
-
 	public Despesa getDespesa() {
 		return despesa;
 	}

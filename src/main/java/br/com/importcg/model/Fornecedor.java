@@ -1,6 +1,7 @@
 package br.com.importcg.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -42,6 +44,12 @@ public class Fornecedor implements Serializable {
 	private Date dataCriacao;
 	
 	private Date dataAlteracao;
+	
+	@Transient
+	private Integer quantidadeVendida;
+	
+	@Transient
+	private BigDecimal valorVendido;
 
 	public Fornecedor() {
 		super();
@@ -119,6 +127,22 @@ public class Fornecedor implements Serializable {
 		this.dataAlteracao = dataAlteracao;
 	}
 	
+	public Integer getQuantidadeVendida() {
+		return quantidadeVendida;
+	}
+
+	public void setQuantidadeVendida(Integer quantidadeVendida) {
+		this.quantidadeVendida = quantidadeVendida;
+	}
+
+	public BigDecimal getValorVendido() {
+		return valorVendido;
+	}
+
+	public void setValorVendido(BigDecimal valorVendido) {
+		this.valorVendido = valorVendido;
+	}
+
 	public boolean isInclusao() {
 		return getId() == null ? true : false;
 	}

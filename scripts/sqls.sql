@@ -133,3 +133,17 @@ select b.idBaixa, b.descricao, b.valorTotal, b.dataCriacao, b.status,
 (select case when sum(valor) is null then 0 else sum(valor) end from importcg.itemBaixa ib where ib.baixado = 0 and b.idBaixa = ib.idBaixa) as valorRestante 
 from importcg.baixa b
 order by b.dataCriacao DESC;
+
+(SELECT SUM(ib.valor) from importcg.itemBaixa ib 
+inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa
+where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and ib.baixado = 1 and d.idEntrada is null);
+
+select SUM(iv.quantidade) from importcg.itemVenda iv inner join importcg.itemEntrada ie ON iv.idItemEntrada = ie.idItemEntrada where ie.idFornecedor = 1;
+
+select f.idFornecedor, f.nome, f.endereco, f.telefone, f.email, f.site, f.instagram, f.dataCriacao, f.dataAlteracao,
+case when (select SUM(ie.quantidade) from importcg.itemEntrada ie where ie.idFornecedor = f.idFornecedor) is null then 0 else 
+(select SUM(ie.quantidade) from importcg.itemEntrada ie where ie.idFornecedor = f.idFornecedor) end quantidadeVendida,
+case when (select SUM(ie.valorEmReal) from importcg.itemEntrada ie where ie.idFornecedor = f.idFornecedor) is null then 0 else 
+(select SUM(ie.valorEmReal) from importcg.itemEntrada ie where ie.idFornecedor = f.idFornecedor) end valorVendido
+from importcg.fornecedor f
+ORDER BY f.nome ASC

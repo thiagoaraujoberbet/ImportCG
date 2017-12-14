@@ -89,7 +89,7 @@ public class ListaPrincipalMB implements Serializable {
         pieModelMesAnterior.setTitle("Mês Anterior");
         pieModelMesAnterior.setLegendPosition("w");
         pieModelMesAnterior.setShowDataLabels(true);
-        pieModelMesAnterior.setSeriesColors("93ABCD,FFCC33,58BA27"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
+        pieModelMesAnterior.setSeriesColors("93ABCD,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
 	
     private void createPieModelMesAtual() {
@@ -100,7 +100,7 @@ public class ListaPrincipalMB implements Serializable {
         pieModelMesAtual.setTitle("Mês Atual");
         pieModelMesAtual.setLegendPosition("w");
         pieModelMesAtual.setShowDataLabels(true);
-        pieModelMesAtual.setSeriesColors("93ABCD,FFCC33,58BA27"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
+        pieModelMesAtual.setSeriesColors("93ABCD,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
     
     private void createPieModelGeral() {
@@ -111,7 +111,7 @@ public class ListaPrincipalMB implements Serializable {
         pieModelGeral.setTitle("Geral");
         pieModelGeral.setLegendPosition("w");
         pieModelGeral.setShowDataLabels(true); 
-        pieModelGeral.setSeriesColors("93ABCD,FFCC33,58BA27"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
+        pieModelGeral.setSeriesColors("93ABCD,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
     
 	private PieChartModel montarPieChartModel(PieChartModel pieModel, List<BalancoWrapper> lista) {
@@ -121,10 +121,12 @@ public class ListaPrincipalMB implements Serializable {
         	String entrada  = (item.getValoresEntrada() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresEntrada()));
         	String saida    = (item.getValoresSaida() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresSaida()));
         	String recebido = (item.getValoresRecebido() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresRecebido()));
+        	String despesa  = (item.getValoresDespesa() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresDespesa()));
         	
-        	pieModel.set("Compras: " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
-        	pieModel.set("Vendas: " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
+        	pieModel.set("Compras:  " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
+        	pieModel.set("Vendas:   " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
         	pieModel.set("Recebido: " + recebido, item.getValoresRecebido() == null ? new BigDecimal(0) : item.getValoresRecebido());
+        	pieModel.set("Despesas: " + despesa, item.getValoresDespesa() == null ? new BigDecimal(0) : item.getValoresDespesa());
         }
         
         return pieModel;
