@@ -44,6 +44,8 @@ public class Despesa implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private EnumStatusBaixa status;
 	
+	private boolean baixaGerada = Boolean.FALSE;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "despesa", cascade = CascadeType.ALL)	
 	private List<ItemDespesa> itensDespesa;
 
@@ -103,6 +105,14 @@ public class Despesa implements Serializable {
 
 	public void setItensDespesa(List<ItemDespesa> itensDespesa) {
 		this.itensDespesa = itensDespesa;
+	}
+
+	public boolean isBaixaGerada() {
+		return baixaGerada;
+	}
+
+	public void setBaixaGerada(boolean baixaGerada) {
+		this.baixaGerada = baixaGerada;
 	}
 
 	public boolean isInclusao() {

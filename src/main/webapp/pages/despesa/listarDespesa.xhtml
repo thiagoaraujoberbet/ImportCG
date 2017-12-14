@@ -79,6 +79,10 @@
 	                        	<h:outputText value="#{despesa.status.descricao}" 
 	                        		style="#{despesa.status eq 'BAIXATOTALMENTE' ? 'color: #238E23;' : (despesa.status eq 'BAIXAPARCIALMENTE' ? 'color: #FF7F00;' : 'color: #FF0000;')}"/> 
 	                        </p:column>
+	                        
+   	                        <p:column headerText="Baixa Gerada?" style="width: 8%;">
+	                        	<h:outputText value="#{despesa.baixaGerada eq true ? 'Sim' : 'Não'}" style="#{despesa.baixaGerada eq true ? 'color: #238E23;' : 'color: #FF0000;'}"/>
+	                        </p:column>
 	                        	
 	                    </p:dataTable>
 					</div>

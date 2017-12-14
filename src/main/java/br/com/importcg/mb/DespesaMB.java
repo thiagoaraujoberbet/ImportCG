@@ -12,9 +12,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.importcg.enumeration.EnumStatusBaixa;
+import br.com.importcg.model.Baixa;
 import br.com.importcg.model.Despesa;
 import br.com.importcg.model.Entrada;
 import br.com.importcg.model.ItemDespesa;
+import br.com.importcg.service.BaixaService;
 import br.com.importcg.service.DespesaService;
 import br.com.importcg.service.EntradaService;
 import br.com.importcg.service.ItemDespesaService;
@@ -31,6 +33,7 @@ public class DespesaMB implements Serializable {
 
 	private Despesa despesa = new Despesa();
 	private ItemDespesa itemDespesa = new ItemDespesa();
+	private Baixa baixa = new Baixa();
 	
 	private Long idDespesa;
 	
@@ -50,6 +53,9 @@ public class DespesaMB implements Serializable {
 	
 	@Inject
 	private EntradaService entradaService;
+	
+	@Inject
+	private BaixaService baixaService;
 	
 	public void inicializar() {
 		if (idDespesa != null) {
@@ -130,6 +136,28 @@ public class DespesaMB implements Serializable {
 				
 		FacesUtil.addInfoMessage("Item(s) excluido(s) com sucesso!");
 	}
+	
+	public void gerarBaixa() {
+		this.salvarBaixa();
+		this.setarBaixaGerada();
+		
+		FacesUtil.addInfoMessage("Baixa gerada com sucesso!");
+	}
+
+	private void setarBaixaGerada() {
+		despesa.setBaixaGerada(Boolean.TRUE);
+		despesaService.salvar(despesa);
+	}
+
+	private void salvarBaixa() {
+		baixa = new Baixa(despesa.getDescricao(), new BigDecimal(0), new Date(), EnumStatusBaixa.NAOBAIXADO);
+		baixa = baixaService.salvar(baixa);
+	}
+	
+	public String tramite() {
+		return "listarTramite.xhtml?faces-redirect=true";
+	}
+	
 
 	public Despesa getDespesa() {
 		return despesa;
@@ -153,6 +181,14 @@ public class DespesaMB implements Serializable {
 
 	public void setIdDespesa(Long idDespesa) {
 		this.idDespesa = idDespesa;
+	}
+
+	public Baixa getBaixa() {
+		return baixa;
+	}
+
+	public void setBaixa(Baixa baixa) {
+		this.baixa = baixa;
 	}
 
 	public List<Entrada> getEntradas() {

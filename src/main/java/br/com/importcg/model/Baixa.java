@@ -57,6 +57,13 @@ public class Baixa implements Serializable {
 		super();
 	}
 
+	public Baixa(String descricao, BigDecimal valorTotal, Date dataCriacao, EnumStatusBaixa status) {
+		this.descricao = descricao;
+		this.valorTotal = valorTotal;
+		this.dataCriacao = dataCriacao;
+		this.status = status;
+	}
+
 	public Long getId() {
 		return id;
 	}
