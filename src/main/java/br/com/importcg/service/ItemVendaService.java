@@ -29,8 +29,8 @@ public class ItemVendaService implements Serializable {
 		itemVendaDAO.excluir(itemVenda);
 	}
 	
-	public List<ItemVenda> porIdEntrada(Long idVenda) {
-		return itemVendaDAO.porIdEntrada(idVenda);
+	public List<ItemVenda> porIdVenda(Long idVenda) {
+		return itemVendaDAO.porIdVenda(idVenda);
 	}
 	
 	public ItemVenda porId(Long id) {

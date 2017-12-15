@@ -146,4 +146,16 @@ case when (select SUM(ie.quantidade) from importcg.itemEntrada ie where ie.idFor
 case when (select SUM(ie.valorEmReal) from importcg.itemEntrada ie where ie.idFornecedor = f.idFornecedor) is null then 0 else 
 (select SUM(ie.valorEmReal) from importcg.itemEntrada ie where ie.idFornecedor = f.idFornecedor) end valorVendido
 from importcg.fornecedor f
-ORDER BY f.nome ASC
+ORDER BY f.nome ASC;
+
+select p.idPagamento, p.idVenda, p.forma, p.valor, p.saldo, pe.nome, p.data 
+from importcg.pagamento p 
+inner join importcg.venda v ON p.idVenda = v.idVenda
+inner join importcg.pessoa pe ON v.idCliente = pe.idPessoa
+where p.pago = 0 and p.data = CURDATE();
+
+select p.idPagamento, p.idVenda, p.forma, p.valor, p.saldo, pe.nome, p.data 
+from importcg.pagamento p 
+inner join importcg.venda v ON p.idVenda = v.idVenda
+inner join importcg.pessoa pe ON v.idCliente = pe.idPessoa
+where p.pago = 0 and p.dataRecebimento = '2017-12-27';

@@ -24,7 +24,7 @@ public class ItemVendaDAO implements Serializable {
 		return manager.merge(itemVenda);
 	}
 
-	public List<ItemVenda> porIdEntrada(Long idVenda) {
+	public List<ItemVenda> porIdVenda(Long idVenda) {
 		return manager.createQuery("SELECT i FROM ItemVenda i WHERE i.venda.id = :idVenda", ItemVenda.class).setParameter("idVenda", idVenda).getResultList();
 	}
 

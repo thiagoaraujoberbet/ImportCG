@@ -23,6 +23,8 @@ import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
+import br.com.importcg.model.Pagamento;
+import br.com.importcg.service.PagamentoService;
 import br.com.importcg.service.PrincipalService;
 import br.com.importcg.wrapper.BalancoWrapper;
 import br.com.importcg.wrapper.CalculoMensalWrapper;
@@ -38,6 +40,9 @@ public class ListaPrincipalMB implements Serializable {
 	
 	@Inject
 	private PrincipalService principalService;
+	
+	@Inject
+	private PagamentoService pagamentoService;
 	
 	List<BalancoWrapper> mesAnterior = new ArrayList<>();
 	
@@ -77,10 +82,30 @@ public class ListaPrincipalMB implements Serializable {
 	}
 	
 	public void emitirAvisos() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage("Sucesso!!", "TESTE"));
+		this.pagamentosAReceberCliente();
+		this.pagamentosAReceberPagSeguro();
 	}
 	
+	private void pagamentosAReceberCliente() {
+		List<Pagamento> pagamentos = new ArrayList<>();
+		pagamentos = pagamentoService.buscarRecebimentosDiarioCliente();
+		
+		for (Pagamento pagamento : pagamentos) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Pagamento a Receber!", "Há um pagamento para a ser realizado na data de hoje no valor de R$ " + pagamento.getValor() + " em nome de " + pagamento.getNomePagante() + "."));
+		}
+	}
+	
+	private void pagamentosAReceberPagSeguro() {
+		List<Pagamento> pagamentos = new ArrayList<>();
+		pagamentos = pagamentoService.buscarRecebimentosDiarioPagSeguro();
+		
+		for (Pagamento pagamento : pagamentos) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Crédito Liberado!", "Crédito PagSeguro liberado na data de hoje no valor de R$ " + pagamento.getSaldo() + " referente a compra em nome de " + pagamento.getNomePagante() + "."));
+		}
+	}
+
 	private void createPieModelMesAnterior() {
     	pieModelMesAnterior = new PieChartModel();
     	

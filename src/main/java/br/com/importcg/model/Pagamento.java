@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.importcg.enumeration.EnumFormaPagamento;
 
@@ -56,6 +57,9 @@ public class Pagamento implements Serializable {
 	private Date dataRecebimento;
 	
 	private Date dataCompensacao;
+	
+	@Transient
+	private String nomePagante;
 	
 	@ManyToOne
 	@JoinColumn(name="idCaixa")
@@ -167,6 +171,14 @@ public class Pagamento implements Serializable {
 
 	public void setCaixa(Caixa caixa) {
 		this.caixa = caixa;
+	}
+
+	public String getNomePagante() {
+		return nomePagante;
+	}
+
+	public void setNomePagante(String nomePagante) {
+		this.nomePagante = nomePagante;
 	}
 
 	@Override

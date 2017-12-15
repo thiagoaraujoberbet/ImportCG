@@ -84,7 +84,7 @@ public class DespesaMB implements Serializable {
 		return "";
 	}
 
-	public String salvarItem() {
+	public void salvarItem() {
 		itemDespesa = itemDespesaService.salvar(itemDespesa);
 		
 		if (isEdicaoItem()) {
@@ -101,9 +101,9 @@ public class DespesaMB implements Serializable {
 			this.atualizarDespesaPositiva(itemDespesa.getValor());
 		}
 		
-		FacesUtil.addInfoMessage("Item cadastrado com sucesso!");
+		itensDespesa = itemDespesaService.porIdDespesa(itemDespesa.getDespesa().getId());
 		
-		return "";
+		FacesUtil.addInfoMessage("Item cadastrado com sucesso!");
 	}
 	
 	private void atualizarDespesaPositiva(BigDecimal valor) {

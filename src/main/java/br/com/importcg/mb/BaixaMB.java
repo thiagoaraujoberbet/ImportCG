@@ -93,7 +93,7 @@ public class BaixaMB implements Serializable {
 		return "";
 	}
 
-	public String salvarItem() {
+	public void salvarItem() {
 		itemBaixa = itemBaixaService.salvar(itemBaixa);
 		
 		if (isEdicaoItem()) {
@@ -110,9 +110,9 @@ public class BaixaMB implements Serializable {
 			this.atualizarBaixaPositiva(itemBaixa.getValor());
 		}
 		
-		FacesUtil.addInfoMessage("Item cadastrado com sucesso!");
+		itensBaixa = itemBaixaService.porIdBaixa(itemBaixa.getBaixa().getId());
 		
-		return "";
+		FacesUtil.addInfoMessage("Item cadastrado com sucesso!");
 	}
 	
 	private void atualizarBaixaPositiva(BigDecimal valor) {

@@ -83,7 +83,7 @@ public class VendaMB implements Serializable {
 		if (idVenda != null) {
 			venda = vendaService.porId(idVenda);
 			itemVenda.setVenda(venda);
-			itensVenda = itemVendaService.porIdEntrada(idVenda);
+			itensVenda = itemVendaService.porIdVenda(idVenda);
 		} else {
 			venda.setDataVenda(new Date());
 			venda.setValorTotal(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN));
@@ -134,6 +134,7 @@ public class VendaMB implements Serializable {
 		}
 		
 		itensEntrada = itemEntradaService.buscarItensParaVenda();
+		itensVenda = itemVendaService.porIdVenda(itemVenda.getVenda().getId());
 		
 		FacesUtil.addInfoMessage("Item cadastrado com sucesso!");
 	}
@@ -202,7 +203,7 @@ public class VendaMB implements Serializable {
 		}
 		
 		pagamento = new Pagamento();
-		pagamentos = pagamentoService.porIdVenda(idVenda);
+		pagamentos = pagamentoService.porIdVenda(venda.getId());
 		
 		this.edicaoPagamento = false;
 		

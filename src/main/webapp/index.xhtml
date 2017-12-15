@@ -10,18 +10,28 @@
 
     <ui:define name="title">
     		<h:form id="hForm">
-        		<p:growl id="growl" showDetail="true" sticky="true"/>
-        		<p:commandButton id="emitirAvisos" value="" update="growl" actionListener="#{listaPrincipalMB.emitirAvisos}"/>
+        		<p:growl id="growl" showDetail="true" sticky="false"/>
+        		<p:commandButton id="emitirAvisos" value="" style="display: none;" update="growl" actionListener="#{listaPrincipalMB.emitirAvisos}"/>
         		
 	    		<script type="text/javascript">
 	    			function initAvisos() {
-	    				$("hForm:emitirAvisos").click();
+	    				document.getElementById('hForm:emitirAvisos').onclick();
 	    			}
 	    			
 	    			window.onload = function () {
 	    				initAvisos();
 	    			}
 	    		</script>
+	    		
+	    		<style>
+					.ui-growl-item-container {
+				    	left: 190%;
+					}
+					
+					.ui-messages {
+						display: none;
+					}
+				</style>
         </h:form>
 
         <h2 class="align-center">

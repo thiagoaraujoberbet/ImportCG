@@ -110,7 +110,7 @@ public class EntradaMB implements Serializable {
 		return "";
 	}
 
-	public String salvarItem() {
+	public void salvarItem() {
 		itemEntrada = itemEntradaService.salvar(itemEntrada);
 		
 		if (isEdicaoItem()) {
@@ -138,9 +138,9 @@ public class EntradaMB implements Serializable {
 			this.atualizarEntradaPositiva(itemEntrada.getQuantidade(), itemEntrada.getValorEmReal());
 		}
 		
-		FacesUtil.addInfoMessage("Item cadastrado com sucesso!");
+		itensEntrada = itemEntradaService.porIdEntrada(itemEntrada.getEntrada().getId());
 		
-		return "";
+		FacesUtil.addInfoMessage("Item cadastrado com sucesso!");
 	}
 	
 	private void atualizarEntradaPositiva(Integer quantidade, BigDecimal valor) {

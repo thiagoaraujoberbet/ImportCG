@@ -36,4 +36,12 @@ public class PagamentoService implements Serializable {
 	public Pagamento porId(Long id) {
 		return pagamentoDAO.porId(id);
 	}
+
+	public List<Pagamento> buscarRecebimentosDiarioCliente() {
+		return pagamentoDAO.buscarRecebimentosDiarioCliente();
+	}
+
+	public List<Pagamento> buscarRecebimentosDiarioPagSeguro() {
+		return pagamentoDAO.buscarRecebimentosDiarioPagSeguro();
+	}
 }
