@@ -159,3 +159,10 @@ from importcg.pagamento p
 inner join importcg.venda v ON p.idVenda = v.idVenda
 inner join importcg.pessoa pe ON v.idCliente = pe.idPessoa
 where p.pago = 0 and p.dataRecebimento = '2017-12-27';
+
+select SUM(p.saldo) from importcg.pagamento p inner join importcg.venda v on p.idVenda = v.idVenda where v.status = 'AGUARDANDOPAGAMENTO' and p.pago = 1; 
+select SUM(p.saldo) from importcg.pagamento p inner join importcg.venda v on p.idVenda = v.idVenda where v.status = 'PAGAMENTOPARCIAL' and p.pago = 1;
+
+
+select SUM(p.saldo) from importcg.pagamento p inner join importcg.venda v on p.idVenda = v.idVenda where v.status = 'AGUARDANDOPAGAMENTO' and p.pago = 0; 
+select SUM(p.saldo) from importcg.pagamento p inner join importcg.venda v on p.idVenda = v.idVenda where v.status = 'PAGAMENTOPARCIAL' and p.pago = 0; 
