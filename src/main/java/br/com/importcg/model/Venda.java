@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.importcg.enumeration.EnumStatusVenda;
 
@@ -58,6 +59,9 @@ public class Venda implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "venda", cascade = CascadeType.ALL)	
 	private List<Pagamento> pagamentos;
+	
+	@Transient
+	private BigDecimal restante;
 
 	public Venda() {
 		super();
@@ -117,6 +121,14 @@ public class Venda implements Serializable {
 
 	public void setStatus(EnumStatusVenda status) {
 		this.status = status;
+	}
+
+	public BigDecimal getRestante() {
+		return restante;
+	}
+
+	public void setRestante(BigDecimal restante) {
+		this.restante = restante;
 	}
 
 	public boolean isInclusao() {

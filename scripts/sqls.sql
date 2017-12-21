@@ -166,3 +166,10 @@ select SUM(p.saldo) from importcg.pagamento p inner join importcg.venda v on p.i
 
 select SUM(p.saldo) from importcg.pagamento p inner join importcg.venda v on p.idVenda = v.idVenda where v.status = 'AGUARDANDOPAGAMENTO' and p.pago = 0; 
 select SUM(p.saldo) from importcg.pagamento p inner join importcg.venda v on p.idVenda = v.idVenda where v.status = 'PAGAMENTOPARCIAL' and p.pago = 0; 
+
+SELECT v.idVenda, v.idCliente, v.idFuncionario, v.dataVenda, v.valorTotal, v.quantidadeTotal, v.status,
+	case when 
+		(select SUM(p.saldo) from importcg.pagamento p inner join importcg.venda ve on p.idVenda = ve.idVenda where p.pago = 0 and ve.idVenda = v.idVenda)  is null then 0 else 
+		(select SUM(p.saldo) from importcg.pagamento p inner join importcg.venda ve on p.idVenda = ve.idVenda where p.pago = 0 and ve.idVenda = v.idVenda) end as restante
+FROM importcg.venda v
+ORDER BY status ASC, dataVenda DESC;

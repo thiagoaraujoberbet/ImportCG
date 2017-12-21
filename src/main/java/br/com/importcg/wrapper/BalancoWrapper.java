@@ -6,6 +6,8 @@ public class BalancoWrapper {
 
 	private BigDecimal valoresEntrada;
 	
+	private BigDecimal valoresPago;
+	
 	private BigDecimal valoresSaida;
 	
 	private BigDecimal valoresRecebido;
@@ -18,6 +20,14 @@ public class BalancoWrapper {
 
 	public void setValoresEntrada(BigDecimal valoresEntrada) {
 		this.valoresEntrada = valoresEntrada;
+	}
+
+	public BigDecimal getValoresPago() {
+		return valoresPago;
+	}
+
+	public void setValoresPago(BigDecimal valoresPago) {
+		this.valoresPago = valoresPago;
 	}
 
 	public BigDecimal getValoresSaida() {

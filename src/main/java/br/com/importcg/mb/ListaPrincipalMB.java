@@ -66,6 +66,12 @@ public class ListaPrincipalMB implements Serializable {
 	
 	private BigDecimal valorPagar;
 	
+	private BigDecimal saldoMensalAnterior;
+	
+	private BigDecimal saldoMensalAtual;
+	
+	private BigDecimal saldoMensalGeral;
+	
 	@PostConstruct
 	public void inicializar() {
 		mesAnterior = principalService.buscarBalancoMesAnterior();
@@ -107,49 +113,65 @@ public class ListaPrincipalMB implements Serializable {
 	}
 
 	private void createPieModelMesAnterior() {
-    	pieModelMesAnterior = new PieChartModel();
+		pieModelMesAnterior = new PieChartModel();
     	
-    	pieModelMesAnterior = this.montarPieChartModel(pieModelMesAnterior, mesAnterior);
+    		pieModelMesAnterior = this.montarPieChartModel(pieModelMesAnterior, mesAnterior, "mesAnterior");
         
-        pieModelMesAnterior.setTitle("Mês Anterior");
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+        pieModelMesAnterior.setTitle("Mês Anterior -> R - (P + D) = " + nf.format(saldoMensalAnterior));
         pieModelMesAnterior.setLegendPosition("w");
         pieModelMesAnterior.setShowDataLabels(true);
-        pieModelMesAnterior.setSeriesColors("93ABCD,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
+        pieModelMesAnterior.setSeriesColors("93ABCD,2758BA,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
 	
     private void createPieModelMesAtual() {
-    	pieModelMesAtual = new PieChartModel();
+    		pieModelMesAtual = new PieChartModel();
     	
-    	pieModelMesAtual = this.montarPieChartModel(pieModelMesAtual, mesAtual);
+		pieModelMesAtual = this.montarPieChartModel(pieModelMesAtual, mesAtual, "mesAtual");
         
-        pieModelMesAtual.setTitle("Mês Atual");
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+        pieModelMesAtual.setTitle("Mês Atual -> R - (P + D) = " + nf.format(saldoMensalAtual));
         pieModelMesAtual.setLegendPosition("w");
         pieModelMesAtual.setShowDataLabels(true);
-        pieModelMesAtual.setSeriesColors("93ABCD,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
+        pieModelMesAtual.setSeriesColors("93ABCD,2758BA,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
     
     private void createPieModelGeral() {
-    	pieModelGeral = new PieChartModel();
+    		pieModelGeral = new PieChartModel();
     	
-    	pieModelGeral = this.montarPieChartModel(pieModelGeral, geral);
+    		pieModelGeral = this.montarPieChartModel(pieModelGeral, geral, "geral");
         
-        pieModelGeral.setTitle("Geral");
+    		NumberFormat nf = NumberFormat.getCurrencyInstance();
+        pieModelGeral.setTitle("Geral -> R - (P + D) = " + nf.format(saldoMensalGeral));
         pieModelGeral.setLegendPosition("w");
         pieModelGeral.setShowDataLabels(true); 
-        pieModelGeral.setSeriesColors("93ABCD,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
+        pieModelGeral.setSeriesColors("93ABCD,2758BA,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
     
-	private PieChartModel montarPieChartModel(PieChartModel pieModel, List<BalancoWrapper> lista) {
+	private PieChartModel montarPieChartModel(PieChartModel pieModel, List<BalancoWrapper> lista, String referencia) {
 		NumberFormat nf = NumberFormat.getCurrencyInstance();
 		
         for (BalancoWrapper item : lista) {
         	String entrada  = (item.getValoresEntrada() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresEntrada()));
+        	String pago     = (item.getValoresPago() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresPago()));
         	String saida    = (item.getValoresSaida() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresSaida()));
         	String recebido = (item.getValoresRecebido() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresRecebido()));
         	String despesa  = (item.getValoresDespesa() == null ? nf.format(new BigDecimal(0)) : nf.format(item.getValoresDespesa()));
         	
-        	pieModel.set("Compras:  " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
-        	pieModel.set("Vendas:   " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
+        	BigDecimal saldo = (item.getValoresRecebido() == null ? new BigDecimal(0) : item.getValoresRecebido()).
+        			subtract((item.getValoresPago() == null ? new BigDecimal(0) : item.getValoresPago()).
+        					add((item.getValoresDespesa() == null ? new BigDecimal(0) : item.getValoresDespesa())));
+        	
+        	if ("mesAnterior".equals(referencia))
+        		saldoMensalAnterior =  saldo;
+        	if ("mesAtual".equals(referencia))
+        		saldoMensalAtual = saldo;
+        	if ("geral".equals(referencia))
+        		saldoMensalGeral = saldo;
+        	
+        	pieModel.set("Comprado:  " + entrada, (item.getValoresEntrada() == null ? new BigDecimal(0) : item.getValoresEntrada()));
+        	pieModel.set("Pago:  " + pago, (item.getValoresPago() == null ? new BigDecimal(0) : item.getValoresPago()));
+        	pieModel.set("Vendido:   " + saida, item.getValoresSaida() == null ? new BigDecimal(0) : item.getValoresSaida());
         	pieModel.set("Recebido: " + recebido, item.getValoresRecebido() == null ? new BigDecimal(0) : item.getValoresRecebido());
         	pieModel.set("Despesas: " + despesa, item.getValoresDespesa() == null ? new BigDecimal(0) : item.getValoresDespesa());
         }
@@ -305,5 +327,28 @@ public class ListaPrincipalMB implements Serializable {
 	public void setValorPagar(BigDecimal valorPagar) {
 		this.valorPagar = valorPagar;
 	}
-	
+
+	public BigDecimal getSaldoMensalAnterior() {
+		return saldoMensalAnterior;
+	}
+
+	public void setSaldoMensalAnterior(BigDecimal saldoMensalAnterior) {
+		this.saldoMensalAnterior = saldoMensalAnterior;
+	}
+
+	public BigDecimal getSaldoMensalAtual() {
+		return saldoMensalAtual;
+	}
+
+	public void setSaldoMensalAtual(BigDecimal saldoMensalAtual) {
+		this.saldoMensalAtual = saldoMensalAtual;
+	}
+
+	public BigDecimal getSaldoMensalGeral() {
+		return saldoMensalGeral;
+	}
+
+	public void setSaldoMensalGeral(BigDecimal saldoMensalGeral) {
+		this.saldoMensalGeral = saldoMensalGeral;
+	}
 }

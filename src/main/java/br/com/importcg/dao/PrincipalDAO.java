@@ -36,7 +36,10 @@ public class PrincipalDAO implements Serializable {
 		sql.append("	where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and p.pago = 1) recebido, ");
 		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
 		sql.append("	inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
-		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and ib.baixado = 1 and d.idEntrada is null) despesas;");
+		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and ib.baixado = 1 and d.idEntrada is null) despesas, ");
+		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("	inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
+		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and ib.baixado = 1) pago");
 		
 		Query query = manager.createNativeQuery(sql.toString());
 		
@@ -61,6 +64,10 @@ public class PrincipalDAO implements Serializable {
 			
 			if (item[3] != null) {
 				balanco.setValoresDespesa(new BigDecimal(item[3].toString()));
+			}
+			
+			if (item[4] != null) {
+				balanco.setValoresPago(new BigDecimal(item[4].toString()));
 			}
 			
 			itens.add(balanco);
@@ -83,7 +90,10 @@ public class PrincipalDAO implements Serializable {
 		sql.append("	where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and p.pago = 1) recebido, ");
 		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
 		sql.append("	inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
-		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and ib.baixado = 1 and d.idEntrada is null) despesas;");
+		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and ib.baixado = 1 and d.idEntrada is null) despesas, ");
+		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("	inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
+		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and ib.baixado = 1) pago;");
 		
 		Query query = manager.createNativeQuery(sql.toString());
 		
@@ -108,6 +118,10 @@ public class PrincipalDAO implements Serializable {
 			
 			if (item[3] != null) {
 				balanco.setValoresDespesa(new BigDecimal(item[3].toString()));
+			}
+			
+			if (item[4] != null) {
+				balanco.setValoresPago(new BigDecimal(item[4].toString()));
 			}
 			
 			itens.add(balanco);
@@ -126,7 +140,10 @@ public class PrincipalDAO implements Serializable {
 		sql.append("(SELECT SUM(p.saldo) from importcg.pagamento p WHERE p.pago = 1) recebido, ");
 		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
 		sql.append("	inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
-		sql.append("	where ib.baixado = 1 and d.idEntrada is null) despesas;");
+		sql.append("	where ib.baixado = 1 and d.idEntrada is null) despesas, ");
+		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("	inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
+		sql.append("	where ib.baixado = 1) pago;");
 		
 		Query query = manager.createNativeQuery(sql.toString());
 		
@@ -151,6 +168,10 @@ public class PrincipalDAO implements Serializable {
 			
 			if (item[3] != null) {
 				balanco.setValoresDespesa(new BigDecimal(item[3].toString()));
+			}
+			
+			if (item[4] != null) {
+				balanco.setValoresPago(new BigDecimal(item[4].toString()));
 			}
 			
 			itens.add(balanco);

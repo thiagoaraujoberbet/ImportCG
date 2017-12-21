@@ -353,7 +353,7 @@ public class VendaMB implements Serializable {
 		BigDecimal valorRestante = new BigDecimal(0);
 		for (Pagamento item : pagamentos) {
 			if (!item.isPago())
-				valorRestante = valorRestante.add(item.getValor());
+				valorRestante = valorRestante.add(item.getSaldo());
 		}
 		return valorRestante;
 	}
