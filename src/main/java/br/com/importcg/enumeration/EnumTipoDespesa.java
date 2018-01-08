@@ -6,9 +6,12 @@ public enum EnumTipoDespesa {
 	COMBUSTIVEL("Combustível"),
 	COMPRAPRODUTO("Compra de Produtos"),
 	FRETE("Frete"),
+	IMPOSTO("Imposto"),
 	MARKETING("Marketing"),
 	MANUTENCAOCARRO("Manutenção do Carro"),
-	OUTROS("Outros");
+	OUTROS("Outros"),
+	REDESOCIAL("Rede Social"),
+	TAXA("Taxa");
 	
 	private String descricao;
 	
