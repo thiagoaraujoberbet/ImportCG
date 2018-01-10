@@ -173,3 +173,7 @@ SELECT v.idVenda, v.idCliente, v.idFuncionario, v.dataVenda, v.valorTotal, v.qua
 		(select SUM(p.saldo) from importcg.pagamento p inner join importcg.venda ve on p.idVenda = ve.idVenda where p.pago = 0 and ve.idVenda = v.idVenda) end as restante
 FROM importcg.venda v
 ORDER BY status ASC, dataVenda DESC;
+
+
+select p.saldo from importcg.pagamento p
+			where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and p.pago = 1;

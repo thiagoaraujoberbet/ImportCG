@@ -91,7 +91,7 @@ public class VendaMB implements Serializable {
 		}
 		
 		if (clientes.isEmpty()) {
-			clientes = pessoaService.listarTodos(EnumTipoPessoa.CLIENTE);
+			clientes = pessoaService.listarTodos(null);
 		}
 		
 		if (funcionarios.isEmpty()) {

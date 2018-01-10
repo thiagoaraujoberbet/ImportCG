@@ -46,8 +46,10 @@ public class PessoaDAO implements Serializable {
 	public List<Pessoa> listarTodos(EnumTipoPessoa tipo) {
 		if (EnumTipoPessoa.FUNCIONARIO.equals(tipo))
 			return manager.createNativeQuery("SELECT * FROM pessoa WHERE tipo = :tipo ORDER BY nome ASC", Pessoa.class).setParameter("tipo", EnumTipoPessoa.FUNCIONARIO.toString()).getResultList();
-		else 
+		else if (EnumTipoPessoa.CLIENTE.equals(tipo))
 			return manager.createNativeQuery("SELECT * FROM pessoa WHERE tipo = :tipo ORDER BY nome ASC", Pessoa.class).setParameter("tipo", EnumTipoPessoa.CLIENTE.toString()).getResultList();
+		else 
+			return manager.createNativeQuery("SELECT * FROM pessoa ORDER BY nome ASC", Pessoa.class).getResultList();
 	}
 
 	@SuppressWarnings("unchecked")

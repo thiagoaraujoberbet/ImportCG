@@ -32,7 +32,7 @@ public class PagamentoDAO implements Serializable {
 	}
 
 	public List<Pagamento> porIdVenda(Long idVenda) {
-		return manager.createQuery("SELECT p FROM Pagamento p WHERE p.venda.id = :idVenda", Pagamento.class).setParameter("idVenda", idVenda).getResultList();
+		return manager.createQuery("SELECT p FROM Pagamento p WHERE p.venda.id = :idVenda ORDER BY p.data ASC", Pagamento.class).setParameter("idVenda", idVenda).getResultList();
 	}
 
 	public Pagamento porId(Long id) {
