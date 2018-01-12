@@ -117,26 +117,45 @@
                        currentPageReportTemplate=""
                        rowsPerPageTemplate="5,10,15,20,30">
                        
-                    <p:column headerText="Forma">
+                    <p:column headerText="Forma" width="8%;">
 						<h:outputText value="#{item.forma.descricao}"/>	
                     </p:column>
                     
-                   <p:column headerText="Valor">
+                   <p:column headerText="Valor" width="8%;">
                     	<h:outputText value="#{item.valor}">
                     		<f:convertNumber type="currency" currencySymbol="R$"/>
                     	</h:outputText>
                     </p:column>
                     
-                    <p:column headerText="Saldo">
+                    <p:column headerText="Saldo" width="8%;">
                     	<h:outputText value="#{item.forma eq 'DINHEIRO' or item.forma eq 'CHEQUE' ? item.valor : item.saldo}">
                     		<f:convertNumber type="currency" currencySymbol="R$"/>
                     	</h:outputText>
                     </p:column>
                     
-                   	<p:column headerText="Data de Pag.">
+                   	<p:column headerText="Data de Pag." width="8%;">
 						<h:outputText value="#{item.data}">
 							<f:convertDateTime pattern="dd/MM/yyyy"/>
 						</h:outputText>	
+                    </p:column>
+                    
+                    <p:column headerText="Conta Recebimento">
+                    		<p:selectOneMenu id="caixa" value="#{vendaMB.pagamento.caixa}" converter="caixaConverter" var="c" filter="true" filterMatchMode="contains">
+							<f:selectItem itemLabel="Selecione..."/>
+				            <f:selectItems value="#{vendaMB.caixas}" var="caixa" itemLabel="#{caixa.conta.tipo.descricao} | #{caixa.conta.instituicao.descricao} | #{caixa.conta.funcionario.nome}" itemValue="#{caixa}" />
+					        
+				            <p:column>
+				                <h:outputText value="#{c.conta.tipo.descricao}" />
+				            </p:column>
+					 
+				            	<p:column>
+				                <h:outputText value="#{c.conta.instituicao.descricao}" />
+				            </p:column>
+					            
+				            <p:column>
+				                <h:outputText value="#{c.conta.funcionario.nome}" />
+				            </p:column>
+			        		</p:selectOneMenu>
                     </p:column>
                     
                     <p:column headerText="Recebido?" width="10%">
