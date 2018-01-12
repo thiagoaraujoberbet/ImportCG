@@ -13,7 +13,6 @@ import javax.inject.Named;
 
 import br.com.importcg.enumeration.EnumFormaPagamento;
 import br.com.importcg.enumeration.EnumStatusVenda;
-import br.com.importcg.enumeration.EnumTipoConta;
 import br.com.importcg.enumeration.EnumTipoPessoa;
 import br.com.importcg.model.Caixa;
 import br.com.importcg.model.ItemEntrada;
@@ -289,7 +288,7 @@ public class VendaMB implements Serializable {
 	}
 	
 	private void confirmarRecebimentoCaixaFuncionarioEmDinheiro() {
-		Caixa caixa = caixaService.porIdFuncionario(venda.getFuncionario().getId(), EnumTipoConta.CONTAMANUAL);
+		Caixa caixa = pagamento.getCaixa();
 		
 		if (pagamento.isPago())
 			caixa.setValor(caixa.getValor().add(pagamento.getValor()));

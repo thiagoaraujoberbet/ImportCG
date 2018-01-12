@@ -9,7 +9,7 @@
 		
    			<div class="ui-fluid">
        
-        		<p:panelGrid id="cadastroGeral" columns="13" style="width:100%;" rendered="#{vendaMB.venda.status ne 'VENDACONCLUIDA'}">
+        			<p:panelGrid id="cadastroGeral" columns="13" style="width:100%;" rendered="#{vendaMB.venda.status ne 'VENDACONCLUIDA'}">
         		
 					<p:outputLabel value="Pago R$" for="valorPago"/>
 					<p:inputNumber id="valorPago" value="#{vendaMB.calcularValorPago()}" disabled="true"/>
@@ -34,9 +34,6 @@
 					
 					<p:outputLabel value="Data" for="dataPagamento"/>
 					<p:calendar id="dataPagamento" value="#{vendaMB.pagamento.data}" pattern="dd/MM/yyyy" mask="true"/>
-					
-					<p:commandButton action="#{vendaMB.salvarPagamento()}" update="@form" icon="fa fa-plus" title="Adicionar" styleClass="btn-success"
-						rendered="#{vendaMB.pagamento.forma eq 'DINHEIRO'}"/>
 		
 				</p:panelGrid>
 				
@@ -70,8 +67,8 @@
 				<p:panelGrid id="cadastroCheque" columns="5" style="width:100%;" 
 					rendered="#{vendaMB.pagamento.forma eq 'CHEQUE' and vendaMB.venda.status ne 'VENDACONCLUIDA'}">
 					
-					<p:outputLabel value="Conta de Crédito" for="caixa"/>
-					<p:selectOneMenu id="caixa" value="#{vendaMB.pagamento.caixa}" converter="caixaConverter" var="c" filter="true" filterMatchMode="contains">
+					<p:outputLabel value="Conta de Crédito" for="caixaCreditoCheque"/>
+					<p:selectOneMenu id="caixaCreditoCheque" value="#{vendaMB.pagamento.caixa}" converter="caixaConverter" var="c" filter="true" filterMatchMode="contains">
 						<f:selectItem itemLabel="Selecione..."/>
 			            <f:selectItems value="#{vendaMB.caixas}" var="caixa" 
 			            	itemLabel="#{caixa.conta.nome} | #{caixa.conta.tipo.descricao} | #{caixa.conta.instituicao.descricao} | #{caixa.conta.funcionario.nome} | #{caixa.valor}" itemValue="#{caixa}" />
@@ -108,6 +105,44 @@
 
 				<p:spacer />
 
+				<p:panelGrid id="cadastroDinheiro" columns="5" style="width:100%;" 
+					rendered="#{vendaMB.pagamento.forma eq 'DINHEIRO' and vendaMB.venda.status ne 'VENDACONCLUIDA'}">
+					
+					<p:outputLabel value="Conta de Crédito" for="caixaCreditoDinheiro"/>
+					<p:selectOneMenu id="caixaCreditoDinheiro" value="#{vendaMB.pagamento.caixa}" converter="caixaConverter" var="c" filter="true" filterMatchMode="contains">
+						<f:selectItem itemLabel="Selecione..."/>
+			            <f:selectItems value="#{vendaMB.caixas}" var="caixa" 
+			            	itemLabel="#{caixa.conta.nome} | #{caixa.conta.tipo.descricao} | #{caixa.conta.instituicao.descricao} | #{caixa.conta.funcionario.nome} | #{caixa.valor}" itemValue="#{caixa}" />
+			        
+		            	<p:column>
+			                <h:outputText value="#{c.conta.nome}" />
+			            </p:column>
+			            
+			            <p:column>
+			                <h:outputText value="#{c.conta.tipo.descricao}" />
+			            </p:column>
+			 
+		            	<p:column>
+			                <h:outputText value="#{c.conta.instituicao.descricao}" />
+			            </p:column>
+			            
+			            <p:column>
+			                <h:outputText value="#{c.conta.funcionario.nome}" />
+			            </p:column>
+			            
+			            <p:column>
+			                <h:outputText value="#{c.valor}">
+			                	<f:convertNumber type="currency" currencySymbol="R$"/>
+			                </h:outputText>
+			            </p:column>
+			        </p:selectOneMenu>
+					
+					<p:commandButton action="#{vendaMB.salvarPagamento()}" update="@form" icon="fa fa-plus" title="Adicionar" styleClass="btn-success"
+						rendered="#{vendaMB.pagamento.forma eq 'DINHEIRO'}"/>
+				</p:panelGrid>
+
+				<p:spacer />
+				
 				<p:dataTable id="pagamentoTable" widgetVar="pagamentoTable" rows="5"	 
       			 		value="#{vendaMB.pagamentos}" var="item" rowKey="#{item.id}"
       			 		expandableRowGroups="true"
@@ -117,45 +152,26 @@
                        currentPageReportTemplate=""
                        rowsPerPageTemplate="5,10,15,20,30">
                        
-                    <p:column headerText="Forma" width="8%;">
+                    <p:column headerText="Forma">
 						<h:outputText value="#{item.forma.descricao}"/>	
                     </p:column>
                     
-                   <p:column headerText="Valor" width="8%;">
+                   <p:column headerText="Valor">
                     	<h:outputText value="#{item.valor}">
                     		<f:convertNumber type="currency" currencySymbol="R$"/>
                     	</h:outputText>
                     </p:column>
                     
-                    <p:column headerText="Saldo" width="8%;">
+                    <p:column headerText="Saldo">
                     	<h:outputText value="#{item.forma eq 'DINHEIRO' or item.forma eq 'CHEQUE' ? item.valor : item.saldo}">
                     		<f:convertNumber type="currency" currencySymbol="R$"/>
                     	</h:outputText>
                     </p:column>
                     
-                   	<p:column headerText="Data de Pag." width="8%;">
+                   	<p:column headerText="Data de Pag.">
 						<h:outputText value="#{item.data}">
 							<f:convertDateTime pattern="dd/MM/yyyy"/>
 						</h:outputText>	
-                    </p:column>
-                    
-                    <p:column headerText="Conta Recebimento">
-                    		<p:selectOneMenu id="caixa" value="#{vendaMB.pagamento.caixa}" converter="caixaConverter" var="c" filter="true" filterMatchMode="contains">
-							<f:selectItem itemLabel="Selecione..."/>
-				            <f:selectItems value="#{vendaMB.caixas}" var="caixa" itemLabel="#{caixa.conta.tipo.descricao} | #{caixa.conta.instituicao.descricao} | #{caixa.conta.funcionario.nome}" itemValue="#{caixa}" />
-					        
-				            <p:column>
-				                <h:outputText value="#{c.conta.tipo.descricao}" />
-				            </p:column>
-					 
-				            	<p:column>
-				                <h:outputText value="#{c.conta.instituicao.descricao}" />
-				            </p:column>
-					            
-				            <p:column>
-				                <h:outputText value="#{c.conta.funcionario.nome}" />
-				            </p:column>
-			        		</p:selectOneMenu>
                     </p:column>
                     
                     <p:column headerText="Recebido?" width="10%">
