@@ -1,4 +1,4 @@
-vendaselect IFNULL(sum(iv.quantidade), 0) from importcg.itemVenda iv where iv.idItemEntrada = 29;
+select IFNULL(sum(iv.quantidade), 0) from importcg.itemVenda iv where iv.idItemEntrada = 29;
 
 select sum(ie.quantidade) from importcg.itemEntrada ie where ie.idItemEntrada = 27;
 

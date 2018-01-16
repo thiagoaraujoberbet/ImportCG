@@ -4,19 +4,24 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import br.com.importcg.enumeration.EnumRole;
 
 @Entity
 @Table(name = "usuario")
+@NamedQuery(name = "User.findUserByLogin", query = "select u from Usuario u where u.login = :login")
 public class Usuario implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5319711022812723466L;
+	
+	public static final String FIND_BY_LOGIN = "User.findUserByLogin";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +30,13 @@ public class Usuario implements Serializable {
 	
 	private String nome;
 	
+	@Column(unique=true)
 	private String login;
 	
 	private String senha;
+	
+	@Enumerated(EnumType.STRING)
+	private EnumRole role;
 
 	public Usuario() {
 		super();
@@ -63,6 +72,22 @@ public class Usuario implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public EnumRole getRole() {
+		return role;
+	}
+
+	public void setRole(EnumRole role) {
+		this.role = role;
+	}
+	
+	public boolean isAdmin() {
+		return EnumRole.ADMIN.equals(role);
+	}
+	
+	public boolean isUser() {
+		return EnumRole.USER.equals(role);
 	}
 
 	@Override

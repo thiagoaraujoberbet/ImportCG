@@ -41,23 +41,20 @@
                     <p class="login-box-msg">Sign in to start your session</p>
 
                     <div class="form-group has-feedback">
-                        <p:inputText id="txtUserName" class="form-control" label="User name" value="#{loginController.username}" required="true">
+                        <p:inputText id="txtUserName" class="form-control" label="User name" value="#{loginMB.login}" required="true">
                             <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
                         </p:inputText>
                         <p:watermark value="#{messages.usernameText}" for="txtUserName"/>
                     </div>
                     <div class="form-group has-feedback">
-                        <p:password id="txtPassword" class="form-control" label="Password" value="#{loginController.password}" required="true">
+                        <p:password id="txtPassword" class="form-control" label="Password" value="#{loginMB.senha}" required="true">
                             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </p:password>
                         <p:watermark for="txtPassword" value="#{messages.passwordText}"/>
                     </div>
-                    <div class="form-group">
-                        <p:captcha id="captcha" label="captcha" requiredMessage="Captcha is required"/>
-                    </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <p:commandButton ajax="false" value="#{messages.loginText}" action="#{loginController.login}" update="growlLogin" class="btn btn-primary btn-lg btn-block btn-flat" icon="fa fa-user"/>
+                            <p:commandButton ajax="false" value="#{messages.loginText}" action="#{loginMB.login}" update="growlLogin" class="btn btn-primary btn-lg btn-block btn-flat" icon="fa fa-user"/>
                         </div><!-- /.col -->
                     </div>
 

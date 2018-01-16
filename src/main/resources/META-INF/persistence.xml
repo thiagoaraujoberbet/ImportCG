@@ -27,6 +27,7 @@
 		<class>br.com.importcg.model.ItemBaixa</class>
 		<class>br.com.importcg.model.Fechamento</class>
 		<class>br.com.importcg.model.ItemFechamento</class>
+		<class>br.com.importcg.model.Usuario</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/importcg" />
