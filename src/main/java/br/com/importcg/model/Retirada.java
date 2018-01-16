@@ -25,7 +25,7 @@ public class Retirada implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idTramite", nullable=false)
+	@Column(name="idRetirada", nullable=false)
 	private Long id;
 	
 	@ManyToOne
