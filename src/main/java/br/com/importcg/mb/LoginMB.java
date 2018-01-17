@@ -50,7 +50,7 @@ public class LoginMB implements java.io.Serializable {
 			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 			request.getSession().setAttribute("usuario", usuario);
 			
-			return "/index.xhtml";
+			return "/pages/protected/index.xhtml";
 		}
 		
 		FacesUtil.addErrorMessage("Verifique seu login/senha!");

@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:adm="http://github.com/adminfaces"
+                template="../templates/template.xhtml">
+
+    <ui:define name="head-end">
+        <style type="text/css">
+            .ui-grid-row .ui-grid-col-2,
+            .ui-grid-row .ui-grid-col-10 {
+                padding: 0.5em 0;
+                margin-left: 10px;
+            }
+
+            .ui-orderlist .ui-orderlist-list {
+                height: auto;
+            }
+
+            .ui-orderlist .ui-grid-row .ui-grid-col-2,
+            .ui-orderlist .ui-grid-row .ui-grid-col-10 {
+                padding: 0;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="title">
+        Pesquisa de entradas
+    </ui:define>
+
+    <ui:define name="description">
+        Pesquise ... 
+    </ui:define>
+
+    <ui:define name="body">
+        <adm:breadcrumb title="Pesquisa de entradas"/>
+
+			<h:form>
+            	<div class="box box-primary">
+                	<div class="box-header with-border">
+                    	<p:commandButton action="manterEntrada?faces-redirect=true" ajax="false" icon="fa fa-plus" value="Novo" styleClass="btn-primary"/>
+                    	<p:spacer width="5"/>
+	                    <p:commandButton value="Excluir" icon="fa fa-trash" styleClass="btn-danger" action="#{listaEntradaMB.excluirSelecionadas}" 
+	                    	process="@form" update="@form" rendered="false"/>
+	                    <p:spacer width="5"/>
+	                    <p:commandButton value="Visualizar" oncomplete="PF('entradasSelecionadas').show()" update="@(.ui-dialog)"  styleClass="btn-info" icon="fa fa-search" rendered="#{listaEntradaMB.entradas.size() > 0}"/>
+	                                     
+	                    <p:separator/>
+	                    
+	                    <p:dataTable id="entradaTable" widgetVar="entradaTable" rows="10"	 
+	                    			 value="#{listaEntradaMB.entradas}" var="entrada" rowKey="#{entrada.id}"
+	                    			 selection="#{listaEntradaMB.entradasSelecionadas}"                   			 
+	                                 paginator="true" 	                                 
+	                                 paginatorPosition="bottom"	                                 
+	                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+	                                 currentPageReportTemplate=""
+	                                 rowsPerPageTemplate="5,10,15,20,30">
+	
+	                        <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>	                        
+	                        
+	                        <p:column headerText="Data da Compra" filterBy="#{entrada.dataCompraFormatada}" sortBy="#{entrada.dataCompraFormatada}">
+ 	                        	<h:link value="#{entrada.dataCompraFormatada}" outcome="manterEntrada.xhtml">
+	                        		<f:param name="id" value="#{entrada.id}"/>
+	                        	</h:link>
+	                        </p:column>
+	                        
+   	                        <p:column headerText="Valor Total" filterBy="#{entrada.valorTotal}" sortBy="#{entrada.valorTotal}">
+	                        	<h:outputText value="#{entrada.valorTotal}">
+	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
+	                        	</h:outputText>
+	                        </p:column>
+	                        
+  	                        <p:column headerText="Quantidade Total" filterBy="#{entrada.quantidadeTotal}" sortBy="#{entrada.quantidadeTotal}">
+	                        	<h:outputText value="#{entrada.quantidadeTotal}" />
+	                        </p:column>
+	                        
+   	                        <p:column headerText="Despesa Lançada?" filterBy="#{entrada.despesaLancada}" sortBy="#{entrada.despesaLancada}">
+	                        	<h:outputText value="#{entrada.despesaLancada eq true ? 'Sim' : 'Não'}" style="#{entrada.despesaLancada eq true ? 'color: #238E23;' : 'color: #FF0000;'}"/>
+	                        </p:column>
+	                        	
+	                    </p:dataTable>
+					</div>
+	            </div>
+        	</h:form>
+        	
+        	<p:dialog header="Entradas Selecionadas" widgetVar="entradasSelecionadas" height="250"
+                  	  width="600" responsive="true" styleClass="box-success">
+	            <p:dataList id="listaEntradasSelecionadas" value="#{listaEntradaMB.entradasSelecionadas}" var="entrada"
+	                        type="definition">
+							DATA DA COMPRA: #{entrada.dataCompraFormatada} - VALOR DA COMPRA: #{entrada.valorTotal} - QUANTIDADE: #{entrada.quantidadeTotal}  
+	            </p:dataList>
+			</p:dialog>
+        
+    </ui:define>
+
+</ui:composition>

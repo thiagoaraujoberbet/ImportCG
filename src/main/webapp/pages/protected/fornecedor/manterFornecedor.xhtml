@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
+                template="../templates/template.xhtml">
+
+    <ui:define name="title">
+        Cadastro Fornecedor
+    </ui:define>
+
+    <ui:define name="body">
+        <f:metadata>
+        	<f:viewParam name="id" value="#{fornecedorMB.idFornecedor}" converter="javax.faces.Long"/>
+        	<f:event listener="#{fornecedorMB.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+
+        <adm:breadcrumb title="Cadastro de Fornecedores #{fornecedorMB.fornecedor.id}" link="manterFornecedor.xhtml?id=#{fornecedorMB.fornecedor.id}"/>
+        <h:form id="form" prependId="false">
+        
+        	<p:focus context="capaPanel"/>
+			
+            <div class="box box-primary">
+            
+                <div class="box-header with-border">
+                
+                    <div id="main-buttons" class="hidden-sm hidden-xs">
+                        <p:commandButton value="Salvar" update="@form" icon="fa fa-check"  action="#{fornecedorMB.salvar()}" styleClass="btn-primary"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="Excluir" process="@this" rendered="#{fornecedorMB.fornecedor.edicao}" icon="fa fa-trash" action="#{fornecedorMB.excluir()}" styleClass="btn-danger"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="Voltar" immediate="true" action="listarFornecedor?faces-redirect=true" process="@this" icon="fa fa-close"/>
+                    </div>
+                    
+                    <p:splitButton value="Salvar" update="@form" icon="fa fa-check" action="#{fornecedorMB.salvar()}" styleClass="hidden-md hidden-lg btn-primary">
+                        <p:menuitem value="Excluir" process="@this" icon="fa fa-trash" action="#{fornecedorMB.excluir()}" rendered="#{fornecedorMB.fornecedor.edicao}"/>
+                        <p:separator/>
+                        <p:menuitem value="Voltar" action="listarFornecedor?faces-redirect=true" process="@this" icon="fa fa-close"/>
+                    </p:splitButton>
+
+                    <p:separator/>
+
+                    <div class="ui-fluid">
+                    
+						<p:panelGrid id="capaPanel" columns="4" style="width:100%;">
+						
+							<p:outputLabel value="Fornecedor" for="nome"/>
+							<p:inputText id="nome" value="#{fornecedorMB.fornecedor.nome}" style="width:100%;" required="true" requiredMessage="O nome do fornecedor é obrigatório!"/>	
+							
+							<p:outputLabel value="Endereço" for="endereco"/>
+							<p:inputTextarea id="endereco" value="#{fornecedorMB.fornecedor.endereco}" style="width:100%;" required="true" requiredMessage="O endereço do fornecedor é obrigatório!"/>
+							
+							<p:outputLabel value="E-mail" for="email"/>
+							<p:inputText id="email" value="#{fornecedorMB.fornecedor.email}" style="width:100%;"/>
+							
+							<p:outputLabel value="Site" for="site"/>
+							<p:inputText id="site" value="#{fornecedorMB.fornecedor.site}" style="width:100%;"/>
+							
+							<p:outputLabel value="Telefone" for="telefone"/>
+							<p:inputMask id="telefone" value="#{fornecedorMB.fornecedor.telefone}" mask="(99) 99999-9999" style="width:100%;"/>
+							
+							<p:outputLabel value="Instagram" for="instagram"/>
+							<p:inputText id="instagram" value="#{fornecedorMB.fornecedor.instagram}" style="width:100%;"/>
+													
+						</p:panelGrid>
+						
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

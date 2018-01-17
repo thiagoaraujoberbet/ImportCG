@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:adm="http://github.com/adminfaces"
+                template="../templates/template.xhtml">
+
+    <ui:define name="head-end">
+        <style type="text/css">
+            .ui-grid-row .ui-grid-col-2,
+            .ui-grid-row .ui-grid-col-10 {
+                padding: 0.5em 0;
+                margin-left: 10px;
+            }
+
+            .ui-orderlist .ui-orderlist-list {
+                height: auto;
+            }
+
+            .ui-orderlist .ui-grid-row .ui-grid-col-2,
+            .ui-orderlist .ui-grid-row .ui-grid-col-10 {
+                padding: 0;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="title">
+        Pesquisa de clientes
+    </ui:define>
+
+    <ui:define name="description">
+        Pesquise ... 
+    </ui:define>
+
+    <ui:define name="body">
+        <adm:breadcrumb title="Pesquisa de clientes"/>
+
+			<h:form>
+            	<div class="box box-primary">
+                	<div class="box-header with-border">
+                    	<p:commandButton action="manterCliente?faces-redirect=true" ajax="false" icon="fa fa-plus" value="Novo" styleClass="btn-primary"/>
+                    	<p:spacer width="5"/>
+	                    <p:commandButton value="Excluir" icon="fa fa-trash" styleClass="btn-danger" action="#{listaClienteMB.excluirSelecionados}" 
+	                    	process="@form" update="@form" rendered="false"/>
+	                    
+	                    <p:separator/>
+	                    
+	                    <p:dataTable id="clienteTable" widgetVar="clienteTable" rows="10"	 
+	                    			 value="#{listaClienteMB.clientes}" var="cliente" rowKey="#{cliente.id}"
+	                    			 selection="#{listaClienteMB.clientesSelecionados}"                   			 
+	                                 paginator="true" 	                                 
+	                                 paginatorPosition="bottom"	                                 
+	                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+	                                 currentPageReportTemplate=""
+	                                 rowsPerPageTemplate="5,10,15,20,30">
+	
+	                        <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>	                        
+	                        
+	                        <p:column headerText="Nome" filterBy="#{cliente.nome}" sortBy="#{cliente.nome}">
+	                        	<h:link value="#{cliente.nome}" outcome="manterCliente.xhtml">
+	                        		<f:param name="id" value="#{cliente.id}"/>
+	                        	</h:link>
+	                        </p:column>
+                        
+  	                        <p:column headerText="E-mail">
+	                        	<h:outputText value="#{cliente.email}" />
+	                        </p:column>
+	                        
+	                        <p:column headerText="Data de Nasc." filterBy="#{cliente.dataNascimento}" sortBy="#{cliente.dataNascimento}" style="width:10%; text-align:center;">
+	                        	<h:outputText value="#{cliente.dataNascimento}">
+	                        		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	                        	</h:outputText>
+	                        </p:column>
+	                        
+	                        <p:column headerText="Celular" style="width:12%; text-align:center;">
+	                        	<h:outputText value="#{cliente.celular}"/>
+	                        </p:column>
+	                        
+   	                        <p:column headerText="Qtde Comprada" style="width:7%; text-align:center;">
+	                        	<h:outputText value="#{cliente.quantidadeComprada}"/>
+	                        </p:column>
+	                         
+	                       	<p:column headerText="Desde" style="width:10%; text-align:center;">
+	                        	<h:outputText value="#{cliente.dataCriacao}">
+	                        		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	                        	</h:outputText>
+	                        </p:column>
+	                        
+	                    </p:dataTable>
+					</div>
+	            </div>
+        	</h:form>
+        	
+        	<p:dialog header="Clientes Selecionados" widgetVar="clientesSelecionados" height="250"
+                  	  width="400" responsive="true" styleClass="box-success">
+	            <p:dataList id="listaClientesSelecionados" value="#{listaClienteMB.clientesSelecionados}" var="cliente"
+	                        type="definition">
+							ID: #{cliente.id} - PRODUTO: #{cliente.nome} - DESCRIÇÃO: #{cliente.email} 
+	            </p:dataList>
+			</p:dialog>
+        
+    </ui:define>
+
+</ui:composition>

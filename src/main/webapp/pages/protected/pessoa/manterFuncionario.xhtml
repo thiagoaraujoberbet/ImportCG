@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
+                template="../templates/template.xhtml">
+
+    <ui:define name="title">
+        Cadastro Funcionario
+    </ui:define>
+
+    <ui:define name="body">
+        <f:metadata>
+        	<f:viewParam name="id" value="#{funcionarioMB.idFuncionario}" converter="javax.faces.Long"/>
+        	<f:event listener="#{funcionarioMB.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+        
+        <adm:breadcrumb title="Cadastro de Funcionarios #{funcionarioMB.funcionario.id}" link="manterFuncionario.xhtml?id=#{funcionarioMB.funcionario.id}"/>
+        <h:form id="form" prependId="false">
+            
+            <p:focus context="capaPanel"/>
+			
+            <div class="box box-primary">
+            
+                <div class="box-header with-border">
+                
+                    <div id="main-buttons" class="hidden-sm hidden-xs">
+                    
+                        <p:commandButton value="Salvar" 
+                        				 update="@form"
+                                         icon="fa fa-check" 
+                                         action="#{funcionarioMB.salvar()}"
+                                         styleClass="btn-primary"/>
+                        
+                        <p:spacer width="5"/>
+
+                        <p:commandButton value="Excluir" 
+                        				 process="@this"
+                        				 rendered="#{funcionarioMB.funcionario.edicao}"
+                                         icon="fa fa-trash"
+                                         action="#{funcionarioMB.excluir()}"
+                                         styleClass="btn-danger"/>
+                                         
+                        <p:spacer width="5"/>
+                        
+                        <p:commandButton value="Voltar" immediate="true"
+                                         action="listarFuncionario?faces-redirect=true"
+                                         process="@this"
+                                         icon="fa fa-close"/>
+                    </div>
+                    
+                    <p:splitButton value="Salvar" 
+                    			   update="@form"
+                                   icon="fa fa-check"
+                                   action="#{funcionarioMB.salvar()}"
+                                   styleClass="hidden-md hidden-lg btn-primary">
+                                   
+                        <p:menuitem value="Excluir"
+                                    process="@this"
+                                    icon="fa fa-trash"
+                                    action="#{funcionarioMB.excluir()}"
+                                    rendered="#{funcionarioMB.funcionario.edicao}">
+                        </p:menuitem>
+                                    
+                        <p:separator/>
+                        
+                        <p:menuitem value="Voltar" action="listarFuncionario?faces-redirect=true" process="@this"
+                                    icon="fa fa-close"/>
+                                    
+                    </p:splitButton>
+
+                    <p:separator/>
+
+                    <div class="ui-fluid">
+						<p:panelGrid id="capaPanel" columns="4" style="width:100%;">
+						
+							<p:outputLabel value="Nome" for="nome"/>
+							<p:inputText id="nome" value="#{funcionarioMB.funcionario.nome}" style="width:100%;" required="true" requiredMessage="O nome do funcionário é obrigatório!"/>	
+							
+							<p:outputLabel value="Cargo" for="cargo"/>
+							<p:selectOneMenu id="cargo" value="#{funcionarioMB.funcionario.cargo}" style="width:100%;" required="true" requiredMessage="O cargo do funcionário é obrigatório!">
+								<f:selectItem itemLabel="Selecione..."/>
+								<f:selectItem itemLabel="Sócio" itemValue="SOCIO"/>
+								<f:selectItem itemLabel="Vendedor" itemValue="VENDEDOR"/>
+							</p:selectOneMenu>
+							
+							<p:outputLabel value="Cpf" for="cpf"/>
+							<p:inputMask id="cpf" value="#{funcionarioMB.funcionario.cpf}" mask="999.999.999-99" style="width:100%;"/>
+													
+							<p:outputLabel value="Data de Nasc." for="dataNascimento"/>
+							<p:inputMask id="dataNascimento" value="#{funcionarioMB.funcionario.dataNascimento}" mask="99/99/9999" style="width:100%;" required="true" requiredMessage="A data de nascimento do funcionário é obrigatório!"/>
+							
+							<p:outputLabel value="Celular" for="celular"/>
+							<p:inputMask id="celular" value="#{funcionarioMB.funcionario.celular}" mask="(99) 99999-9999" style="width:100%;" required="true" requiredMessage="O celular do funcionário é obrigatório!"/>
+							
+							<p:outputLabel value="E-mail" for="email"/>
+							<p:inputText id="email" value="#{funcionarioMB.funcionario.email}" style="width:100%;" required="true" requiredMessage="O e-mail do funcionário é obrigatório!"/>
+							
+<!-- 							<p:outputLabel value="Data de Criação" for="dataCriacao"/> -->
+<!-- 							<p:inputText id="dataCriacao" value="#{funcionarioMB.funcionario.dataCriacao}" disabled="true" style="width:100%;"> -->
+<!-- 								<f:convertDateTime pattern="dd/MM/yyyy"/> -->
+<!-- 							</p:inputText> -->
+													
+						</p:panelGrid>
+						
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

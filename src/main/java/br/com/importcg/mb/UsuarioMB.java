@@ -28,7 +28,7 @@ public class UsuarioMB implements java.io.Serializable {
 	public String logOut() {
 		getRequest().getSession().invalidate();
 		
-		return "/login.xhtml";
+		return "/pages/public/login.xhtml";
 	}
 	
 	private HttpServletRequest getRequest() {
