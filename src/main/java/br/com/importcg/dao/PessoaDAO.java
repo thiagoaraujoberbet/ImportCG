@@ -56,9 +56,9 @@ public class PessoaDAO implements Serializable {
 	public List<Pessoa> buscarInformacoesFuncionario() {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT p.idPessoa, p.nome, p.cargo, p.cpf, p.dataNascimento, p.celular, p.email, p.tipo, p.dataCriacao, p.dataAlteracao, ");
-		sql.append("    case when (select SUM(iv.quantidade) from importcg.itemVenda iv JOIN importcg.venda v ON iv.idVenda = v.idVenda where v.idFuncionario = p.idPessoa) is null then 0 else ");
-		sql.append("    (select SUM(iv.quantidade) from importcg.itemVenda iv JOIN importcg.venda v ON iv.idVenda = v.idVenda where v.idFuncionario = p.idPessoa) end quantidadeVendida ");
-		sql.append("FROM importcg.pessoa p "); 
+		sql.append("    case when (select SUM(iv.quantidade) from itemVenda iv JOIN venda v ON iv.idVenda = v.idVenda where v.idFuncionario = p.idPessoa) is null then 0 else ");
+		sql.append("    (select SUM(iv.quantidade) from itemVenda iv JOIN venda v ON iv.idVenda = v.idVenda where v.idFuncionario = p.idPessoa) end quantidadeVendida ");
+		sql.append("FROM pessoa p "); 
 		sql.append("WHERE p.tipo = 'FUNCIONARIO' ");  
 		sql.append("ORDER BY p.nome "); 
 		
@@ -125,9 +125,9 @@ public class PessoaDAO implements Serializable {
 	public List<Pessoa> buscarInformacoesCliente() {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT p.idPessoa, p.nome, p.cargo, p.cpf, p.dataNascimento, p.celular, p.email, p.tipo, p.dataCriacao, p.dataAlteracao, ");
-		sql.append("    case when (select SUM(iv.quantidade) from importcg.itemVenda iv JOIN importcg.venda v ON iv.idVenda = v.idVenda where v.idCliente = p.idPessoa) is null then 0 else ");
-		sql.append("    (select SUM(iv.quantidade) from importcg.itemVenda iv JOIN importcg.venda v ON iv.idVenda = v.idVenda where v.idCliente = p.idPessoa) end quantidadeComprada ");
-		sql.append("FROM importcg.pessoa p "); 
+		sql.append("    case when (select SUM(iv.quantidade) from itemVenda iv JOIN venda v ON iv.idVenda = v.idVenda where v.idCliente = p.idPessoa) is null then 0 else ");
+		sql.append("    (select SUM(iv.quantidade) from itemVenda iv JOIN venda v ON iv.idVenda = v.idVenda where v.idCliente = p.idPessoa) end quantidadeComprada ");
+		sql.append("FROM pessoa p "); 
 		sql.append("WHERE p.tipo = 'CLIENTE' ");  
 		sql.append("ORDER BY p.nome "); 
 		

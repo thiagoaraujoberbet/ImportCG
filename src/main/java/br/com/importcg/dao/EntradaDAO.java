@@ -50,7 +50,7 @@ public class EntradaDAO implements Serializable {
 	public List<Entrada> buscarEntradasMensais() {
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("select * from importcg.entrada e ");
+		sql.append("select * from entrada e ");
 		sql.append("where e.dataCompra between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)");
 		
 		return manager.createNativeQuery(sql.toString(), Entrada.class).getResultList();

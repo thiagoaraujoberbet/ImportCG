@@ -20,15 +20,15 @@
             <p:focus/>
 	        
 	        <h:panelGroup id="cadastrarVenda">    
-				<ui:include src="/pages/venda/cadastrarVenda.xhtml" />
+				<ui:include src="/pages/protected/venda/cadastrarVenda.xhtml" />
 			</h:panelGroup>	
 			
             <h:panelGroup id="cadastrarProduto" rendered="#{vendaMB.venda.edicao}">  
-				<ui:include src="/pages/venda/cadastrarProduto.xhtml" />
+				<ui:include src="/pages/protected/venda/cadastrarProduto.xhtml" />
 			</h:panelGroup>	
 			
 	        <h:panelGroup id="cadastrarPagamento" rendered="#{vendaMB.itensVenda.size() > 0}"> 
-	        	<ui:include src="/pages/venda/cadastrarPagamento.xhtml" />
+	        	<ui:include src="/pages/protected/venda/cadastrarPagamento.xhtml" />
 	        </h:panelGroup>
 	                    
         </h:form>

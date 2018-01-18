@@ -61,10 +61,10 @@ public class EstoqueDAO implements Serializable {
 		StringBuilder sql = new StringBuilder();
 		 
 		sql.append("SELECT e.idEstoque, e.idProduto, e.quantidade, p.nome, p.marca, p.modelo, p.categoria, p.descricao, ");
-		sql.append("	case when (select SUM(iv.quantidade) FROM importcg.itemVenda iv WHERE iv.idProduto = p.idProduto) is null then 0 else ");
-		sql.append("		(select SUM(iv.quantidade) FROM importcg.itemVenda iv WHERE iv.idProduto = p.idProduto) end quantidadeTotalVenda ");
-		sql.append("FROM importcg.estoque e ");
-		sql.append("JOIN importcg.produto p ON e.idProduto = p.idProduto ");
+		sql.append("	case when (select SUM(iv.quantidade) FROM itemVenda iv WHERE iv.idProduto = p.idProduto) is null then 0 else ");
+		sql.append("		(select SUM(iv.quantidade) FROM itemVenda iv WHERE iv.idProduto = p.idProduto) end quantidadeTotalVenda ");
+		sql.append("FROM estoque e ");
+		sql.append("JOIN produto p ON e.idProduto = p.idProduto ");
 		sql.append("ORDER BY e.quantidade DESC, p.nome, p.marca, p.modelo ");
 		
 		Query query = manager.createNativeQuery(sql.toString());

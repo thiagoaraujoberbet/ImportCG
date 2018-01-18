@@ -54,9 +54,9 @@ public class PagamentoDAO implements Serializable {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT p.idPagamento, p.idVenda, p.forma, p.valor, p.saldo, pe.nome ");
-		sql.append("FROM importcg.pagamento p ");
-		sql.append("INNER JOIN importcg.venda v ON p.idVenda = v.idVenda ");
-		sql.append("INNER JOIN importcg.pessoa pe ON v.idCliente = pe.idPessoa ");
+		sql.append("FROM pagamento p ");
+		sql.append("INNER JOIN venda v ON p.idVenda = v.idVenda ");
+		sql.append("INNER JOIN pessoa pe ON v.idCliente = pe.idPessoa ");
 		sql.append("WHERE p.pago = 0 and p.data = :data");
 		
 		Query query = manager.createNativeQuery(sql.toString());
@@ -121,9 +121,9 @@ public class PagamentoDAO implements Serializable {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT p.idPagamento, p.idVenda, p.forma, p.valor, p.saldo, pe.nome ");
-		sql.append("FROM importcg.pagamento p ");
-		sql.append("INNER JOIN importcg.venda v ON p.idVenda = v.idVenda ");
-		sql.append("INNER JOIN importcg.pessoa pe ON v.idCliente = pe.idPessoa ");
+		sql.append("FROM pagamento p ");
+		sql.append("INNER JOIN venda v ON p.idVenda = v.idVenda ");
+		sql.append("INNER JOIN pessoa pe ON v.idCliente = pe.idPessoa ");
 		sql.append("WHERE p.pago = 0 and p.dataRecebimento = :data");
 		
 		Query query = manager.createNativeQuery(sql.toString());

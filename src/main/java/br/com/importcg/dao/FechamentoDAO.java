@@ -48,13 +48,13 @@ public class FechamentoDAO implements Serializable {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT ");
-		sql.append("(SELECT SUM(e.valorTotal) from importcg.entrada e ");
+		sql.append("(SELECT SUM(e.valorTotal) from entrada e ");
 		sql.append("	where e.dataCompra between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) entradas, ");
-		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("(SELECT SUM(ib.valor) from itemBaixa ib ");
 		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and ib.baixado = 1) despesasBaixadas, ");
-		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("(SELECT SUM(ib.valor) from itemBaixa ib ");
 		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and ib.baixado = 0) despesasABaixar, ");
-		sql.append("(SELECT SUM(p.saldo) from importcg.pagamento p ");
+		sql.append("(SELECT SUM(p.saldo) from pagamento p ");
 		sql.append("	where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and p.pago = 1) recebido ");
 		
 		Query query = manager.createNativeQuery(sql.toString());

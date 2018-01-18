@@ -47,9 +47,9 @@ public class BaixaDAO implements Serializable {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("select b.idBaixa, b.descricao, b.valorTotal, b.dataCriacao, b.status, ");
-		sql.append("(select case when sum(valor) is null then 0 else sum(valor) end from importcg.itemBaixa ib where ib.baixado = 1 and b.idBaixa = ib.idBaixa) as valorPago, ");
-		sql.append("(select case when sum(valor) is null then 0 else sum(valor) end from importcg.itemBaixa ib where ib.baixado = 0 and b.idBaixa = ib.idBaixa) as valorRestante ");
-		sql.append("from importcg.baixa b ");
+		sql.append("(select case when sum(valor) is null then 0 else sum(valor) end from itemBaixa ib where ib.baixado = 1 and b.idBaixa = ib.idBaixa) as valorPago, ");
+		sql.append("(select case when sum(valor) is null then 0 else sum(valor) end from itemBaixa ib where ib.baixado = 0 and b.idBaixa = ib.idBaixa) as valorRestante ");
+		sql.append("from baixa b ");
 		sql.append("order by b.dataCriacao DESC ");
 		
 		Query query = manager.createNativeQuery(sql.toString());

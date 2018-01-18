@@ -45,11 +45,11 @@ public class FornecedorDAO implements Serializable {
 	public List<Fornecedor> listarTodos() {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT f.idFornecedor, f.nome, f.endereco, f.telefone, f.email, f.site, f.instagram, f.dataCriacao, f.dataAlteracao, ");
-		sql.append("	case when (SELECT SUM(ie.quantidade) FROM importcg.itemEntrada ie where ie.idFornecedor = f.idFornecedor) is null then 0 else ");
-		sql.append("		(SELECT SUM(ie.quantidade) FROM importcg.itemEntrada ie where ie.idFornecedor = f.idFornecedor) end quantidadeVendida, ");
-		sql.append("	case when (SELECT SUM(ie.valorEmReal) FROM importcg.itemEntrada ie where ie.idFornecedor = f.idFornecedor) is null then 0 else ");
-		sql.append("		(SELECT SUM(ie.valorEmReal) FROM importcg.itemEntrada ie where ie.idFornecedor = f.idFornecedor) end valorVendido ");
-		sql.append("FROM importcg.fornecedor f ");
+		sql.append("	case when (SELECT SUM(ie.quantidade) FROM itemEntrada ie where ie.idFornecedor = f.idFornecedor) is null then 0 else ");
+		sql.append("		(SELECT SUM(ie.quantidade) FROM itemEntrada ie where ie.idFornecedor = f.idFornecedor) end quantidadeVendida, ");
+		sql.append("	case when (SELECT SUM(ie.valorEmReal) FROM itemEntrada ie where ie.idFornecedor = f.idFornecedor) is null then 0 else ");
+		sql.append("		(SELECT SUM(ie.valorEmReal) FROM itemEntrada ie where ie.idFornecedor = f.idFornecedor) end valorVendido ");
+		sql.append("FROM fornecedor f ");
 		sql.append("ORDER BY f.nome ASC ");
 		
 		Query query = manager.createNativeQuery(sql.toString());

@@ -27,18 +27,18 @@ public class PrincipalDAO implements Serializable {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT ");
-		sql.append("(SELECT SUM(e.valorTotal) from importcg.entrada e ");
+		sql.append("(SELECT SUM(e.valorTotal) from entrada e ");
 		sql.append("	where e.dataCompra between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) entradas, ");
-		sql.append("(SELECT SUM(iv.valor) from importcg.itemVenda iv ");
-		sql.append("	JOIN importcg.venda v ON iv.idVenda = v.idVenda ");
+		sql.append("(SELECT SUM(iv.valor) from itemVenda iv ");
+		sql.append("	JOIN venda v ON iv.idVenda = v.idVenda ");
 		sql.append("	where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) saidas, ");
-		sql.append("(SELECT SUM(p.saldo) from importcg.pagamento p ");
+		sql.append("(SELECT SUM(p.saldo) from pagamento p ");
 		sql.append("	where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and p.pago = 1) recebido, ");
-		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
-		sql.append("	inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
+		sql.append("(SELECT SUM(ib.valor) from itemBaixa ib ");
+		sql.append("	inner join itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
 		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and ib.baixado = 1 and d.idEntrada is null) despesas, ");
-		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
-		sql.append("	inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
+		sql.append("(SELECT SUM(ib.valor) from itemBaixa ib ");
+		sql.append("	inner join itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
 		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and ib.baixado = 1) pago");
 		
 		Query query = manager.createNativeQuery(sql.toString());
@@ -81,18 +81,18 @@ public class PrincipalDAO implements Serializable {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT ");
-		sql.append("(SELECT SUM(e.valorTotal) from importcg.entrada e ");
+		sql.append("(SELECT SUM(e.valorTotal) from entrada e ");
 		sql.append("	where e.dataCompra between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate())) entradas, ");
-		sql.append("(SELECT SUM(iv.valor) from importcg.itemVenda iv ");
-		sql.append("	JOIN importcg.venda v ON iv.idVenda = v.idVenda ");
+		sql.append("(SELECT SUM(iv.valor) from itemVenda iv ");
+		sql.append("	JOIN venda v ON iv.idVenda = v.idVenda ");
 		sql.append("	where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate())) saidas, ");
-		sql.append("(SELECT SUM(p.saldo) from importcg.pagamento p ");
+		sql.append("(SELECT SUM(p.saldo) from pagamento p ");
 		sql.append("	where p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and p.pago = 1) recebido, ");
-		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
-		sql.append("	inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
+		sql.append("(SELECT SUM(ib.valor) from itemBaixa ib ");
+		sql.append("	inner join itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
 		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and ib.baixado = 1 and d.idEntrada is null) despesas, ");
-		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
-		sql.append("	inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
+		sql.append("(SELECT SUM(ib.valor) from itemBaixa ib ");
+		sql.append("	inner join itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
 		sql.append("	where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and ib.baixado = 1) pago;");
 		
 		Query query = manager.createNativeQuery(sql.toString());
@@ -135,14 +135,14 @@ public class PrincipalDAO implements Serializable {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT ");
-		sql.append("(SELECT SUM(e.valorTotal) from importcg.entrada e) entradas, ");
-		sql.append("(SELECT SUM(iv.valor) from importcg.itemVenda iv) saidas, ");
-		sql.append("(SELECT SUM(p.saldo) from importcg.pagamento p WHERE p.pago = 1) recebido, ");
-		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
-		sql.append("	inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
+		sql.append("(SELECT SUM(e.valorTotal) from entrada e) entradas, ");
+		sql.append("(SELECT SUM(iv.valor) from itemVenda iv) saidas, ");
+		sql.append("(SELECT SUM(p.saldo) from pagamento p WHERE p.pago = 1) recebido, ");
+		sql.append("(SELECT SUM(ib.valor) from itemBaixa ib ");
+		sql.append("	inner join itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
 		sql.append("	where ib.baixado = 1 and d.idEntrada is null) despesas, ");
-		sql.append("(SELECT SUM(ib.valor) from importcg.itemBaixa ib ");
-		sql.append("	inner join importcg.itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
+		sql.append("(SELECT SUM(ib.valor) from itemBaixa ib ");
+		sql.append("	inner join itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");
 		sql.append("	where ib.baixado = 1) pago;");
 		
 		Query query = manager.createNativeQuery(sql.toString());
@@ -186,19 +186,19 @@ public class PrincipalDAO implements Serializable {
 		
 		sql.append("select ");
 		// A receber no mes atual
-		sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
+		sql.append("(select SUM(p.saldo) from pagamento p ");
 		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate())) AReceberMesAtual, ");
 		// A receber no proximo mês     
-		sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
+		sql.append("(select SUM(p.saldo) from pagamento p ");
 		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 0 MONTH)), 1)) and last_day(sysdate() + INTERVAL 1 MONTH)) AReceberProximoMes1, ");
 		// A receber no proximo mês     
-		sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
+		sql.append("(select SUM(p.saldo) from pagamento p ");
 		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -1 MONTH)), 1)) and last_day(sysdate() + INTERVAL 2 MONTH)) AReceberProximoMes2, ");
 		// A receber no proximo mês     
-		sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
+		sql.append("(select SUM(p.saldo) from pagamento p ");
 		sql.append("			where p.pago = 0 and p.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -2 MONTH)), 1)) and last_day(sysdate() + INTERVAL 3 MONTH)) AReceberProximoMes3, ");
 		// A receber em todos os meses
-		sql.append("(select SUM(p.saldo) from importcg.pagamento p ");
+		sql.append("(select SUM(p.saldo) from pagamento p ");
 		sql.append("			where p.pago = 0) AReceberTodosMeses ");
 		
 		Query query = manager.createNativeQuery(sql.toString());
@@ -242,19 +242,19 @@ public class PrincipalDAO implements Serializable {
 		
 		sql.append("select ");
 		// A receber no mes atual
-		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("(select SUM(ib.valor) from itemBaixa ib ");
 		sql.append("			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate())) APagarMesAtual, ");
 		// A receber no proximo mês     
-		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("(select SUM(ib.valor) from itemBaixa ib ");
 		sql.append("			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 0 MONTH)), 1)) and last_day(sysdate() + INTERVAL 1 MONTH)) APagarProximoMes1, ");
 		// A receber no proximo mês     
-		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("(select SUM(ib.valor) from itemBaixa ib ");
 		sql.append("			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -1 MONTH)), 1)) and last_day(sysdate() + INTERVAL 2 MONTH)) APagarProximoMes2, ");
 		// A receber no proximo mês     
-		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("(select SUM(ib.valor) from itemBaixa ib ");
 		sql.append("			where ib.baixado = 0 and ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL -2 MONTH)), 1)) and last_day(sysdate() + INTERVAL 3 MONTH)) APagarProximoMes3, ");
 		//A receber em todos os meses
-		sql.append("(select SUM(ib.valor) from importcg.itemBaixa ib ");
+		sql.append("(select SUM(ib.valor) from itemBaixa ib ");
 		sql.append("			where ib.baixado = 0) APagarTodosMeses ");
 		
 		Query query = manager.createNativeQuery(sql.toString());

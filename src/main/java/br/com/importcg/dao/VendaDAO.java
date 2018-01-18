@@ -49,11 +49,11 @@ public class VendaDAO implements Serializable {
 
 		sql.append("SELECT v.idVenda, v.idCliente, pC.nome cliente, v.idFuncionario, pF.nome funcionario, v.dataVenda, v.valorTotal, v.quantidadeTotal, v.status, ");
 		sql.append("case when ");
-		sql.append("(select SUM(p.saldo) from importcg.pagamento p inner join importcg.venda ve on p.idVenda = ve.idVenda where p.pago = 0 and ve.idVenda = v.idVenda)  is null then 0 else ");
-		sql.append("(select SUM(p.saldo) from importcg.pagamento p inner join importcg.venda ve on p.idVenda = ve.idVenda where p.pago = 0 and ve.idVenda = v.idVenda) end as restante ");
-		sql.append("FROM importcg.venda v ");
-		sql.append("INNER JOIN  importcg.pessoa pC ON v.idCliente = pC.idPessoa ");
-		sql.append("INNER JOIN  importcg.pessoa pF ON v.idFuncionario = pF.idPessoa ");
+		sql.append("(select SUM(p.saldo) from pagamento p inner join venda ve on p.idVenda = ve.idVenda where p.pago = 0 and ve.idVenda = v.idVenda)  is null then 0 else ");
+		sql.append("(select SUM(p.saldo) from pagamento p inner join venda ve on p.idVenda = ve.idVenda where p.pago = 0 and ve.idVenda = v.idVenda) end as restante ");
+		sql.append("FROM venda v ");
+		sql.append("INNER JOIN  pessoa pC ON v.idCliente = pC.idPessoa ");
+		sql.append("INNER JOIN  pessoa pF ON v.idFuncionario = pF.idPessoa ");
 		sql.append("ORDER BY status ASC, dataVenda DESC ");
 		
 		Query query = manager.createNativeQuery(sql.toString());

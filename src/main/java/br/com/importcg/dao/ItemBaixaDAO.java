@@ -49,7 +49,7 @@ public class ItemBaixaDAO implements Serializable {
 	public List<ItemBaixa> buscarDespesasMensaisBaixadas() {
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("select * from importcg.itemBaixa ib ");
+		sql.append("select * from itemBaixa ib ");
 		sql.append("where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH) and ib.baixado = 1");
 		
 		return manager.createNativeQuery(sql.toString(), ItemBaixa.class).getResultList();
@@ -59,7 +59,7 @@ public class ItemBaixaDAO implements Serializable {
 	public List<ItemBaixa> buscarDespesasABaixar() {
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("select * from importcg.itemBaixa ib ");
+		sql.append("select * from itemBaixa ib ");
 		sql.append("where ib.data between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate()) and ib.baixado = 0");
 		
 		return manager.createNativeQuery(sql.toString(), ItemBaixa.class).getResultList();
