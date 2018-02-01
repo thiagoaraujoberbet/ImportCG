@@ -37,6 +37,14 @@ public class LoginCheckFilter extends AbstractFilter implements Filter {
 			allowedURIs.add("/ImportCG/javax.faces.resource/fonts/glyphicons-halflings-regular.ttf.xhtml");
 			allowedURIs.add("/ImportCG/javax.faces.resource/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2.xhtml");
 			allowedURIs.add("/ImportCG/javax.faces.resource/ajaxloadingbar.gif.xhtml");
+			allowedURIs.add("/ImportCG/javax.faces.resource/js/bootstrap.min.js.xhtml");
+			allowedURIs.add("/ImportCG/javax.faces.resource/iCheck/icheck.min.js.xhtml");
+			allowedURIs.add("/ImportCG/javax.faces.resource/bootstrap/fonts/glyphicons-halflings-regular.woff2.xhtml");
+			allowedURIs.add("/ImportCG/javax.faces.resource/bootstrap/fonts/glyphicons-halflings-regular.ttf.xhtml");
+			allowedURIs.add("/ImportCG/javax.faces.resource/eNpVjLEOwjAMRL-IZs-GEBsjP-CmLlit7RA76sLHEzIEMZzku-e7XIhxhYQWk3JWQXGbktk7_8gBjoWhbGFc_WVWdfMCOTYXhpuYpPOmuKr4CQ40ZfwDpEJJxUa4kHkfOi8tut2vg-S9Pkha5fLEtAV7VSgY5r3iF38AyEBMrg.css.xhtml");
+			allowedURIs.add("/ImportCG/javax.faces.resource/fonts/fontawesome-webfont.woff2.xhtml");
+			allowedURIs.add("/ImportCG/javax.faces.resource/fonts/fontawesome-webfont.woff.xhtml");
+			allowedURIs.add("/ImportCG/javax.faces.resource/fonts/fontawesome-webfont.ttf.xhtml");
 		}
 	}
 

@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.com.importcg.enumeration.EnumTipoBaixa;
 
@@ -29,32 +31,37 @@ public class ItemBaixa implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idItemBaixa", nullable=false)
+	@Column(name="idItemBaixa", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idBaixa")
+	@JoinColumn(name="idBaixa", nullable=false)
 	private Baixa baixa;
 	
 	@ManyToOne
-	@JoinColumn(name="idItemDespesa")
+	@JoinColumn(name="idItemDespesa", nullable=false)
 	private ItemDespesa itemDespesa;
 	
 	@ManyToOne
-	@JoinColumn(name="idCaixa")
+	@JoinColumn(name="idCaixa", nullable=false)
 	private Caixa caixa;
 	
 	private String descricao;
 	
+	@Column(nullable=false)
 	private BigDecimal valor = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
 	private BigDecimal acrescimo = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
+	@Temporal(value = TemporalType.DATE)
 	private Date data = new Date();
 	
+	@Column(nullable=false)
 	@Enumerated(EnumType.STRING)
 	private EnumTipoBaixa tipo = EnumTipoBaixa.NAOBAIXADO;
 	
+	@Column(nullable=false)
 	private boolean baixado = Boolean.FALSE;
 
 	public ItemBaixa() {

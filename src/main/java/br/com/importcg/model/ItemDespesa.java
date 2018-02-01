@@ -28,11 +28,11 @@ public class ItemDespesa implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idItemDespesa", nullable=false)
+	@Column(name="idItemDespesa", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idDespesa")
+	@JoinColumn(name="idDespesa", nullable=false)
 	private Despesa despesa;
 	
 	@ManyToOne
@@ -41,9 +41,11 @@ public class ItemDespesa implements Serializable {
 	
 	private String descricao;
 	
+	@Column(nullable=false)
 	@Enumerated(EnumType.STRING)
 	private EnumTipoDespesa tipo;
 	
+	@Column(nullable=false)
 	private BigDecimal valor = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
 //	@Enumerated(EnumType.STRING)

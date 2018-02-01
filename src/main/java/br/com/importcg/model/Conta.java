@@ -29,16 +29,18 @@ public class Conta implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idConta", nullable=false)
+	@Column(name="idConta", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idFuncionario")
+	@JoinColumn(name="idFuncionario", nullable=false)
 	private Pessoa funcionario;
 	
+	@Column(nullable=false)
 	@NotEmpty
 	private String nome;
 	
+	@Column(nullable=false)
 	@Enumerated(EnumType.STRING)
 	private EnumTipoConta tipo;
 	

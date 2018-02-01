@@ -28,19 +28,19 @@ public class ItemVenda implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idItemVenda", nullable=false)
+	@Column(name="idItemVenda", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idVenda")
+	@JoinColumn(name="idVenda", nullable=false)
 	private Venda venda;
 	
 	@ManyToOne
-	@JoinColumn(name="idProduto")
+	@JoinColumn(name="idProduto", nullable=false)
 	private Produto produto;
 	
 	@ManyToOne
-	@JoinColumn(name="idItemEntrada")
+	@JoinColumn(name="idItemEntrada", nullable=false)
 	private ItemEntrada itemEntrada;
 	
 	private BigDecimal valor = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);

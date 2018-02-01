@@ -24,15 +24,17 @@ public class CatalogoPreco implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idCatalogoPreco", nullable=false)
+	@Column(name="idCatalogoPreco", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idProduto")
+	@JoinColumn(name="idProduto", nullable=false)
 	private Produto produto;
 	
+	@Column(nullable=false)
 	private BigDecimal valorAVista = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
 	private BigDecimal valorAPrazo = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 
 	public CatalogoPreco() {

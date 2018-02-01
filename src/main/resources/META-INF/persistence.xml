@@ -6,28 +6,30 @@
 
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-		<class>br.com.importcg.model.Pessoa</class>
-		<class>br.com.importcg.model.Produto</class>
-		<class>br.com.importcg.model.Estoque</class>
-		<class>br.com.importcg.model.Entrada</class>
-		<class>br.com.importcg.model.ItemEntrada</class>
-		<class>br.com.importcg.model.Venda</class>
-		<class>br.com.importcg.model.ItemVenda</class>
-		<class>br.com.importcg.model.Fornecedor</class>
-		<class>br.com.importcg.model.Pagamento</class>
-		<class>br.com.importcg.model.Conta</class>
+		<class>br.com.importcg.model.Baixa</class>
 		<class>br.com.importcg.model.Caixa</class>
-		<class>br.com.importcg.model.ProdutoImagem</class>
 		<class>br.com.importcg.model.CatalogoInternacional</class>
 		<class>br.com.importcg.model.CatalogoPreco</class>
-		<class>br.com.importcg.model.Tramite</class>
+		<class>br.com.importcg.model.Conta</class>
 		<class>br.com.importcg.model.Despesa</class>
-		<class>br.com.importcg.model.ItemDespesa</class>
-		<class>br.com.importcg.model.Baixa</class>
-		<class>br.com.importcg.model.ItemBaixa</class>
+		<class>br.com.importcg.model.Entrada</class>
+		<class>br.com.importcg.model.EstatisticaVenda</class>
+		<class>br.com.importcg.model.Estoque</class>
 		<class>br.com.importcg.model.Fechamento</class>
+		<class>br.com.importcg.model.Fornecedor</class>
+		<class>br.com.importcg.model.ItemBaixa</class>
+		<class>br.com.importcg.model.ItemDespesa</class>
+ 		<class>br.com.importcg.model.ItemEntrada</class>
 		<class>br.com.importcg.model.ItemFechamento</class>
+ 		<class>br.com.importcg.model.ItemVenda</class>
+		<class>br.com.importcg.model.Pagamento</class>
+		<class>br.com.importcg.model.Pessoa</class>
+		<class>br.com.importcg.model.Produto</class>
+		<class>br.com.importcg.model.ProdutoImagem</class>
+		<class>br.com.importcg.model.Retirada</class>
+		<class>br.com.importcg.model.Tramite</class>
 		<class>br.com.importcg.model.Usuario</class>
+		<class>br.com.importcg.model.Venda</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/u684253104_impcg" />
@@ -40,6 +42,7 @@
       		
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 		</properties>
 
 	</persistence-unit>

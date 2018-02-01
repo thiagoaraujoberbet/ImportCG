@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.com.importcg.enumeration.EnumOperacao;
 
@@ -29,18 +31,22 @@ public class Tramite implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idTramite", nullable=false)
+	@Column(name="idTramite", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idCaixa")
+	@JoinColumn(name="idCaixa", nullable=false)
 	private Caixa caixa;
 	
+	@Column(nullable=false)
 	@Enumerated(EnumType.STRING)
 	private EnumOperacao operacao;
 	
+	@Column(nullable=false)
+	@Temporal(value = TemporalType.DATE)
 	private Date data;
 	
+	@Column(nullable=false)
 	private BigDecimal valor = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
 	private String motivo;

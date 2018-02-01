@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import br.com.importcg.enumeration.EnumFormaPagamento;
@@ -30,20 +32,23 @@ public class Pagamento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idPagamento", nullable=false)
+	@Column(name="idPagamento", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idVenda")
+	@JoinColumn(name="idVenda", nullable=false)
 	private Venda venda;
 	
+	@Column(nullable=false)
 	@Enumerated(EnumType.STRING)
 	private EnumFormaPagamento forma;
 	
+	@Temporal(value = TemporalType.DATE)
 	private Date data;
 	
 	private BigDecimal valor = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
 	private boolean pago = Boolean.FALSE;
 	
 	private Integer parcela = new Integer(0);
@@ -54,16 +59,18 @@ public class Pagamento implements Serializable {
 	
 	private BigDecimal taxa = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Temporal(value = TemporalType.DATE)
 	private Date dataRecebimento;
 	
+	@Temporal(value = TemporalType.DATE)
 	private Date dataCompensacao;
-	
-	@Transient
-	private String nomePagante;
 	
 	@ManyToOne
 	@JoinColumn(name="idCaixa")
 	private Caixa caixa;
+	
+	@Transient
+	private String nomePagante;
 	
 	public Pagamento() {
 		super();

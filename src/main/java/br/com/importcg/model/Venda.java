@@ -19,6 +19,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import br.com.importcg.enumeration.EnumStatusVenda;
@@ -34,17 +36,19 @@ public class Venda implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idVenda", nullable=false)
+	@Column(name="idVenda", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idCliente")
+	@JoinColumn(name="idCliente", nullable=false)
 	private Pessoa cliente;
 	
 	@ManyToOne
-	@JoinColumn(name="idFuncionario")
+	@JoinColumn(name="idFuncionario", nullable=false)
 	private Pessoa funcionario;
 	
+	@Column(nullable=false)
+	@Temporal(value = TemporalType.DATE)
 	private Date dataVenda;
 	
 	private BigDecimal valorTotal;

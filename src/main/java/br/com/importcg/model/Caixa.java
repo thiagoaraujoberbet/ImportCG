@@ -2,6 +2,7 @@ package br.com.importcg.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,14 +24,15 @@ public class Caixa implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idCaixa", nullable=false)
+	@Column(name="idCaixa", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idConta")
+	@JoinColumn(name="idConta", nullable=false)
 	private Conta conta;
 	
-	private BigDecimal valor;
+	@Column(nullable=false)
+	private BigDecimal valor = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 
 	public Caixa() {
 		super();

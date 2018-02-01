@@ -17,6 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import br.com.importcg.enumeration.EnumStatusBaixa;
@@ -32,15 +34,20 @@ public class Baixa implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idBaixa", nullable=false)
+	@Column(name="idBaixa", nullable=false, unique=true)
 	private Long id;
 	
+	@Column(length=200)
 	private String descricao;
 	
+	@Column(nullable=false)
 	private BigDecimal valorTotal;
 	
+	@Temporal(value = TemporalType.DATE)
+	@Column(nullable=false)
 	private Date dataCriacao;
 	
+	@Column(length=20)
 	@Enumerated(EnumType.STRING)
 	private EnumStatusBaixa status;
 	

@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "retirada")
@@ -25,17 +27,21 @@ public class Retirada implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idRetirada", nullable=false)
+	@Column(name="idRetirada", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idCaixa")
+	@JoinColumn(name="idCaixa", nullable=false)
 	private Caixa caixa;
 	
+	@Column(nullable=false)
 	private String descricao;
 	
+	@Column(nullable=false)
+	@Temporal(value = TemporalType.DATE)
 	private Date data;
 	
+	@Column(nullable=false)
 	private BigDecimal valor = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 
 	public Retirada() {

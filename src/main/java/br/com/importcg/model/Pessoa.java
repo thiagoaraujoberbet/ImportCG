@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -29,9 +31,10 @@ public class Pessoa implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idPessoa", nullable=false)
+	@Column(name="idPessoa", nullable=false, unique=true)
 	private Long id;
 	
+	@Column(nullable=false)
 	@NotEmpty
 	private String nome;
 	
@@ -46,11 +49,14 @@ public class Pessoa implements Serializable {
 	
 	private String email;
 	
+	@Column(nullable=false)
 	@Enumerated(EnumType.STRING)
 	private EnumTipoPessoa tipo;
 	
+	@Temporal(value = TemporalType.DATE)
 	private Date dataCriacao;
 	
+	@Temporal(value = TemporalType.DATE)
 	private Date dataAlteracao;	
 	
 	private String enderecoResidencial;

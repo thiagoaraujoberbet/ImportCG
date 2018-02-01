@@ -28,7 +28,7 @@ public class ItemFechamento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idItemFechamento", nullable=false)
+	@Column(name="idItemFechamento", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne

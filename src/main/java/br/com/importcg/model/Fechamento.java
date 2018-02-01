@@ -18,6 +18,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.com.importcg.enumeration.EnumMes;
 
@@ -32,26 +34,36 @@ public class Fechamento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idFechamento", nullable=false)
+	@Column(name="idFechamento", nullable=false, unique=true)
 	private Long id;
 	
+	@Column(nullable=false)
 	private BigDecimal valorRecebido = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
 	private BigDecimal valorEntradas = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
 	private BigDecimal valorDespesasBaixadas = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
 	private BigDecimal valorDespesasABaixar = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
 	private BigDecimal saldo = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
 	@Enumerated(EnumType.STRING)
 	private EnumMes mes;
 	
+	@Column(nullable=false)
 	private int ano;
 	
+	@Column(nullable=false)
+	@Temporal(value = TemporalType.DATE)
 	private Date data = new Date();
 	
+	@Column(nullable=false)
 	private boolean finalizado = Boolean.FALSE;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "fechamento", cascade = CascadeType.ALL)	

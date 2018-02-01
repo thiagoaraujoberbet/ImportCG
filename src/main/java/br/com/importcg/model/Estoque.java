@@ -22,13 +22,14 @@ public class Estoque implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idEstoque", nullable=false)
+	@Column(name="idEstoque", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idProduto")
+	@JoinColumn(name="idProduto", nullable=false)
 	private Produto produto;
 	
+	@Column(nullable=false)
 	private Integer quantidade;
 
 	public Estoque() {

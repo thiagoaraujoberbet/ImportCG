@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "catalogoInternacional")
@@ -25,27 +27,32 @@ public class CatalogoInternacional implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idCatalogoInternacional", nullable=false)
+	@Column(name="idCatalogoInternacional", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idProduto")
+	@JoinColumn(name="idProduto", nullable=false)
 	private Produto produto;
 	
 	@ManyToOne
-	@JoinColumn(name="idFornecedor")
+	@JoinColumn(name="idFornecedor", nullable=false)
 	private Fornecedor fornecedor;
 	
 	@ManyToOne
 	@JoinColumn(name="idItemEntrada")
 	private ItemEntrada itemEntrada;
 	
+	@Column(nullable=false)
 	private BigDecimal valorEmDolar = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
 	private BigDecimal valorEmReal = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
 	private BigDecimal cotacao = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
+	@Temporal(value = TemporalType.DATE)
 	private Date data;
 
 	public CatalogoInternacional() {

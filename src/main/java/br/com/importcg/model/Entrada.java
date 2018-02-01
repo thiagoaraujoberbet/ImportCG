@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "entrada")
@@ -27,15 +29,18 @@ public class Entrada implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idEntrada", nullable=false)
+	@Column(name="idEntrada", nullable=false, unique=true)
 	private Long id;
 	
+	@Column(nullable=false)
+	@Temporal(value = TemporalType.DATE)
 	private Date dataCompra;
 	
 	private BigDecimal valorTotal;
 	
 	private Integer quantidadeTotal;
 	
+	@Column(nullable=false)
 	private boolean despesaLancada = Boolean.FALSE;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "entrada", cascade = CascadeType.ALL)	

@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -25,9 +27,10 @@ public class Fornecedor implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idFornecedor", nullable=false)
+	@Column(name="idFornecedor", nullable=false, unique=true)
 	private Long id;
 	
+	@Column(nullable=false)
 	@NotEmpty
 	private String nome;
 	
@@ -41,8 +44,10 @@ public class Fornecedor implements Serializable {
 	
 	private String instagram;
 	
+	@Temporal(value = TemporalType.DATE)
 	private Date dataCriacao;
 	
+	@Temporal(value = TemporalType.DATE)
 	private Date dataAlteracao;
 	
 	@Transient

@@ -18,6 +18,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.com.importcg.enumeration.EnumStatusBaixa;
 
@@ -32,18 +34,24 @@ public class Despesa implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idDespesa", nullable=false)
+	@Column(name="idDespesa", nullable=false, unique=true)
 	private Long id;
 	
+	@Column(nullable=false)
 	private String descricao;
 	
+	@Column(nullable=false)
 	private BigDecimal valorTotal = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
+	@Temporal(value = TemporalType.DATE)
 	private Date dataDespesa;
 	
+	@Column(nullable=false)
 	@Enumerated(EnumType.STRING)
 	private EnumStatusBaixa status;
 	
+	@Column(nullable=false)
 	private boolean baixaGerada = Boolean.FALSE;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "despesa", cascade = CascadeType.ALL)	

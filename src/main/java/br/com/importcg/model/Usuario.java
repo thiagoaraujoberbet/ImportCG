@@ -25,16 +25,19 @@ public class Usuario implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idUsuario", nullable=false)
+	@Column(name="idUsuario", nullable=false, unique=true)
 	private Long id;
 	
+	@Column(nullable=false)
 	private String nome;
 	
-	@Column(unique=true)
+	@Column(unique=true, nullable=false)
 	private String login;
 	
+	@Column(nullable=false)
 	private String senha;
 	
+	@Column(nullable=false)
 	@Enumerated(EnumType.STRING)
 	private EnumRole role;
 

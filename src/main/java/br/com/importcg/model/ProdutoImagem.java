@@ -23,7 +23,7 @@ public class ProdutoImagem implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idProdutoImagem", nullable=false)
+	@Column(name="idProdutoImagem", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne

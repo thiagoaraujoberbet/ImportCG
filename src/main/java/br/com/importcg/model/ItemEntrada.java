@@ -29,19 +29,19 @@ public class ItemEntrada implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idItemEntrada", nullable=false)
+	@Column(name="idItemEntrada", nullable=false, unique=true)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="idEntrada")
+	@JoinColumn(name="idEntrada", nullable=false)
 	private Entrada entrada;
 	
 	@ManyToOne
-	@JoinColumn(name="idProduto")
+	@JoinColumn(name="idProduto", nullable=false)
 	private Produto produto;
 	
 	@ManyToOne
-	@JoinColumn(name="idFornecedor")
+	@JoinColumn(name="idFornecedor", nullable=false)
 	private Fornecedor fornecedor;
 	
 	private BigDecimal valorEmDolar = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
@@ -50,6 +50,7 @@ public class ItemEntrada implements Serializable {
 	
 	private BigDecimal cotacao = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
+	@Column(nullable=false)
 	private Integer quantidade = Integer.parseInt("0");
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "itemEntrada", cascade = CascadeType.ALL)	
