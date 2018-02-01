@@ -53,13 +53,9 @@ public class TramiteMB implements Serializable {
 	}
 
 	public String salvar() {
-		if (caixaOrigem == null && caixaDestino == null) {
+		if (caixaOrigem == null || caixaDestino == null) {
 			FacesUtil.addErrorMessage("É obrigatório selecionar ao menos uma conta!");
 			return null;
-		} else if (caixaOrigem == null) {
-			this.tramitarEntradaExterna();
-		} else if (caixaDestino == null) {
-			this.tramitarSaidaExterna();
 		} else {
 			this.tramitarInterno();
 		}
@@ -74,15 +70,15 @@ public class TramiteMB implements Serializable {
 		this.tramitarMovimentacaoInterna();
 	}
 	
-	private void tramitarEntradaExterna() {
-		this.atualizarCaixasMovimentacaoEntradaExterna();
-		this.tramitarMovimentacaoEntradaExterna();
-	}
-	
-	private void tramitarSaidaExterna() {
-		this.atualizarCaixasMovimentacaoSaidaExterna();
-		this.tramitarMovimentacaoSaidaExterna();
-	}
+//	private void tramitarEntradaExterna() {
+//		this.atualizarCaixasMovimentacaoEntradaExterna();
+//		this.tramitarMovimentacaoEntradaExterna();
+//	}
+//	
+//	private void tramitarSaidaExterna() {
+//		this.atualizarCaixasMovimentacaoSaidaExterna();
+//		this.tramitarMovimentacaoSaidaExterna();
+//	}
 
 	private void tramitarMovimentacaoInterna() {
 		Tramite tramiteCredito = new Tramite();
@@ -98,21 +94,21 @@ public class TramiteMB implements Serializable {
 		tramiteService.salvar(tramiteDebito);
 	}
 	
-	private void tramitarMovimentacaoEntradaExterna() {
-		Tramite tramiteCredito = new Tramite();
-		tramiteCredito = tramite;
-		tramiteCredito.setCaixa(caixaDestino);
-		tramiteCredito.setOperacao(EnumOperacao.CREDITO);
-		tramiteService.salvar(tramiteCredito);
-	}
-	
-	private void tramitarMovimentacaoSaidaExterna() {
-		Tramite tramiteCredito = new Tramite();
-		tramiteCredito = tramite;
-		tramiteCredito.setCaixa(caixaOrigem);
-		tramiteCredito.setOperacao(EnumOperacao.DEBITO);
-		tramiteService.salvar(tramiteCredito);
-	}
+//	private void tramitarMovimentacaoEntradaExterna() {
+//		Tramite tramiteCredito = new Tramite();
+//		tramiteCredito = tramite;
+//		tramiteCredito.setCaixa(caixaDestino);
+//		tramiteCredito.setOperacao(EnumOperacao.CREDITO);
+//		tramiteService.salvar(tramiteCredito);
+//	}
+//	
+//	private void tramitarMovimentacaoSaidaExterna() {
+//		Tramite tramiteCredito = new Tramite();
+//		tramiteCredito = tramite;
+//		tramiteCredito.setCaixa(caixaOrigem);
+//		tramiteCredito.setOperacao(EnumOperacao.DEBITO);
+//		tramiteService.salvar(tramiteCredito);
+//	}
 
 	private void atualizarCaixasMovimentacaoInterna() {
 		caixaDestino.setValor(caixaDestino.getValor().add(tramite.getValor()));
@@ -122,15 +118,15 @@ public class TramiteMB implements Serializable {
 		caixaService.salvar(caixaDestino);
 	}
 	
-	private void atualizarCaixasMovimentacaoEntradaExterna() {
-		caixaDestino.setValor(caixaDestino.getValor().add(tramite.getValor()));
-		caixaService.salvar(caixaDestino);
-	}
-	
-	private void atualizarCaixasMovimentacaoSaidaExterna() {
-		caixaOrigem.setValor(caixaOrigem.getValor().subtract(tramite.getValor()));
-		caixaService.salvar(caixaOrigem);
-	}
+//	private void atualizarCaixasMovimentacaoEntradaExterna() {
+//		caixaDestino.setValor(caixaDestino.getValor().add(tramite.getValor()));
+//		caixaService.salvar(caixaDestino);
+//	}
+//	
+//	private void atualizarCaixasMovimentacaoSaidaExterna() {
+//		caixaOrigem.setValor(caixaOrigem.getValor().subtract(tramite.getValor()));
+//		caixaService.salvar(caixaOrigem);
+//	}
 	
 	public void autoCompletarValor() {
 		if (caixaOrigem == null)

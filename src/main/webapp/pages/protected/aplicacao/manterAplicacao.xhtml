@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
+                template="../templates/template.xhtml">
+
+    <ui:define name="title">
+        Cadastro Aplicação
+    </ui:define>
+
+    <ui:define name="body">
+        <f:metadata>
+        	<f:event listener="#{aplicacaoMB.inicializar()}" type="preRenderView"/>
+        </f:metadata>
+
+        <adm:breadcrumb title="Cadastro de Aplicacões #{aplicacaoMB.aplicacao.id}" link="manterAplicacao.xhtml?id=#{aplicacaoMB.aplicacao.id}"/>
+        <h:form id="form" prependId="false">
+        
+        	<p:focus context="capaPanel1"/>
+			
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <div id="main-buttons" class="hidden-sm hidden-xs">
+                        <p:commandButton value="Salvar" update="@form" icon="fa fa-check" action="#{aplicacaoMB.salvar()}" styleClass="btn-primary"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="Voltar" immediate="true" action="listarAplicacao?faces-redirect=true" process="@this" icon="fa fa-close"/>
+                    </div>
+                    
+                    <p:splitButton value="Salvar" update="@form" icon="fa fa-check" action="#{aplicacaoMB.salvar()}" styleClass="hidden-md hidden-lg btn-primary">
+                        <p:menuitem value="Voltar" action="listarAplicacao?faces-redirect=true" process="@this" icon="fa fa-close"/>
+                    </p:splitButton>
+
+                    <p:separator/>
+
+                    <div class="ui-fluid">
+                    
+					    <p:panelGrid id="capaPanel1" columns="2" style="width:100%;">
+					    
+  							<p:outputLabel value="Caixa de Crédito" for="caixaAplicacao"/>
+							<p:selectOneMenu id="caixaAplicacao" value="#{aplicacaoMB.caixaAplicacao}" converter="caixaConverter" var="cAplicacao" filter="true" filterMatchMode="contains">
+								<f:selectItem itemLabel="Selecione..."/>
+					            <f:selectItems value="#{aplicacaoMB.caixasAplicacao}" var="caixaAplicacao" 
+					            	itemLabel="#{caixaAplicacao.conta.nome} | #{caixaAplicacao.conta.tipo.descricao} | #{caixaAplicacao.conta.instituicao.descricao} | #{caixaAplicacao.conta.funcionario.nome} | #{caixaAplicacao.valor}" itemValue="#{caixaAplicacao}" />
+					        
+				            	<p:column>
+					                <h:outputText value="#{cAplicacao.conta.nome}" />
+					            </p:column>
+					            
+					            <p:column>
+					                <h:outputText value="#{cAplicacao.conta.tipo.descricao}" />
+					            </p:column>
+					 
+				            	<p:column>
+					                <h:outputText value="#{cAplicacao.conta.instituicao.descricao}" />
+					            </p:column>
+					            
+					            <p:column>
+					                <h:outputText value="#{cAplicacao.conta.funcionario.nome}" />
+					            </p:column>
+					            
+  					           <p:column>
+					                <h:outputText value="#{cAplicacao.valor}">
+					                	<f:convertNumber type="currency" currencySymbol="R$"/>
+					                </h:outputText>
+					            </p:column>
+					        </p:selectOneMenu>
+					        
+				        </p:panelGrid>
+				        
+				        <p:spacer />
+					        
+				        <p:panelGrid id="capaPanel2" columns="6" style="width:100%;">
+					        
+  							<p:outputLabel value="Descrição" for="descricao"/>
+							<p:inputText id="descricao" value="#{aplicacaoMB.aplicacao.descricao}" />
+							
+							<p:outputLabel value="Valor" for="valor"/>
+							<p:inputNumber id="valor" value="#{aplicacaoMB.aplicacao.valor}" />
+							
+							<p:outputLabel value="Data Trâmite" for="data"/>
+							<p:calendar id="data" value="#{aplicacaoMB.aplicacao.data}" pattern="dd/MM/yyyy" mask="true"/>
+													
+						</p:panelGrid>
+						
+                    </div>
+                </div>
+            </div>
+            
+        </h:form>
+        
+    </ui:define>
+    
+</ui:composition>

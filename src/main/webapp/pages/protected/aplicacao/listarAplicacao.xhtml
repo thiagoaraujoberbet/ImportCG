@@ -26,7 +26,7 @@
     </ui:define>
 
     <ui:define name="title">
-        Pesquisa de caixas
+        Pesquisa de aplicacões
     </ui:define>
 
     <ui:define name="description">
@@ -34,7 +34,7 @@
     </ui:define>
 
     <ui:define name="body">
-        <adm:breadcrumb title="Pesquisa de Caixas"/>
+        <adm:breadcrumb title="Pesquisa de Aplicações"/>
 
 			<h:form>
 			
@@ -42,73 +42,55 @@
             	
                 	<div class="box-header with-border">
                 	
-                    	<p:commandButton action="manterCaixa?faces-redirect=true" ajax="false" icon="fa fa-plus" value="Novo" styleClass="btn-primary"/>
-                       	<p:spacer width="5"/>
-                        <p:commandButton action="/pages/protected/tramite/listarTramite?faces-redirect=true" ajax="false" icon="fa fa-check" value="Trâmitar" styleClass="btn-primary"/>
-	                    <p:spacer width="5"/>
-	                    <p:commandButton action="/pages/protected/retirada/listarRetirada?faces-redirect=true" ajax="false" icon="fa fa-check" value="Retirar" styleClass="btn-primary"/>
-	                    <p:spacer width="5"/>
-	                    <p:commandButton action="/pages/protected/aplicacao/listarAplicacao?faces-redirect=true" ajax="false" icon="fa fa-check" value="Aplicar" styleClass="btn-primary"/>
+                    	<p:commandButton action="manterAplicacao?faces-redirect=true" ajax="false" icon="fa fa-plus" value="Novo" styleClass="btn-primary"/>
 	                    
 	                    <p:separator/>
 	                    
-	                    <p:dataTable id="caixaTable" widgetVar="caixaTable" rows="10"
-	                    			 value="#{listaCaixaMB.caixas}" var="caixa" rowKey="#{caixa.id}"
+	                    <p:dataTable id="aplicacaoTable" widgetVar="aplicacaoTable" rows="10"
+	                    			 value="#{listaAplicacaoMB.aplicacoes}" var="aplicacao" rowKey="#{aplicacao.id}"
 	                                 paginator="true" 	                                 
 	                                 paginatorPosition="bottom"	                                 
 	                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 	                                 currentPageReportTemplate=""
 	                                 rowsPerPageTemplate="5,10,15,20,30">
-	
-	                        <p:column headerText="Caixa">
-	                        	<h:outputText value="#{caixa.conta.nome}">
-	                        		<f:param name="id" value="#{caixa.id}"/>
-	                        	</h:outputText>
+	                        
+  	                        <p:column headerText="Conta">
+	                        	<h:outputText value="#{aplicacao.caixa.conta.nome}"/>
 	                        </p:column>
 	                        
-  	                        <p:column headerText="Tipo">
-	                        	<h:outputText value="#{caixa.conta.tipo.descricao}"/>
+	                         <p:column headerText="Tipo">
+	                        	<h:outputText value="#{aplicacao.caixa.conta.tipo.descricao}"/>
 	                        </p:column>
 	                        
-	                        <p:column headerText="Instituição">
-	                        	<h:outputText value="#{caixa.conta.instituicao.descricao}"/>
+   	                        <p:column headerText="Instituição">
+	                        	<h:outputText value="#{aplicacao.caixa.conta.instituicao.descricao}"/>
 	                        </p:column>
 	                        
    	                        <p:column headerText="Titular">
-	                        	<h:outputText value="#{caixa.conta.funcionario.nome}"/>
+	                        	<h:outputText value="#{aplicacao.caixa.conta.funcionario.nome}"/>
+	                        </p:column>
+	                        
+	                        <p:column headerText="Descrição">
+	                        	<h:outputText value="#{aplicacao.descricao}"/>
 	                        </p:column>
 	                        
   	                        <p:column headerText="Valor">
-	                        	<h:outputText value="#{caixa.valor}">
+	                        	<h:outputText value="#{aplicacao.valor}">
 	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 	                        	</h:outputText>
 	                        </p:column>
 	                        
-							<p:columnGroup type="footer">
-								<p:row>
-									<p:column />
-									<p:column />
-									<p:column />
-									<p:column footerText="Total:" style="text-align:right" />
-									<p:column footerText="#{listaCaixaMB.totalizar()}" style="text-align:left"/>
-								</p:row>
-							</p:columnGroup>
+   	                        <p:column headerText="Data">
+	                        	<h:outputText value="#{aplicacao.data}">
+	                        		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	                        	</h:outputText>
+	                        </p:column>
 	                        
 	                    </p:dataTable>
 	                    
 					</div>
 					
 	            </div>
-	            
-                <div class="box box-primary">
-               
-                    <div class="box-header with-border">
-                   
-                        <p:chart type="pie" model="#{listaCaixaMB.pieModel}" responsive="true" />
-                   
-                    </div>
-                   
-            	</div>
 	            
         	</h:form>
         	

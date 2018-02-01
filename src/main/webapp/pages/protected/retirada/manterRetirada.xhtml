@@ -5,15 +5,15 @@
                 template="../templates/template.xhtml">
 
     <ui:define name="title">
-        Cadastro Trâmite
+        Cadastro Retirada
     </ui:define>
 
     <ui:define name="body">
         <f:metadata>
-        	<f:event listener="#{tramiteMB.inicializar()}" type="preRenderView"/>
+        	<f:event listener="#{retiradaMB.inicializar()}" type="preRenderView"/>
         </f:metadata>
 
-        <adm:breadcrumb title="Cadastro de Tramites #{tramiteMB.tramite.id}" link="manterTramite.xhtml?id=#{tramiteMB.tramite.id}"/>
+        <adm:breadcrumb title="Cadastro de Retiradas #{retiradaMB.retirada.id}" link="manterRetirada.xhtml?id=#{retiradaMB.retirada.id}"/>
         <h:form id="form" prependId="false">
         
         	<p:focus context="capaPanel1"/>
@@ -21,13 +21,13 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <div id="main-buttons" class="hidden-sm hidden-xs">
-                        <p:commandButton value="Salvar" update="@form" icon="fa fa-check" action="#{tramiteMB.salvar()}" styleClass="btn-primary"/>
+                        <p:commandButton value="Salvar" update="@form" icon="fa fa-check" action="#{retiradaMB.salvar()}" styleClass="btn-primary"/>
                         <p:spacer width="5"/>
-                        <p:commandButton value="Voltar" immediate="true" action="listarTramite?faces-redirect=true" process="@this" icon="fa fa-close"/>
+                        <p:commandButton value="Voltar" immediate="true" action="listarRetirada?faces-redirect=true" process="@this" icon="fa fa-close"/>
                     </div>
                     
-                    <p:splitButton value="Salvar" update="@form" icon="fa fa-check" action="#{tramiteMB.salvar()}" styleClass="hidden-md hidden-lg btn-primary">
-                        <p:menuitem value="Voltar" action="listarTramite?faces-redirect=true" process="@this" icon="fa fa-close"/>
+                    <p:splitButton value="Salvar" update="@form" icon="fa fa-check" action="#{retiradaMB.salvar()}" styleClass="hidden-md hidden-lg btn-primary">
+                        <p:menuitem value="Voltar" action="listarRetirada?faces-redirect=true" process="@this" icon="fa fa-close"/>
                     </p:splitButton>
 
                     <p:separator/>
@@ -36,66 +36,29 @@
                     
 						<p:panelGrid id="capaPanel1" columns="2" style="width:100%;">
 						
-							<p:outputLabel value="Caixa de Débito (Origem)" for="caixaOrigem"/>
-							<p:selectOneMenu id="caixaOrigem" value="#{tramiteMB.caixaOrigem}" converter="caixaConverter" var="cOrigem" filter="true" filterMatchMode="contains">
+							<p:outputLabel value="Caixa de Débito" for="caixaRetirada"/>
+							<p:selectOneMenu id="caixaRetirada" value="#{retiradaMB.caixaRetirada}" converter="caixaConverter" var="cRetirada" filter="true" filterMatchMode="contains">
 								<f:selectItem itemLabel="Selecione..."/>
-					            <f:selectItems value="#{tramiteMB.caixasOrigem}" var="caixaOrigem" itemLabel="#{caixaOrigem.conta.nome} | #{caixaOrigem.conta.tipo.descricao} | #{caixaOrigem.conta.instituicao.descricao} | #{caixaOrigem.conta.funcionario.nome} | #{caixaOrigem.valor}" itemValue="#{caixaOrigem}" />
+					            <f:selectItems value="#{retiradaMB.caixasRetirada}" var="caixaRetirada" itemLabel="#{caixaRetirada.conta.nome} | #{caixaRetirada.conta.tipo.descricao} | #{caixaRetirada.conta.instituicao.descricao} | #{caixaRetirada.conta.funcionario.nome} | #{caixaRetirada.valor}" itemValue="#{caixaRetirada}" />
 					        
 				            	<p:column>
-					                <h:outputText value="#{cOrigem.conta.nome}" />
+					                <h:outputText value="#{cRetirada.conta.nome}" />
 					            </p:column>
 					            
 					            <p:column>
-					                <h:outputText value="#{cOrigem.conta.tipo.descricao}" />
+					                <h:outputText value="#{cRetirada.conta.tipo.descricao}" />
 					            </p:column>
 					 
 				            	<p:column>
-					                <h:outputText value="#{cOrigem.conta.instituicao.descricao}" />
+					                <h:outputText value="#{cRetirada.conta.instituicao.descricao}" />
 					            </p:column>
 					            
 					            <p:column>
-					                <h:outputText value="#{cOrigem.conta.funcionario.nome}" />
+					                <h:outputText value="#{cRetirada.conta.funcionario.nome}" />
 					            </p:column>
 					            
 					           <p:column>
-					                <h:outputText value="#{cOrigem.valor}">
-					                	<f:convertNumber type="currency" currencySymbol="R$"/>
-					                </h:outputText>
-					            </p:column>
-					            
-					            <p:ajax event="change" update="valor" listener="#{tramiteMB.autoCompletarValor()}"/>
-					        </p:selectOneMenu>
-					        
-				        </p:panelGrid>
-				        
-				        <p:spacer />
-					    
-					    <p:panelGrid id="capaPanel2" columns="2" style="width:100%;">
-					    
-  							<p:outputLabel value="Caixa de Crédito (Destino)" for="caixaDestino"/>
-							<p:selectOneMenu id="caixaDestino" value="#{tramiteMB.caixaDestino}" converter="caixaConverter" var="cDestino" filter="true" filterMatchMode="contains">
-								<f:selectItem itemLabel="Selecione..."/>
-					            <f:selectItems value="#{tramiteMB.caixasDestino}" var="caixaDestino" 
-					            	itemLabel="#{caixaDestino.conta.nome} | #{caixaDestino.conta.tipo.descricao} | #{caixaDestino.conta.instituicao.descricao} | #{caixaDestino.conta.funcionario.nome} | #{caixaDestino.valor}" itemValue="#{caixaDestino}" />
-					        
-				            	<p:column>
-					                <h:outputText value="#{cDestino.conta.nome}" />
-					            </p:column>
-					            
-					            <p:column>
-					                <h:outputText value="#{cDestino.conta.tipo.descricao}" />
-					            </p:column>
-					 
-				            	<p:column>
-					                <h:outputText value="#{cDestino.conta.instituicao.descricao}" />
-					            </p:column>
-					            
-					            <p:column>
-					                <h:outputText value="#{cDestino.conta.funcionario.nome}" />
-					            </p:column>
-					            
-  					           <p:column>
-					                <h:outputText value="#{cDestino.valor}">
+					                <h:outputText value="#{cRetirada.valor}">
 					                	<f:convertNumber type="currency" currencySymbol="R$"/>
 					                </h:outputText>
 					            </p:column>
@@ -105,16 +68,16 @@
 				        
 				        <p:spacer />
 					        
-				        <p:panelGrid id="capaPanel3" columns="6" style="width:100%;">
+				        <p:panelGrid id="capaPanel2" columns="6" style="width:100%;">
 					        
-  							<p:outputLabel value="Motivo" for="motivo"/>
-							<p:inputText id="motivo" value="#{tramiteMB.tramite.motivo}" />
+  							<p:outputLabel value="Descrição" for="descricao"/>
+							<p:inputText id="descricao" value="#{retiradaMB.retirada.descricao}" />
 							
 							<p:outputLabel value="Valor" for="valor"/>
-							<p:inputNumber id="valor" value="#{tramiteMB.tramite.valor}" />
+							<p:inputNumber id="valor" value="#{retiradaMB.retirada.valor}" />
 							
-							<p:outputLabel value="Data Trâmite" for="data"/>
-							<p:calendar id="data" value="#{tramiteMB.tramite.data}" pattern="dd/MM/yyyy" mask="true"/>
+							<p:outputLabel value="Data" for="data"/>
+							<p:calendar id="data" value="#{retiradaMB.retirada.data}" pattern="dd/MM/yyyy" mask="true"/>
 													
 						</p:panelGrid>
 						
