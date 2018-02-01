@@ -70,17 +70,17 @@
 	                        	<h:outputText value="#{tramite.caixa.conta.funcionario.nome}"/>
 	                        </p:column>
 	                        
-	                        <p:column headerText="Operação">
+	                        <p:column headerText="Operação" width="10%" styleClass="align-center">
 	                        	<h:outputText value="#{tramite.operacao.descricao}"/>
 	                        </p:column>
 	                        
-  	                        <p:column headerText="Valor">
+  	                        <p:column headerText="Valor" width="10%">
 	                        	<h:outputText value="#{tramite.valor}">
 	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 	                        	</h:outputText>
 	                        </p:column>
 	                        
-   	                        <p:column headerText="Data">
+   	                        <p:column headerText="Data" width="10%" styleClass="align-center">
 	                        	<h:outputText value="#{tramite.data}">
 	                        		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	                        	</h:outputText>

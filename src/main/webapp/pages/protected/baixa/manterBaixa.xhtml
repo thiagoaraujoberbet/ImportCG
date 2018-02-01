@@ -155,9 +155,6 @@
 								<p:outputLabel value="Valor" for="valor"/>
 				                <p:inputNumber id="valor" value="#{baixaMB.itemBaixa.valor}"/>
 				                
-  								<p:outputLabel value="Acréscimo" for="acrescimo"/>
-				                <p:inputNumber id="acrescimo" value="#{baixaMB.itemBaixa.acrescimo}"/>
-				                
        							<p:outputLabel value="Data da Baixa" for="dataBaixa" />
 								<p:calendar id="dataBaixa" value="#{baixaMB.itemBaixa.data}" pattern="dd/MM/yyyy" mask="true"/>
 								
@@ -195,25 +192,19 @@
 		                        	<h:outputText value="#{item.caixa.conta.nome} | #{item.caixa.conta.funcionario.nome} | #{item.caixa.valor}" />
 		                        </p:column>
 		                        
-   	   	                        <p:column headerText="Valor R$">
+   	   	                        <p:column headerText="Valor R$" width="10%">
 		                        	<h:outputText value="#{item.valor}">
 		                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 		                        	</h:outputText>
 		                        </p:column>
 		                        
-  	   	                        <p:column headerText="Acréscimo R$">
-		                        	<h:outputText value="#{item.acrescimo}">
-		                        		<f:convertNumber type="currency" currencySymbol="R$"/>
-		                        	</h:outputText>
-		                        </p:column>
-		                        
-                              	<p:column headerText="Data da Baixa">
+                              	<p:column headerText="Data da Baixa" width="10%" styleClass="align-center">
 									<h:outputText value="#{item.data}">
 										<f:convertDateTime pattern="dd/MM/yyyy"/>
 									</h:outputText>	
 			                    </p:column>
 		                        
-   	   	                        <p:column headerText="Tipo Baixa">
+   	   	                        <p:column headerText="Tipo Baixa" width="10%" styleClass="align-center">
 		                        	<h:outputText value="#{item.tipo.descricao}" />
 		                        </p:column>
 		                        
