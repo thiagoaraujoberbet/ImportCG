@@ -42,7 +42,7 @@ public class ItemBaixaDAO implements Serializable {
 	}
 
 	public List<ItemBaixa> porIdBaixa(Long idBaixa) {
-		return manager.createQuery("SELECT i FROM ItemBaixa i WHERE i.baixa.id = :idBaixa", ItemBaixa.class).setParameter("idBaixa", idBaixa).getResultList();
+		return manager.createQuery("SELECT i FROM ItemBaixa i WHERE i.baixa.id = :idBaixa ORDER BY i.data ASC", ItemBaixa.class).setParameter("idBaixa", idBaixa).getResultList();
 	}
 
 	@SuppressWarnings("unchecked")

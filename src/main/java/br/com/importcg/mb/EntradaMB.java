@@ -11,6 +11,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.importcg.enumeration.EnumStatusBaixa;
 import br.com.importcg.enumeration.EnumTipoDespesa;
 import br.com.importcg.model.CatalogoInternacional;
 import br.com.importcg.model.Despesa;
@@ -198,7 +199,7 @@ public class EntradaMB implements Serializable {
 	}
 	
 	private void salvarDespesa() {
-		despesa = new Despesa(entrada.getDataCompra(), "Lançamento de Despesas - Compra de Produtos ("+ entrada.getDataCompraFormatada() +")", entrada.getValorTotal());
+		despesa = new Despesa(entrada.getDataCompra(), "Lançamento de Despesas - Compra de Produtos ("+ entrada.getDataCompraFormatada() +")", entrada.getValorTotal(), EnumStatusBaixa.NAOBAIXADO);
 		despesa = despesaService.salvar(despesa);
 	}
 	

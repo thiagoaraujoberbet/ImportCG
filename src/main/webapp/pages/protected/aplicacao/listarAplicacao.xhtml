@@ -54,15 +54,15 @@
 	                                 currentPageReportTemplate=""
 	                                 rowsPerPageTemplate="5,10,15,20,30">
 	                        
-  	                        <p:column headerText="Conta">
+  	                        <p:column headerText="Conta" style="width: 12%; text-align: center;">
 	                        	<h:outputText value="#{aplicacao.caixa.conta.nome}"/>
 	                        </p:column>
 	                        
-	                         <p:column headerText="Tipo">
+	                         <p:column headerText="Tipo" style="width: 12%; text-align: center;">
 	                        	<h:outputText value="#{aplicacao.caixa.conta.tipo.descricao}"/>
 	                        </p:column>
 	                        
-   	                        <p:column headerText="Instituição">
+   	                        <p:column headerText="Instituição" style="width: 12%; text-align: center;">
 	                        	<h:outputText value="#{aplicacao.caixa.conta.instituicao.descricao}"/>
 	                        </p:column>
 	                        
@@ -74,13 +74,13 @@
 	                        	<h:outputText value="#{aplicacao.descricao}"/>
 	                        </p:column>
 	                        
-  	                        <p:column headerText="Valor">
+  	                        <p:column headerText="Valor" style="width: 10%;">
 	                        	<h:outputText value="#{aplicacao.valor}">
 	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 	                        	</h:outputText>
 	                        </p:column>
 	                        
-   	                        <p:column headerText="Data">
+   	                        <p:column headerText="Data" style="width: 10%; text-align: center;">
 	                        	<h:outputText value="#{aplicacao.data}">
 	                        		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	                        	</h:outputText>

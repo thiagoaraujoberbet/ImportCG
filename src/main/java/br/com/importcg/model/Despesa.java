@@ -61,10 +61,11 @@ public class Despesa implements Serializable {
 		super();
 	}
 
-	public Despesa(Date data, String descricao, BigDecimal valorTotal) {
+	public Despesa(Date data, String descricao, BigDecimal valorTotal, EnumStatusBaixa status) {
 		this.dataDespesa = data;
 		this.descricao = descricao;
 		this.valorTotal = valorTotal;
+		this.status = status;
 	}
 
 	public Long getId() {
