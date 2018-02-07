@@ -48,4 +48,8 @@ public class ItemBaixaService implements Serializable {
 	public List<ItemBaixa> buscarDespesasABaixar() {
 		return itemBaixaDAO.buscarDespesasABaixar();
 	}
+
+	public List<ItemBaixa> buscarChequesEmitidos() {
+		return itemBaixaDAO.buscarChequesEmitidos();
+	}
 }

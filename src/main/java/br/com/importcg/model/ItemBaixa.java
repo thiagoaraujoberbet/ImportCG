@@ -63,6 +63,9 @@ public class ItemBaixa implements Serializable {
 	
 	@Column(nullable=false)
 	private boolean baixado = Boolean.FALSE;
+	
+	@Column(nullable=false)
+	private boolean cheque = Boolean.FALSE;
 
 	public ItemBaixa() {
 		super();
@@ -146,6 +149,14 @@ public class ItemBaixa implements Serializable {
 
 	public void setBaixado(boolean baixado) {
 		this.baixado = baixado;
+	}
+
+	public boolean isCheque() {
+		return cheque;
+	}
+
+	public void setCheque(boolean cheque) {
+		this.cheque = cheque;
 	}
 
 	public boolean isInclusao() {

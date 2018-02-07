@@ -111,8 +111,13 @@ public class BaixaMB implements Serializable {
 		}
 		
 		itensBaixa = itemBaixaService.porIdBaixa(itemBaixa.getBaixa().getId());
+		itensDespesa = itemDespesaService.buscarItensDespesaNaoBaixadas();
 		
 		FacesUtil.addInfoMessage("Item cadastrado com sucesso!");
+	}
+	
+	public void editar() {
+		itensDespesa = itemDespesaService.listarTodos();
 	}
 	
 	private void atualizarBaixaPositiva(BigDecimal valor) {

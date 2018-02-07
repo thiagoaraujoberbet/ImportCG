@@ -80,6 +80,12 @@
    	                        <p:column headerText="Qtde Comprada" style="width:7%; text-align:center;">
 	                        	<h:outputText value="#{cliente.quantidadeComprada}"/>
 	                        </p:column>
+	                        
+   	                        <p:column headerText="Comprado" style="width:10%; text-align:right;">
+	                        	<h:outputText value="#{cliente.valorComprado}">
+	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
+	                        	</h:outputText>
+	                        </p:column>
 	                         
 	                       	<p:column headerText="Desde" style="width:10%; text-align:center;">
 	                        	<h:outputText value="#{cliente.dataCriacao}">

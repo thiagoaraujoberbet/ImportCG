@@ -71,13 +71,13 @@
 	                        	<h:outputText value="#{venda.cliente.nome}" />
 	                        </p:column>
 	                        
-   	                        <p:column headerText="Valor Venda" style="width:10%; text-align:center;">
+   	                        <p:column headerText="Valor Venda" style="width:10%; text-align:right;">
 	                        	<h:outputText value="#{venda.valorTotal}">
 	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 	                        	</h:outputText>
 	                        </p:column>
 	                        
-    	                        <p:column headerText="Restante" style="width:10%; text-align:center;">
+    	                        <p:column headerText="Restante" style="width:10%; text-align:right;">
 	                        	<h:outputText value="#{venda.restante}" 
 	                        		style="#{venda.status eq 'VENDACONCLUIDA' ? 'color: #238E23;' : 'color: #FF0000;'}">
 	                        		<f:convertNumber type="currency" currencySymbol="R$"/>

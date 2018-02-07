@@ -69,13 +69,13 @@
 	                        	<h:outputText value="#{baixa.descricao}" />
 	                        </p:column>
 	                        
-   	                        <p:column headerText="Valor Total" style="width: 10%;">
+   	                        <p:column headerText="Valor Total" style="width: 10%; text-align:right;">
 	                        	<h:outputText value="#{baixa.valorTotal}">
 	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 	                        	</h:outputText>
 	                        </p:column>
 	                        
-    	                        <p:column headerText="Valor Restante" style="width: 10%;">
+    	                        <p:column headerText="Valor Restante" style="width: 10%; text-align:right;">
 	                        	<h:outputText value="#{baixa.valorRestante}">
 	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 	                        	</h:outputText>

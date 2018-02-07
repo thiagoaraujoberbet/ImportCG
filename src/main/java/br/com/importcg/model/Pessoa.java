@@ -1,6 +1,7 @@
 package br.com.importcg.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -63,11 +64,21 @@ public class Pessoa implements Serializable {
 	
 	private String enderecoComercial;
 	
+	// Utilizado na consulta de listagem de clientes (ListaClienteMB -> listarCliente.xhtml)
 	@Transient
 	private Integer quantidadeComprada;
 	
+	// Utilizado na consulta de listagem de funcionários (ListaFuncionarioMB -> listarFuncionario.xhtml)
 	@Transient
 	private Integer quantidadeVendida;
+	
+	// Utilizado na consulta de listagem de clientes (ListaClienteMB -> listarCliente.xhtml)
+	@Transient
+	private BigDecimal valorComprado;
+	
+	// Utilizado na consulta de listagem de funcionários (ListaFuncionarioMB -> listarFuncionario.xhtml)
+	@Transient
+	private BigDecimal valorVendido;
 
 	public Pessoa() {
 		super();
@@ -183,6 +194,22 @@ public class Pessoa implements Serializable {
 
 	public void setEnderecoComercial(String enderecoComercial) {
 		this.enderecoComercial = enderecoComercial;
+	}
+	
+	public BigDecimal getValorComprado() {
+		return valorComprado;
+	}
+
+	public void setValorComprado(BigDecimal valorComprado) {
+		this.valorComprado = valorComprado;
+	}
+
+	public BigDecimal getValorVendido() {
+		return valorVendido;
+	}
+
+	public void setValorVendido(BigDecimal valorVendido) {
+		this.valorVendido = valorVendido;
 	}
 
 	public boolean isInclusao() {

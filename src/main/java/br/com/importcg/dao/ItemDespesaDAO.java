@@ -38,7 +38,7 @@ public class ItemDespesaDAO implements Serializable {
 	}
 	
 	public List<ItemDespesa> listarTodos() {
-		return manager.createQuery("SELECT i FROM itemDespesa i", ItemDespesa.class).getResultList();
+		return manager.createQuery("SELECT i FROM ItemDespesa i", ItemDespesa.class).getResultList();
 	}
 
 	public List<ItemDespesa> porIdDespesa(Long idDespesa) {

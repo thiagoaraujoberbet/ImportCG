@@ -82,6 +82,12 @@
 	                        	<h:outputText value="#{funcionario.quantidadeVendida}"/>
 	                        </p:column>
 	                        
+   	                        <p:column headerText="Vendido" style="width:10%; text-align:right;">
+	                        	<h:outputText value="#{funcionario.valorVendido}">
+	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
+	                        	</h:outputText>
+	                        </p:column>
+	                        
   	                       	<p:column headerText="Desde" style="width:10%; text-align:center;">
 	                        	<h:outputText value="#{funcionario.dataCriacao}">
 	                        		<f:convertDateTime pattern="dd/MM/yyyy"/>

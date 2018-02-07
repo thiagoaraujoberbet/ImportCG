@@ -64,4 +64,9 @@ public class ItemBaixaDAO implements Serializable {
 		
 		return manager.createNativeQuery(sql.toString(), ItemBaixa.class).getResultList();
 	}
+
+	public List<ItemBaixa> buscarChequesEmitidos() {
+		return manager.createQuery("SELECT i FROM ItemBaixa i WHERE i.baixado = :baixado AND i.cheque = :cheque ORDER BY i.data ASC", ItemBaixa.class)
+				.setParameter("baixado", Boolean.FALSE).setParameter("cheque", Boolean.TRUE).getResultList();
+	}
 }

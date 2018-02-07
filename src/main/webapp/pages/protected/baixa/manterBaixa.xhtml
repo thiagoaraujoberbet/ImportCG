@@ -90,7 +90,7 @@
 							<p:panelGrid id="itemPanel1" columns="4" style="width:100%;" rendered="#{baixaMB.baixa.status ne 'BAIXATOTALMENTE'}">
 							
 								<p:outputLabel value="Despesa" for="itensDespesa"/>
-								<p:selectOneMenu id="itensDespesa" value="#{baixaMB.itemBaixa.itemDespesa}" converter="itemDespesaConverter" var="i" filter="true" filterMatchMode="contains">
+								<p:selectOneMenu id="itensDespesa" value="#{baixaMB.itemBaixa.itemDespesa}" converter="itemDespesaConverter" var="i" filter="true" filterMatchMode="contains" disabled="#{baixaMB.itemBaixa.edicao}">
 									<f:selectItem itemLabel="Selecione..."/>
 						            <f:selectItems value="#{baixaMB.itensDespesa}" var="itemDespesa" itemLabel="#{itemDespesa.despesa.dataDespesaFormatada} | #{itemDespesa.tipo.descricao} | #{itemDespesa.valor}" itemValue="#{produto}" />
 						        
@@ -145,12 +145,12 @@
 					         
    								<p:outputLabel value="Descrição" for="descricaoItem"/>
 								<p:inputText id="descricaoItem" value="#{baixaMB.itemBaixa.descricao}"/>
-					         
+								
 					         </p:panelGrid>
 					         
 					         <p:spacer rendered="#{baixaMB.baixa.status ne 'BAIXATOTALMENTE'}"/>
 						        
-					         <p:panelGrid id="itemPanel3" columns="8" style="width:100%;" rendered="#{baixaMB.baixa.status ne 'BAIXATOTALMENTE'}">
+					         <p:panelGrid id="itemPanel3" columns="10" style="width:100%;" rendered="#{baixaMB.baixa.status ne 'BAIXATOTALMENTE'}">
 						        
 								<p:outputLabel value="Valor" for="valor"/>
 				                <p:inputNumber id="valor" value="#{baixaMB.itemBaixa.valor}"/>
@@ -164,6 +164,9 @@
 									<f:selectItem itemLabel="Baixa Parcial" itemValue="BAIXAPARCIAL"/>
 									<f:selectItem itemLabel="Baixa Integral" itemValue="BAIXAINTEGRAL"/>
 								</p:selectOneMenu>
+								
+								<p:outputLabel value="Cheque?" for="cheque"/>
+								<p:selectBooleanCheckbox id="cheque" value="#{baixaMB.itemBaixa.cheque}"/>
 								
 							</p:panelGrid>
 							
@@ -189,7 +192,7 @@
 		                        </p:column>
 		                        
 		                      	<p:column headerText="Debitar de">
-		                        	<h:outputText value="#{item.caixa.conta.nome} | #{item.caixa.conta.funcionario.nome} | #{item.caixa.valor}" />
+		                        	<h:outputText value="#{item.caixa.conta.nome} | #{item.caixa.conta.instituicao.descricao} | #{item.caixa.conta.funcionario.nome} | #{item.caixa.valor}" />
 		                        </p:column>
 		                        
    	   	                        <p:column headerText="Valor R$" width="10%">
@@ -216,7 +219,7 @@
 			                    </p:column>
                     
                                	<p:column styleClass="align-center" width="10%">
-						             <p:commandButton update="@form" icon="fa fa-pencil" title="Editar" styleClass="btn-primary" disabled="#{item.baixado}">
+						             <p:commandButton update="@form" icon="fa fa-pencil" title="Editar" styleClass="btn-primary" disabled="#{item.baixado}" action="#{baixaMB.editar}">
 						                <f:setPropertyActionListener value="true" target="#{baixaMB.edicaoItem}" />
 						                <f:setPropertyActionListener value="#{item}" target="#{baixaMB.itemBaixa}" />
 						                <f:setPropertyActionListener value="#{item.valor}" target="#{baixaMB.valorAtual}" />

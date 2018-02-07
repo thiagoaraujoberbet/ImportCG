@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 template="templates/template.xhtml">
 
@@ -53,7 +54,50 @@
           	  <p:panelGrid columns="1" style="width: 100%;">
 				   <p:chart type="bar" model="#{listaPrincipalMB.barModelBalanco}" responsive="true" />
 			  </p:panelGrid>
-          
+			  
+			  <p:separator/>
+			  
+			  <div class="ui-fluid">
+				  	<p:dataTable id="chequeTable" widgetVar="chequeTable" rows="3"	 
+	           			 value="#{listaPrincipalMB.cheques}" var="item" rowKey="#{item.id}"
+	                     paginator="true" 	                                 
+	                     paginatorPosition="bottom"	                                 
+	                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+	                     currentPageReportTemplate=""
+	                     rowsPerPageTemplate="3,6,9,12,15">
+	                          
+		               <p:column headerText="Descrição">
+		               		<h:outputText value="#{item.descricao}" />
+		               </p:column>
+		               
+                       <p:column headerText="Valor" style="width:10%; text-align:right;">
+                       		<h:outputText value="#{item.valor}">
+                       			<f:convertNumber type="currency" currencySymbol="R$"/>
+                      		 </h:outputText>
+                       </p:column>
+                       
+                       <p:column headerText="Data de Compensação" style="width: 10%; text-align: center;">
+                       		<h:outputText value="#{item.data}">
+                       			<f:convertDateTime pattern="dd/MM/yyyy"/>
+                       		</h:outputText>
+                       </p:column>
+                       
+					   <p:columnGroup type="footer">
+   							<p:row>
+								<p:column footerText="Total de cheques a compensar no Mês Atual:" style="text-align:right" />
+								<p:column footerText="#{listaPrincipalMB.totalizarMesAtual()}" style="text-align:right"/>
+								<p:column />
+							</p:row>
+							
+							<p:row>
+								<p:column footerText="Total de cheques a compensar no Geral:" style="text-align:right" />
+								<p:column footerText="#{listaPrincipalMB.totalizar()}" style="text-align:right"/>
+								<p:column />
+							</p:row>
+					   </p:columnGroup>
+	                 
+					</p:dataTable>
+          		</div>
            </div>
           
    		</div>

@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +24,9 @@ import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
+import br.com.importcg.model.ItemBaixa;
 import br.com.importcg.model.Pagamento;
+import br.com.importcg.service.ItemBaixaService;
 import br.com.importcg.service.PagamentoService;
 import br.com.importcg.service.PrincipalService;
 import br.com.importcg.wrapper.BalancoWrapper;
@@ -44,6 +47,9 @@ public class ListaPrincipalMB implements Serializable {
 	@Inject
 	private PagamentoService pagamentoService;
 	
+	@Inject
+	private ItemBaixaService itemBaixaService;
+	
 	List<BalancoWrapper> mesAnterior = new ArrayList<>();
 	
 	List<BalancoWrapper> mesAtual = new ArrayList<>();
@@ -53,6 +59,8 @@ public class ListaPrincipalMB implements Serializable {
 	List<CalculoMensalWrapper> receber = new ArrayList<>();
 	
 	List<CalculoMensalWrapper> pagar = new ArrayList<>();
+	
+	List<ItemBaixa> cheques = new ArrayList<>();
 
 	private PieChartModel pieModelMesAnterior;
 	
@@ -81,10 +89,50 @@ public class ListaPrincipalMB implements Serializable {
 		receber = principalService.buscarValoresAReceber();
 		pagar = principalService.buscarValoresAPagar();
 		
+		cheques = itemBaixaService.buscarChequesEmitidos();
+		
 		this.createPieModelMesAnterior();
 		this.createPieModelMesAtual();
 		this.createPieModelGeral();
 		this.createBarModelBalanco();
+	}
+	
+	public String totalizar() {
+		BigDecimal total = new BigDecimal(0);
+		
+		for (ItemBaixa cheque : cheques) {
+			total = total.add(cheque.getValor());
+		}
+		
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		String formatado = nf.format(total);
+		
+		return formatado;
+	}
+	
+	public String totalizarMesAtual() {
+		BigDecimal total = new BigDecimal(0);
+		
+		int mesAtual = retornarMes(new Date());
+		
+		for (ItemBaixa cheque : cheques) {
+			int mes = retornarMes(cheque.getData());
+			
+			if (mesAtual == mes)
+				total = total.add(cheque.getValor());
+		}
+		
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		String formatado = nf.format(total);
+		
+		return formatado;
+	}
+	
+	private int retornarMes(Date data) {
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.setTime(data);
+		
+		return calendar.get(GregorianCalendar.MONTH);
 	}
 	
 	public void emitirAvisos() {
@@ -115,34 +163,34 @@ public class ListaPrincipalMB implements Serializable {
 	private void createPieModelMesAnterior() {
 		pieModelMesAnterior = new PieChartModel();
     	
-    		pieModelMesAnterior = this.montarPieChartModel(pieModelMesAnterior, mesAnterior, "mesAnterior");
+		pieModelMesAnterior = this.montarPieChartModel(pieModelMesAnterior, mesAnterior, "mesAnterior");
         
 		NumberFormat nf = NumberFormat.getCurrencyInstance();
-        pieModelMesAnterior.setTitle("Mês Anterior -> R - (P + D) = " + nf.format(saldoMensalAnterior));
+        pieModelMesAnterior.setTitle("Mês Anterior = " + nf.format(saldoMensalAnterior)); //R - (P + D)
         pieModelMesAnterior.setLegendPosition("w");
         pieModelMesAnterior.setShowDataLabels(true);
         pieModelMesAnterior.setSeriesColors("93ABCD,2758BA,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
 	
     private void createPieModelMesAtual() {
-    		pieModelMesAtual = new PieChartModel();
+		pieModelMesAtual = new PieChartModel();
     	
 		pieModelMesAtual = this.montarPieChartModel(pieModelMesAtual, mesAtual, "mesAtual");
         
 		NumberFormat nf = NumberFormat.getCurrencyInstance();
-        pieModelMesAtual.setTitle("Mês Atual -> R - (P + D) = " + nf.format(saldoMensalAtual));
+        pieModelMesAtual.setTitle("Mês Atual = " + nf.format(saldoMensalAtual)); //R - (P + D)
         pieModelMesAtual.setLegendPosition("w");
         pieModelMesAtual.setShowDataLabels(true);
         pieModelMesAtual.setSeriesColors("93ABCD,2758BA,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
     
     private void createPieModelGeral() {
-    		pieModelGeral = new PieChartModel();
+		pieModelGeral = new PieChartModel();
     	
-    		pieModelGeral = this.montarPieChartModel(pieModelGeral, geral, "geral");
+    	pieModelGeral = this.montarPieChartModel(pieModelGeral, geral, "geral");
         
-    		NumberFormat nf = NumberFormat.getCurrencyInstance();
-        pieModelGeral.setTitle("Geral -> R - (P + D) = " + nf.format(saldoMensalGeral));
+    	NumberFormat nf = NumberFormat.getCurrencyInstance();
+        pieModelGeral.setTitle("Geral = " + nf.format(saldoMensalGeral)); // R - (P + D)
         pieModelGeral.setLegendPosition("w");
         pieModelGeral.setShowDataLabels(true); 
         pieModelGeral.setSeriesColors("93ABCD,2758BA,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
@@ -192,7 +240,7 @@ public class ListaPrincipalMB implements Serializable {
         Axis yAxis = barModelBalanco.getAxis(AxisType.Y);
         yAxis.setLabel("Valores");
         yAxis.setMin(0);
-        yAxis.setMax(10000);
+        yAxis.setMax(15000);
 	}	
 	
 	private BarChartModel initBarModelBalanco() {
@@ -278,6 +326,14 @@ public class ListaPrincipalMB implements Serializable {
 
 	public void setPagar(List<CalculoMensalWrapper> pagar) {
 		this.pagar = pagar;
+	}
+
+	public List<ItemBaixa> getCheques() {
+		return cheques;
+	}
+
+	public void setCheques(List<ItemBaixa> cheques) {
+		this.cheques = cheques;
 	}
 
 	public PieChartModel getPieModelMesAnterior() {
