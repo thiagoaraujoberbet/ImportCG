@@ -68,6 +68,8 @@ public class ListaPrincipalMB implements Serializable {
 	
 	private PieChartModel pieModelGeral;
 	
+	private PieChartModel pieModelChequesEmitidos;
+	
 	private BarChartModel barModelBalanco;
 	
 	private BigDecimal valorReceber;
@@ -94,6 +96,8 @@ public class ListaPrincipalMB implements Serializable {
 		this.createPieModelMesAnterior();
 		this.createPieModelMesAtual();
 		this.createPieModelGeral();
+		this.createPieModelChequesEmitidos();
+		
 		this.createBarModelBalanco();
 	}
 	
@@ -195,6 +199,33 @@ public class ListaPrincipalMB implements Serializable {
         pieModelGeral.setShowDataLabels(true); 
         pieModelGeral.setSeriesColors("93ABCD,2758BA,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
+    
+	private void createPieModelChequesEmitidos() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		pieModelChequesEmitidos = new PieChartModel();
+
+		BigDecimal totalGeral = new BigDecimal("0");
+		BigDecimal totalMensal = new BigDecimal("0");
+		int mesAtual = retornarMes(new Date());
+		
+        for (ItemBaixa item : cheques) {
+			int mes = retornarMes(item.getData());
+			
+			totalGeral = totalGeral.add(item.getValor());
+			
+			if (mesAtual == mes) {
+				totalMensal = totalMensal.add(item.getValor());
+				
+				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+				pieModelChequesEmitidos.set(formato.format(item.getData()) + " - " + item.getDescricao(), item.getValor());
+			}
+        }
+        
+        pieModelChequesEmitidos.setTitle("Cheques a compensar neste mês: " + nf.format(totalMensal) + " de um total de " + nf.format(totalGeral));
+        pieModelChequesEmitidos.setLegendPosition("w");
+        pieModelChequesEmitidos.setShowDataLabels(true);
+        pieModelChequesEmitidos.setDiameter(300);
+	}
     
 	private PieChartModel montarPieChartModel(PieChartModel pieModel, List<BalancoWrapper> lista, String referencia) {
 		NumberFormat nf = NumberFormat.getCurrencyInstance();
@@ -358,6 +389,14 @@ public class ListaPrincipalMB implements Serializable {
 
 	public void setPieModelGeral(PieChartModel pieModelGeral) {
 		this.pieModelGeral = pieModelGeral;
+	}
+
+	public PieChartModel getPieModelChequesEmitidos() {
+		return pieModelChequesEmitidos;
+	}
+
+	public void setPieModelChequesEmitidos(PieChartModel pieModelChequesEmitidos) {
+		this.pieModelChequesEmitidos = pieModelChequesEmitidos;
 	}
 
 	public BarChartModel getBarModelBalanco() {

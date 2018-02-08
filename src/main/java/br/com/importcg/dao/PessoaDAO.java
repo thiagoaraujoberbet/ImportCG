@@ -14,6 +14,8 @@ import br.com.importcg.enumeration.EnumCargo;
 import br.com.importcg.enumeration.EnumTipoPessoa;
 import br.com.importcg.exception.NegocioException;
 import br.com.importcg.model.Pessoa;
+import br.com.importcg.wrapper.QuantidadeCompradaWrapper;
+import br.com.importcg.wrapper.ValorCompradoWrapper;
 
 public class PessoaDAO implements Serializable {
 
@@ -130,15 +132,61 @@ public class PessoaDAO implements Serializable {
 	
 	@SuppressWarnings("unchecked")
 	public List<Pessoa> buscarInformacoesCliente() {
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT p.idPessoa, p.nome, p.cargo, p.cpf, p.dataNascimento, p.celular, p.email, p.tipo, p.dataCriacao, p.dataAlteracao, ");
-		sql.append("    case when (select SUM(iv.quantidade) from itemVenda iv JOIN venda v ON iv.idVenda = v.idVenda where v.idCliente = p.idPessoa) is null then 0 else ");
-		sql.append("    (select SUM(iv.quantidade) from itemVenda iv JOIN venda v ON iv.idVenda = v.idVenda where v.idCliente = p.idPessoa) end quantidadeComprada, ");
-		sql.append("    case when (select SUM(iv.valor) from itemVenda iv JOIN venda v ON iv.idVenda = v.idVenda where v.idCliente = p.idPessoa) is null then 0 else ");
-		sql.append("    (select SUM(iv.valor) from itemVenda iv JOIN venda v ON iv.idVenda = v.idVenda where v.idCliente = p.idPessoa) end valorComprado ");
-		sql.append("FROM pessoa p "); 
-		sql.append("WHERE p.tipo = 'CLIENTE' ");  
-		sql.append("ORDER BY p.nome "); 
+		StringBuffer  sql = new StringBuffer();
+		
+		sql.append("SELECT * ");
+		sql.append("FROM   (SELECT p.idPessoa, ");
+		sql.append("               p.nome, ");
+		sql.append("               p.cargo, ");
+		sql.append("               p.cpf, ");
+		sql.append("               p.dataNascimento, ");
+		sql.append("               p.celular, ");
+		sql.append("               p.email, ");
+		sql.append("               p.tipo, ");
+		sql.append("               p.dataCriacao, ");
+		sql.append("               p.dataAlteracao, ");
+		sql.append("               CASE ");
+		sql.append("                 WHEN (SELECT Sum(iv.quantidade) ");
+		sql.append("                       FROM   u684253104_impcg.itemVenda iv ");
+		sql.append("                              JOIN venda v ");
+		sql.append("                                ON iv.idVenda = v.idVenda ");
+		sql.append("                       WHERE  v.idCliente = p.idPessoa) IS NULL THEN 0 ");
+		sql.append("                 ELSE (SELECT Sum(iv.quantidade) ");
+		sql.append("                       FROM   u684253104_impcg.itemVenda iv ");
+		sql.append("                              JOIN venda v ");
+		sql.append("                                ON iv.idVenda = v.idVenda ");
+		sql.append("                       WHERE  v.idCliente = p.idPessoa) ");
+		sql.append("               END quantidadeComprada, ");
+		sql.append("               CASE ");
+		sql.append("                 WHEN (SELECT Sum(iv.valor) ");
+		sql.append("                       FROM   u684253104_impcg.itemVenda iv ");
+		sql.append("                              JOIN venda v ");
+		sql.append("                                ON iv.idVenda = v.idVenda ");
+		sql.append("                       WHERE  v.idCliente = p.idPessoa) IS NULL THEN 0 ");
+		sql.append("                 ELSE (SELECT Sum(iv.valor) ");
+		sql.append("                       FROM   u684253104_impcg.itemVenda iv ");
+		sql.append("                              JOIN venda v ");
+		sql.append("                                ON iv.idVenda = v.idVenda ");
+		sql.append("                       WHERE  v.idCliente = p.idPessoa) ");
+		sql.append("               END valorComprado, ");
+		sql.append("               CASE ");
+		sql.append("                 WHEN (SELECT Sum(pag.saldo) ");
+		sql.append("                       FROM   u684253104_impcg.pagamento pag ");
+		sql.append("                              JOIN venda v ");
+		sql.append("                                ON pag.idVenda = v.idVenda ");
+		sql.append("                       WHERE  v.idCliente = p.idPessoa ");
+		sql.append("                              AND pag.pago = 0) IS NULL THEN 0 ");
+		sql.append("                 ELSE (SELECT Sum(pag.saldo) ");
+		sql.append("                       FROM   u684253104_impcg.pagamento pag ");
+		sql.append("                              JOIN venda v ");
+		sql.append("                                ON pag.idVenda = v.idVenda ");
+		sql.append("                       WHERE  v.idCliente = p.idPessoa ");
+		sql.append("                              AND pag.pago = 0) ");
+		sql.append("               END valorDevido ");
+		sql.append("        FROM   u684253104_impcg.pessoa p ");
+		sql.append("        WHERE  p.tipo = 'CLIENTE') cliente ");
+		sql.append("ORDER  BY valorDevido DESC, ");
+		sql.append("          nome ASC;");
 		
 		Query query = manager.createNativeQuery(sql.toString());
 		
@@ -195,6 +243,116 @@ public class PessoaDAO implements Serializable {
 			
 			if (item[11] != null) {
 				pessoa.setValorComprado(new BigDecimal(item[11].toString()));
+			}
+			
+			if (item[12] != null) {
+				pessoa.setValorDevido(new BigDecimal(item[12].toString()));
+			}
+			
+			itens.add(pessoa);
+		}
+		
+		return itens;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<QuantidadeCompradaWrapper> buscarMaioresCompradoresPorQtde() {
+		StringBuffer  sql = new StringBuffer();
+		
+		sql.append("SELECT * ");
+		sql.append("FROM   (SELECT p.idPessoa, ");
+		sql.append("               p.nome, ");
+		sql.append("               CASE ");
+		sql.append("                 WHEN (SELECT Sum(iv.quantidade) ");
+		sql.append("                       FROM   u684253104_impcg.itemVenda iv ");
+		sql.append("                              JOIN venda v ");
+		sql.append("                                ON iv.idVenda = v.idVenda ");
+		sql.append("                       WHERE  v.idCliente = p.idPessoa) IS NULL THEN 0 ");
+		sql.append("                 ELSE (SELECT Sum(iv.quantidade) ");
+		sql.append("                       FROM   u684253104_impcg.itemVenda iv ");
+		sql.append("                              JOIN venda v ");
+		sql.append("                                ON iv.idVenda = v.idVenda ");
+		sql.append("                       WHERE  v.idCliente = p.idPessoa) ");
+		sql.append("               end quantidadeComprada ");
+		sql.append("        FROM   u684253104_impcg.pessoa p ");
+		sql.append("        WHERE  p.tipo = 'CLIENTE' ");
+		sql.append("               AND p.idPessoa <> 46) cliente ");
+		sql.append("ORDER  BY quantidadeComprada DESC, ");
+		sql.append("          nome ASC ");
+		sql.append("LIMIT  10;");
+
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		List<Object[]> objects = query.getResultList();
+		
+		List<QuantidadeCompradaWrapper> itens = new ArrayList<>();
+		
+		for (Object[] item : objects) {
+			QuantidadeCompradaWrapper pessoa = new QuantidadeCompradaWrapper();
+			
+			if (item[0] != null) {
+				pessoa.setId(Long.parseLong(item[0].toString()));
+			}
+			
+			if (item[1] != null) {
+				pessoa.setNome(item[1].toString());
+			}
+			
+			if (item[2] != null) {
+				pessoa.setQuantidade(new Integer(item[2].toString()));
+			}
+			
+			itens.add(pessoa);
+		}
+		
+		return itens;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ValorCompradoWrapper> buscarMaioresCompradoresPorValor() {
+		StringBuffer  sql = new StringBuffer();
+		
+		sql.append("SELECT * ");
+		sql.append("FROM   (SELECT p.idPessoa, ");
+		sql.append("               p.nome, ");
+		sql.append("               CASE ");
+		sql.append("                 WHEN (SELECT Sum(iv.valor) ");
+		sql.append("                       FROM   u684253104_impcg.itemVenda iv ");
+		sql.append("                              JOIN venda v ");
+		sql.append("                                ON iv.idVenda = v.idVenda ");
+		sql.append("                       WHERE  v.idCliente = p.idPessoa) IS NULL THEN 0 ");
+		sql.append("                 ELSE (SELECT Sum(iv.valor) ");
+		sql.append("                       FROM   u684253104_impcg.itemVenda iv ");
+		sql.append("                              JOIN venda v ");
+		sql.append("                                ON iv.idVenda = v.idVenda ");
+		sql.append("                       WHERE  v.idCliente = p.idPessoa) ");
+		sql.append("               end valorComprado ");
+		sql.append("        FROM   u684253104_impcg.pessoa p ");
+		sql.append("        WHERE  p.tipo = 'CLIENTE' ");
+		sql.append("               AND p.idPessoa <> 46) cliente ");
+		sql.append("ORDER  BY valorComprado DESC, ");
+		sql.append("          nome ASC ");
+		sql.append("LIMIT  10;");
+
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		List<Object[]> objects = query.getResultList();
+		
+		List<ValorCompradoWrapper> itens = new ArrayList<>();
+		
+		for (Object[] item : objects) {
+			ValorCompradoWrapper pessoa = new ValorCompradoWrapper();
+			
+			if (item[0] != null) {
+				pessoa.setId(Long.parseLong(item[0].toString()));
+			}
+			
+			if (item[1] != null) {
+				pessoa.setNome(item[1].toString());
+			}
+			
+			if (item[2] != null) {
+				pessoa.setValor(new BigDecimal(item[2].toString()));
 			}
 			
 			itens.add(pessoa);

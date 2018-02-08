@@ -63,10 +63,6 @@
 	                        	</h:link>
 	                        </p:column>
                         
-  	                        <p:column headerText="E-mail">
-	                        	<h:outputText value="#{cliente.email}" />
-	                        </p:column>
-	                        
 	                        <p:column headerText="Data de Nasc." filterBy="#{cliente.dataNascimento}" sortBy="#{cliente.dataNascimento}" style="width:10%; text-align:center;">
 	                        	<h:outputText value="#{cliente.dataNascimento}">
 	                        		<f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -86,6 +82,12 @@
 	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 	                        	</h:outputText>
 	                        </p:column>
+	                        
+   	                        <p:column headerText="Devido" style="width:10%; text-align:right;">
+	                        	<h:outputText value="#{cliente.valorDevido}" style="#{cliente.valorDevido eq '0.00' ? 'color: #238E23;' : 'color: #FF0000;'}">
+	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
+	                        	</h:outputText>
+	                        </p:column>
 	                         
 	                       	<p:column headerText="Desde" style="width:10%; text-align:center;">
 	                        	<h:outputText value="#{cliente.dataCriacao}">
@@ -96,6 +98,19 @@
 	                    </p:dataTable>
 					</div>
 	            </div>
+	            
+                <div class="box box-primary">
+               
+                    <div class="box-header with-border">
+                   
+                   		<p:panelGrid columns="2" style="width: 100%;">
+                        	<p:chart type="pie" model="#{listaClienteMB.pcmCompradoresPorQtde}" responsive="true" />
+                        	<p:chart type="pie" model="#{listaClienteMB.pcmCompradoresPorValor}" responsive="true" />
+                       	</p:panelGrid>
+                   
+                    </div>
+                   
+            	</div>
         	</h:form>
         	
         	<p:dialog header="Clientes Selecionados" widgetVar="clientesSelecionados" height="250"

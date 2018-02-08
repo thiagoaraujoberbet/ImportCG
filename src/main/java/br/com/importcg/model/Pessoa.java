@@ -79,6 +79,10 @@ public class Pessoa implements Serializable {
 	// Utilizado na consulta de listagem de funcionários (ListaFuncionarioMB -> listarFuncionario.xhtml)
 	@Transient
 	private BigDecimal valorVendido;
+	
+	// Utilizado na consulta de listagem de clientes (ListaClienteMB -> listarCliente.xhtml)
+	@Transient
+	private BigDecimal valorDevido;
 
 	public Pessoa() {
 		super();
@@ -210,6 +214,14 @@ public class Pessoa implements Serializable {
 
 	public void setValorVendido(BigDecimal valorVendido) {
 		this.valorVendido = valorVendido;
+	}
+
+	public BigDecimal getValorDevido() {
+		return valorDevido;
+	}
+
+	public void setValorDevido(BigDecimal valorDevido) {
+		this.valorDevido = valorDevido;
 	}
 
 	public boolean isInclusao() {

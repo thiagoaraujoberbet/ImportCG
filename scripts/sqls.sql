@@ -181,3 +181,60 @@ select p.saldo from u684253104_impcg.pagamento p
 select * from u684253104_impcg.itemBaixa ib where ib.baixado = 0 and ib.cheque = 1; 
 
 select * from u684253104_impcg.itemBaixa ib where ib.cheque = 1;         
+
+SELECT
+(SELECT SUM(iv.valor) from u684253104_impcg.itemVenda iv
+JOIN venda v ON iv.idVenda = v.idVenda 
+where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate())
+GROUP BY MONTH(v.dataVenda)) a,
+(SELECT SUM(iv.valor) from u684253104_impcg.itemVenda iv
+JOIN venda v ON iv.idVenda = v.idVenda 
+where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)
+GROUP BY MONTH(v.dataVenda)) b,
+(SELECT SUM(iv.valor) from u684253104_impcg.itemVenda iv
+JOIN venda v ON iv.idVenda = v.idVenda 
+where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 3 MONTH)), 1)) and last_day(sysdate() - INTERVAL 2 MONTH)
+GROUP BY MONTH(v.dataVenda)) c,
+(SELECT SUM(iv.valor) from u684253104_impcg.itemVenda iv
+JOIN venda v ON iv.idVenda = v.idVenda 
+where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 4 MONTH)), 1)) and last_day(sysdate() - INTERVAL 3 MONTH)
+GROUP BY MONTH(v.dataVenda)) d,
+(SELECT SUM(iv.valor) from u684253104_impcg.itemVenda iv
+JOIN venda v ON iv.idVenda = v.idVenda 
+where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 5 MONTH)), 1)) and last_day(sysdate() - INTERVAL 4 MONTH)
+GROUP BY MONTH(v.dataVenda)) e,
+(SELECT SUM(iv.valor) from u684253104_impcg.itemVenda iv
+JOIN venda v ON iv.idVenda = v.idVenda 
+where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 6 MONTH)), 1)) and last_day(sysdate() - INTERVAL 5 MONTH)
+GROUP BY MONTH(v.dataVenda)) f;
+
+
+SELECT MONTH(v.dataVenda), SUM(iv.valor) from u684253104_impcg.itemVenda iv
+JOIN venda v ON iv.idVenda = v.idVenda 
+where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate())
+GROUP BY MONTH(v.dataVenda)
+UNION
+SELECT MONTH(v.dataVenda), SUM(iv.valor) from u684253104_impcg.itemVenda iv
+JOIN venda v ON iv.idVenda = v.idVenda 
+where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)
+GROUP BY MONTH(v.dataVenda)
+UNION
+SELECT MONTH(v.dataVenda), SUM(iv.valor) from u684253104_impcg.itemVenda iv
+JOIN venda v ON iv.idVenda = v.idVenda 
+where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 3 MONTH)), 1)) and last_day(sysdate() - INTERVAL 2 MONTH)
+GROUP BY MONTH(v.dataVenda)
+UNION
+SELECT MONTH(v.dataVenda), SUM(iv.valor) from u684253104_impcg.itemVenda iv
+JOIN venda v ON iv.idVenda = v.idVenda 
+where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 4 MONTH)), 1)) and last_day(sysdate() - INTERVAL 3 MONTH)
+GROUP BY MONTH(v.dataVenda) 
+UNION
+SELECT MONTH(v.dataVenda), SUM(iv.valor) from u684253104_impcg.itemVenda iv
+JOIN venda v ON iv.idVenda = v.idVenda 
+where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 5 MONTH)), 1)) and last_day(sysdate() - INTERVAL 4 MONTH)
+GROUP BY MONTH(v.dataVenda)
+UNION
+SELECT MONTH(v.dataVenda), SUM(iv.valor) from u684253104_impcg.itemVenda iv
+JOIN venda v ON iv.idVenda = v.idVenda 
+where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 6 MONTH)), 1)) and last_day(sysdate() - INTERVAL 5 MONTH)
+GROUP BY MONTH(v.dataVenda)
