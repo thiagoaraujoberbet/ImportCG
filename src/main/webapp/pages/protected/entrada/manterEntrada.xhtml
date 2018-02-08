@@ -30,13 +30,13 @@
                         <p:commandButton value="Excluir"  process="@this" icon="fa fa-trash" action="#{entradaMB.excluir()}" styleClass="btn-danger" rendered="#{entradaMB.entrada.edicao and !entradaMB.entrada.despesaLancada}"/>
                         <p:spacer width="5"/>
                         <p:commandButton value="Lançar Despesa" update="@form" icon="fa fa-check"  action="#{entradaMB.lancarDespesa}" styleClass="btn-primary" 
-                        	rendered="#{entradaMB.entrada.id ne null and !entradaMB.entrada.despesaLancada and entradaMB.itensEntrada.size() > 0}"/>
+                        	rendered="#{entradaMB.entrada.id ne null and !entradaMB.entrada.despesaLancada and !empty entradaMB.itensEntrada}"/>
                     </div>
                     
                     <p:splitButton value="Salvar" update="@form" icon="fa fa-check" action="#{entradaMB.salvar(true)}" styleClass="hidden-md hidden-lg btn-primary">
                         <p:menuitem value="Excluir" process="@this" icon="fa fa-trash" action="#{entradaMB.excluir()}" rendered="#{entradaMB.entrada.edicao and !entradaMB.entrada.despesaLancada}" />
                         <p:menuitem value="Lançar Despesa" update="@form" icon="fa fa-check" action="#{entradaMB.lancarDespesa()}" styleClass="hidden-md hidden-lg btn-primary" 
-                        	rendered="#{entradaMB.entrada.id ne null and !entradaMB.entrada.despesaLancada and entradaMB.itensEntrada.size() > 0}"/>
+                        	rendered="#{entradaMB.entrada.id ne null and !entradaMB.entrada.despesaLancada and !empty entradaMB.itensEntrada}"/>
                         <p:separator/>
                         <p:menuitem value="Voltar" action="listarEntrada?faces-redirect=true" process="@this" icon="fa fa-close"/>
                     </p:splitButton>

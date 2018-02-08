@@ -30,7 +30,7 @@
                         <p:commandButton value="Excluir"  process="@this" icon="fa fa-trash" action="#{despesaMB.excluir()}" styleClass="btn-danger" rendered="#{despesaMB.despesa.edicao and despesaMB.despesa.status ne 'BAIXATOTALMENTE'}"/>
                         <p:spacer width="5"/>
                         <p:commandButton value="Gerar Baixa" update="@form" icon="fa fa-check"  action="#{despesaMB.gerarBaixa}" styleClass="btn-primary" 
-                        	rendered="#{despesaMB.despesa.id ne null and !despesaMB.despesa.baixaGerada and despesaMB.itensDespesa.size() > 0}"/>
+                        	rendered="#{despesaMB.despesa.id ne null and !despesaMB.despesa.baixaGerada and !empty despesaMB.itensDespesa}"/>
                     </div>
                     
                     <p:splitButton value="Salvar" update="@form" icon="fa fa-check" action="#{despesaMB.salvar(true)}" styleClass="hidden-md hidden-lg btn-primary">
