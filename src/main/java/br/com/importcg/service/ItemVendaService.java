@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import br.com.importcg.dao.ItemVendaDAO;
 import br.com.importcg.model.ItemVenda;
 import br.com.importcg.util.Transacional;
+import br.com.importcg.wrapper.QuantidadeVendidaFuncionarioWrapper;
+import br.com.importcg.wrapper.ValorVendidoFuncionarioWrapper;
 
 public class ItemVendaService implements Serializable {
 
@@ -39,5 +41,13 @@ public class ItemVendaService implements Serializable {
 
 	public boolean verificarProdutoVendido(Long idProduto) {
 		return itemVendaDAO.verificarProdutoVendido(idProduto);
+	}
+
+	public List<ValorVendidoFuncionarioWrapper> buscarValorVendidoFuncionario(Long idPessoa) {
+		return itemVendaDAO.buscarValorVendidoFuncionario(idPessoa);
+	}
+
+	public List<QuantidadeVendidaFuncionarioWrapper> buscarQuantidadeVendidaFuncionario(Long idPessoa) {
+		return itemVendaDAO.buscarQuantidadeVendidaFuncionario(idPessoa);
 	}
 }

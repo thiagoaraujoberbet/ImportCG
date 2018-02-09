@@ -14,6 +14,7 @@ import br.com.importcg.enumeration.EnumCargo;
 import br.com.importcg.enumeration.EnumTipoPessoa;
 import br.com.importcg.exception.NegocioException;
 import br.com.importcg.model.Pessoa;
+import br.com.importcg.wrapper.ProdutosCompradosPorCliente;
 import br.com.importcg.wrapper.QuantidadeCompradaWrapper;
 import br.com.importcg.wrapper.ValorCompradoWrapper;
 
@@ -356,6 +357,65 @@ public class PessoaDAO implements Serializable {
 			}
 			
 			itens.add(pessoa);
+		}
+		
+		return itens;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ProdutosCompradosPorCliente> buscarProdutosCompradosPorCliente(Long idCliente) {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT pr.idProduto, ");
+		sql.append("       pr.nome, ");
+		sql.append("       pr.marca, ");
+		sql.append("       pr.modelo, ");
+		sql.append("       iv.valor, ");
+		sql.append("       v.dataVenda ");
+		sql.append("FROM   u684253104_impcg.itemVenda iv ");
+		sql.append("       JOIN u684253104_impcg.venda v ");
+		sql.append("         ON iv.idVenda = v.idVenda ");
+		sql.append("       JOIN u684253104_impcg.pessoa p ");
+		sql.append("         ON v.idCliente = p.idPessoa ");
+		sql.append("       JOIN u684253104_impcg.produto pr ");
+		sql.append("         ON iv.idProduto = pr.idProduto ");
+		sql.append("WHERE  p.idPessoa = :idCliente ");
+		sql.append("ORDER  BY v.dataVenda DESC;");
+
+		Query query = manager.createNativeQuery(sql.toString());
+		query.setParameter("idCliente", idCliente);
+		
+		List<Object[]> objects = query.getResultList();
+		
+		List<ProdutosCompradosPorCliente> itens = new ArrayList<>();
+		
+		for (Object[] item : objects) {
+			ProdutosCompradosPorCliente produto = new ProdutosCompradosPorCliente();
+			
+			if (item[0] != null) {
+				produto.setIdProduto(Long.parseLong(item[0].toString()));
+			}
+			
+			if (item[1] != null) {
+				produto.setNomeProduto(item[1].toString());
+			}
+			
+			if (item[2] != null) {
+				produto.setMarcaProduto(item[2].toString());
+			}
+			
+			if (item[3] != null) {
+				produto.setModeloProduto(item[3].toString());
+			}
+			
+			if (item[4] != null) {
+				produto.setValorProduto(new BigDecimal(item[4].toString()));
+			}
+			
+			if (item[5] != null) {
+				produto.setDataVenda((Date) item[5]);
+			}
+			
+			itens.add(produto);
 		}
 		
 		return itens;

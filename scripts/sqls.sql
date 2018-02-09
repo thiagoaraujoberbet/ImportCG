@@ -237,4 +237,5 @@ UNION
 SELECT MONTH(v.dataVenda), SUM(iv.valor) from u684253104_impcg.itemVenda iv
 JOIN venda v ON iv.idVenda = v.idVenda 
 where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 6 MONTH)), 1)) and last_day(sysdate() - INTERVAL 5 MONTH)
-GROUP BY MONTH(v.dataVenda)
+GROUP BY MONTH(v.dataVenda);
+		

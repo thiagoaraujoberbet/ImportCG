@@ -63,6 +63,52 @@
 							<p:inputText id="endComercial" value="#{clienteMB.cliente.enderecoComercial}" />
 						</p:panelGrid>
 						
+						<p:panelGrid id="capaPanel3" columns="1" style="width:100%;" rendered="#{!empty clienteMB.produtosCompradosPorCliente}">
+	   	                    <p:dataTable id="produtosCompradosTable" widgetVar="produtosCompradosTable" rows="10"	 
+			                    			 value="#{clienteMB.produtosCompradosPorCliente}" var="item" rowKey="#{item.id}"
+			                                 paginator="true" 	                                 
+			                                 paginatorPosition="bottom"	                                 
+			                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+			                                 currentPageReportTemplate=""
+			                                 rowsPerPageTemplate="10,20,30,40,50">
+			                                 
+	   	                        <p:column headerText="Produto">
+		                        	<h:outputText value="#{item.nomeProduto}"/>
+		                        </p:column>
+		                        
+   	   	                        <p:column headerText="Marca">
+		                        	<h:outputText value="#{item.marcaProduto}"/>
+		                        </p:column>
+		                        
+   	   	                        <p:column headerText="Modelo">
+		                        	<h:outputText value="#{item.modeloProduto}"/>
+		                        </p:column>
+			                                 
+	   	                        <p:column headerText="Valor do Produto" style="width:12%; text-align:right;">
+		                        	<h:outputText value="#{item.valorProduto}">
+		                        		<f:convertNumber type="currency" currencySymbol="R$"/>
+		                        	</h:outputText>
+		                        </p:column>
+		                        
+	                          	<p:column headerText="Data da Venda" style="width:10%; text-align:center;">
+									<h:outputText value="#{item.dataVenda}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>	
+			                    </p:column>
+			                    
+       							<p:columnGroup type="footer">
+									<p:row>
+										<p:column />
+										<p:column />
+										<p:column footerText="Total:" style="text-align:right" />
+										<p:column footerText="#{clienteMB.totalizar()}" style="text-align:right"/>
+										<p:column />
+									</p:row>
+								</p:columnGroup>
+		                        	
+		                    </p:dataTable>
+	                    </p:panelGrid>
+						
                     </div>
                     
                 </div>

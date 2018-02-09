@@ -9,8 +9,9 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import br.com.importcg.wrapper.CalculoMensalWrapper;
+import br.com.importcg.wrapper.BalancoMensalWrapper;
 import br.com.importcg.wrapper.BalancoWrapper;
+import br.com.importcg.wrapper.CalculoMensalWrapper;
 
 public class PrincipalDAO implements Serializable {
 
@@ -290,5 +291,230 @@ public class PrincipalDAO implements Serializable {
 		}
 		
 		return itens;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<BalancoMensalWrapper> buscarEntradaPorMes() {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT Year(e.dataCompra), ");
+		sql.append("       Month(e.dataCompra), ");
+		sql.append("       Sum(e.valorTotal) ");
+		sql.append("FROM   entrada e ");
+		sql.append("GROUP  BY Year(e.dataCompra), ");
+		sql.append("          Month(e.dataCompra) ");
+		sql.append("ORDER  BY Year(e.dataCompra) ASC, ");
+		sql.append("          Month(e.dataCompra) ASC;");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		List<Object[]> objects = query.getResultList();
+		
+		List<BalancoMensalWrapper> itens = new ArrayList<>();
+		
+		for (Object[] item : objects) {
+			BalancoMensalWrapper balanco = new BalancoMensalWrapper();
+			
+			if (item[0] != null) {
+				balanco.setAno(new Integer(item[0].toString()));
+			}
+			
+			if (item[1] != null) {
+				balanco.setMes(new Integer(item[1].toString()));
+			}
+			
+			if (item[2] != null) {
+				balanco.setValor(new BigDecimal(item[2].toString()));
+			}
+			
+			itens.add(balanco);
+		}
+		
+		return itens;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<BalancoMensalWrapper> buscarSaidasPorMes() {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT Year(v.dataVenda), ");
+		sql.append("       Month(v.dataVenda), ");
+		sql.append("       Sum(iv.valor) ");
+		sql.append("FROM   itemVenda iv ");
+		sql.append("       JOIN venda v ");
+		sql.append("         ON iv.idVenda = v.idVenda ");
+		sql.append("GROUP  BY Year(v.dataVenda), ");
+		sql.append("          Month(v.dataVenda) ");
+		sql.append("ORDER  BY Year(v.dataVenda) ASC, ");
+		sql.append("          Month(v.dataVenda) ASC;");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		List<Object[]> objects = query.getResultList();
+		
+		List<BalancoMensalWrapper> itens = new ArrayList<>();
+		
+		for (Object[] item : objects) {
+			BalancoMensalWrapper balanco = new BalancoMensalWrapper();
+			
+			if (item[0] != null) {
+				balanco.setAno(new Integer(item[0].toString()));
+			}
+			
+			if (item[1] != null) {
+				balanco.setMes(new Integer(item[1].toString()));
+			}
+			
+			if (item[2] != null) {
+				balanco.setValor(new BigDecimal(item[2].toString()));
+			}
+			
+			itens.add(balanco);
+		}
+		
+		return itens;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<BalancoMensalWrapper> buscarRecebidosPorMes() {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT Year(p.data), ");
+		sql.append("       Month(p.data), ");
+		sql.append("       Sum(p.saldo) ");
+		sql.append("FROM   pagamento p ");
+		sql.append("WHERE  p.pago = 1 ");
+		sql.append("GROUP  BY Year(p.data), ");
+		sql.append("          Month(p.data) ");
+		sql.append("ORDER  BY Year(p.data) ASC, ");
+		sql.append("          Month(p.data) ASC;");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		List<Object[]> objects = query.getResultList();
+		
+		List<BalancoMensalWrapper> itens = new ArrayList<>();
+		
+		for (Object[] item : objects) {
+			BalancoMensalWrapper balanco = new BalancoMensalWrapper();
+			
+			if (item[0] != null) {
+				balanco.setAno(new Integer(item[0].toString()));
+			}
+			
+			if (item[1] != null) {
+				balanco.setMes(new Integer(item[1].toString()));
+			}
+			
+			if (item[2] != null) {
+				balanco.setValor(new BigDecimal(item[2].toString()));
+			}
+			
+			itens.add(balanco);
+		}
+		
+		return itens;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<BalancoMensalWrapper> buscarDespesasPorMes() {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT Year(ib.data), ");
+		sql.append("       Month(ib.data), ");
+		sql.append("       Sum(ib.valor) ");
+		sql.append("FROM   itemBaixa ib ");
+		sql.append("       INNER JOIN itemDespesa d ");
+		sql.append("               ON ib.idItemDespesa = d.idItemDespesa ");
+		sql.append("WHERE  ib.baixado = 1 ");
+		sql.append("       AND d.idEntrada IS NULL ");
+		sql.append("GROUP  BY Year(ib.data), ");
+		sql.append("          Month(ib.data) ");
+		sql.append("ORDER  BY Year(ib.data) ASC, ");
+		sql.append("          Month(ib.data) ASC;");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		List<Object[]> objects = query.getResultList();
+		
+		List<BalancoMensalWrapper> itens = new ArrayList<>();
+		
+		for (Object[] item : objects) {
+			BalancoMensalWrapper balanco = new BalancoMensalWrapper();
+			
+			if (item[0] != null) {
+				balanco.setAno(new Integer(item[0].toString()));
+			}
+			
+			if (item[1] != null) {
+				balanco.setMes(new Integer(item[1].toString()));
+			}
+			
+			if (item[2] != null) {
+				balanco.setValor(new BigDecimal(item[2].toString()));
+			}
+			
+			itens.add(balanco);
+		}
+		
+		return itens;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<BalancoMensalWrapper> buscarPagosPorMes() {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT Year(ib.data), ");
+		sql.append("       Month(ib.data), ");
+		sql.append("       Sum(ib.valor) ");
+		sql.append("FROM   itemBaixa ib ");
+		sql.append("       INNER JOIN itemDespesa d ");
+		sql.append("               ON ib.idItemDespesa = d.idItemDespesa ");
+		sql.append("WHERE  ib.baixado = 1 ");
+		sql.append("GROUP  BY Year(ib.data), ");
+		sql.append("          Month(ib.data) ");
+		sql.append("ORDER  BY Year(ib.data) ASC, ");
+		sql.append("          Month(ib.data) ASC;");
+
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		List<Object[]> objects = query.getResultList();
+		
+		List<BalancoMensalWrapper> itens = new ArrayList<>();
+		
+		for (Object[] item : objects) {
+			BalancoMensalWrapper balanco = new BalancoMensalWrapper();
+			
+			if (item[0] != null) {
+				balanco.setAno(new Integer(item[0].toString()));
+			}
+			
+			if (item[1] != null) {
+				balanco.setMes(new Integer(item[1].toString()));
+			}
+			
+			if (item[2] != null) {
+				balanco.setValor(new BigDecimal(item[2].toString()));
+			}
+			
+			itens.add(balanco);
+		}
+		
+		return itens;
+	}
+
+	public BigDecimal buscarRecordVendas() {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT Max(x.valor) valor ");
+		sql.append("FROM   (SELECT Year(v.dataVenda), ");
+		sql.append("               Month(v.dataVenda), ");
+		sql.append("               Sum(iv.valor) valor ");
+		sql.append("        FROM   itemVenda iv ");
+		sql.append("               JOIN venda v ");
+		sql.append("                 ON iv.idVenda = v.idVenda ");
+		sql.append("        GROUP  BY Year(v.dataVenda), ");
+		sql.append("                  Month(v.dataVenda) ");
+		sql.append("        ORDER  BY Year(v.dataVenda) ASC, ");
+		sql.append("                  Month(v.dataVenda) ASC) x;");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		return (BigDecimal) query.getSingleResult();
 	}
 }

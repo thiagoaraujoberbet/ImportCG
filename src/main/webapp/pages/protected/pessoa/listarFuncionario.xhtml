@@ -97,6 +97,27 @@
 	                    </p:dataTable>
 					</div>
 	            </div>
+                
+                <div class="box box-primary">
+               
+                    <div class="box-header with-border">
+                   
+                   		<p:panelGrid columns="1" style="width: 100%;">
+                   		
+            				<p:chart type="line" model="#{listaFuncionarioMB.lineModelValor}" responsive="true"/>
+            				
+           				</p:panelGrid>
+           				
+                		<p:panelGrid columns="1" style="width: 100%;">
+                   		
+            				<p:chart type="line" model="#{listaFuncionarioMB.lineModelQuantidade}" responsive="true"/>
+            				
+           				</p:panelGrid>
+            				
+       				</div>
+            				
+   				</div>
+            				
         	</h:form>
         	
         	<p:dialog header="Funcionarios Selecionados" widgetVar="funcionariosSelecionados" height="250"

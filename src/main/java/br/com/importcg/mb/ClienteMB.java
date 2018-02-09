@@ -1,7 +1,11 @@
 package br.com.importcg.mb;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -11,6 +15,7 @@ import br.com.importcg.enumeration.EnumTipoPessoa;
 import br.com.importcg.model.Pessoa;
 import br.com.importcg.service.PessoaService;
 import br.com.importcg.util.FacesUtil;
+import br.com.importcg.wrapper.ProdutosCompradosPorCliente;
 
 @Named
 @ViewScoped
@@ -25,16 +30,32 @@ public class ClienteMB implements Serializable {
 	
 	private Long idCliente;
 	
+	private List<ProdutosCompradosPorCliente> produtosCompradosPorCliente = new ArrayList<>();
+	
 	@Inject
 	private PessoaService pessoaService;
 	
 	public void inicializar() {
 		if (idCliente != null) {
 			cliente = pessoaService.porId(idCliente);
+			produtosCompradosPorCliente = pessoaService.buscarProdutosCompradosPorCliente(idCliente);
 		} else {
 			cliente.setTipo(EnumTipoPessoa.CLIENTE);
 			cliente.setDataCriacao(new Date());
 		}
+	}
+	
+	public String totalizar() {
+		BigDecimal total = new BigDecimal(0);
+		
+		for (ProdutosCompradosPorCliente produto : produtosCompradosPorCliente) {
+			total = total.add(produto.getValorProduto());
+		}
+		
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		String formatado = nf.format(total);
+		
+		return formatado;
 	}
 	
 	public String salvar() {
@@ -68,5 +89,13 @@ public class ClienteMB implements Serializable {
 
 	public void setIdCliente(Long idCliente) {
 		this.idCliente = idCliente;
+	}
+
+	public List<ProdutosCompradosPorCliente> getProdutosCompradosPorCliente() {
+		return produtosCompradosPorCliente;
+	}
+
+	public void setProdutosCompradosPorCliente(List<ProdutosCompradosPorCliente> produtosCompradosPorCliente) {
+		this.produtosCompradosPorCliente = produtosCompradosPorCliente;
 	}
 }

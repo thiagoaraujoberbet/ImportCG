@@ -21,7 +21,10 @@ import javax.inject.Named;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
 import br.com.importcg.model.ItemBaixa;
@@ -29,6 +32,7 @@ import br.com.importcg.model.Pagamento;
 import br.com.importcg.service.ItemBaixaService;
 import br.com.importcg.service.PagamentoService;
 import br.com.importcg.service.PrincipalService;
+import br.com.importcg.wrapper.BalancoMensalWrapper;
 import br.com.importcg.wrapper.BalancoWrapper;
 import br.com.importcg.wrapper.CalculoMensalWrapper;
 
@@ -50,87 +54,87 @@ public class ListaPrincipalMB implements Serializable {
 	@Inject
 	private ItemBaixaService itemBaixaService;
 	
-	List<BalancoWrapper> mesAnterior = new ArrayList<>();
-	
-	List<BalancoWrapper> mesAtual = new ArrayList<>();
-	
-	List<BalancoWrapper> geral = new ArrayList<>();
-	
-	List<CalculoMensalWrapper> receber = new ArrayList<>();
-	
-	List<CalculoMensalWrapper> pagar = new ArrayList<>();
-	
-	List<ItemBaixa> cheques = new ArrayList<>();
-
+	/* ***************** Gráfico Pie Mensal ******************************************* */
+	private List<BalancoWrapper> mesAnterior = new ArrayList<>();
+	private List<BalancoWrapper> mesAtual = new ArrayList<>();
+	private List<BalancoWrapper> geral = new ArrayList<>();
 	private PieChartModel pieModelMesAnterior;
-	
 	private PieChartModel pieModelMesAtual;
-	
 	private PieChartModel pieModelGeral;
+	private BigDecimal saldoMensalAnterior;
+	private BigDecimal saldoMensalAtual;
+	private BigDecimal saldoMensalGeral;
 	
-	private PieChartModel pieModelChequesEmitidos;
-	
+	/* ***************** Gráfico Bar de Balanço **************************************** */
+	private List<CalculoMensalWrapper> receber = new ArrayList<>();
+	private List<CalculoMensalWrapper> pagar = new ArrayList<>();
 	private BarChartModel barModelBalanco;
-	
 	private BigDecimal valorReceber;
-	
 	private BigDecimal valorPagar;
 	
-	private BigDecimal saldoMensalAnterior;
+	/* ***************** Gráfico Pie de Cheque Emitidos ******************************** */
+	private List<ItemBaixa> cheques = new ArrayList<>();
+	private PieChartModel pieModelChequesEmitidos;
 	
-	private BigDecimal saldoMensalAtual;
+	/* ***************** Gráfico Line de Balanço Mensal ******************************** */
+	private List<BalancoMensalWrapper> entradas = new ArrayList<>();
+	private List<BalancoMensalWrapper> saidas = new ArrayList<>();
+	private List<BalancoMensalWrapper> recebidos = new ArrayList<>();
+	private List<BalancoMensalWrapper> despesas = new ArrayList<>();
+	private List<BalancoMensalWrapper> pagos = new ArrayList<>();
+	private LineChartModel lineModelBalanco;
 	
-	private BigDecimal saldoMensalGeral;
+	/* ********************************************************************************** */
+	/* ********************************************************************************** */
 	
 	@PostConstruct
 	public void inicializar() {
-		mesAnterior = principalService.buscarBalancoMesAnterior();
-		mesAtual = principalService.buscarBalancoMesAtual();
-		geral = principalService.buscarBalancoGeral();
-		
+		this.inicializarGraficoPieMensal();
+		this.inicializarGraficoPieCheques();
+		this.inicializarGraficoBarBalanco();
+		this.inicializarGraficoLineBalancoMensal();
+	}
+	
+	/* ************************* Inicialização dos Componentes ************************** */
+	/* ********************************************************************************** */
+	
+	private void inicializarGraficoBarBalanco() {
 		receber = principalService.buscarValoresAReceber();
 		pagar = principalService.buscarValoresAPagar();
-		
-		cheques = itemBaixaService.buscarChequesEmitidos();
-		
-		this.createPieModelMesAnterior();
-		this.createPieModelMesAtual();
-		this.createPieModelGeral();
-		this.createPieModelChequesEmitidos();
 		
 		this.createBarModelBalanco();
 	}
 	
-	public String totalizar() {
-		BigDecimal total = new BigDecimal(0);
+	private void inicializarGraficoPieMensal() {
+		mesAnterior = principalService.buscarBalancoMesAnterior();
+		mesAtual = principalService.buscarBalancoMesAtual();
+		geral = principalService.buscarBalancoGeral();
 		
-		for (ItemBaixa cheque : cheques) {
-			total = total.add(cheque.getValor());
-		}
-		
-		NumberFormat nf = NumberFormat.getCurrencyInstance();
-		String formatado = nf.format(total);
-		
-		return formatado;
+		this.createPieModelMesAnterior();
+		this.createPieModelMesAtual();
+		this.createPieModelGeral();
 	}
 	
-	public String totalizarMesAtual() {
-		BigDecimal total = new BigDecimal(0);
+	private void inicializarGraficoPieCheques() {
+		cheques = itemBaixaService.buscarChequesEmitidos();
 		
-		int mesAtual = retornarMes(new Date());
-		
-		for (ItemBaixa cheque : cheques) {
-			int mes = retornarMes(cheque.getData());
-			
-			if (mesAtual == mes)
-				total = total.add(cheque.getValor());
-		}
-		
-		NumberFormat nf = NumberFormat.getCurrencyInstance();
-		String formatado = nf.format(total);
-		
-		return formatado;
+		this.createPieModelChequesEmitidos();
 	}
+	
+	private void inicializarGraficoLineBalancoMensal() {
+		entradas = principalService.buscarEntradaPorMes();
+		saidas = principalService.buscarSaidasPorMes();
+		recebidos = principalService.buscarRecebidosPorMes();
+		despesas = principalService.buscarDespesasPorMes();
+		pagos = principalService.buscarPagosPorMes();
+		
+		this.createLineModelsBalanco();
+	}
+	
+	/* ********************************************************************************** */
+	
+	/* ********************************* Métodos Uteis ********************************** */
+	/* ********************************************************************************** */
 	
 	private int retornarMes(Date data) {
 		GregorianCalendar calendar = new GregorianCalendar();
@@ -138,6 +142,22 @@ public class ListaPrincipalMB implements Serializable {
 		
 		return calendar.get(GregorianCalendar.MONTH);
 	}
+	
+    private String formatarData(int mes) {
+        Calendar c = Calendar.getInstance();
+        
+        c.setTime(new Date());
+        c.add(Calendar.MONTH, mes);
+         
+        DateFormat df = new SimpleDateFormat("MMMM 'de' yyyy");
+        
+        return df.format(c.getTime());
+    }
+	
+	/* ********************************************************************************** */
+	
+	/* ************************************* Avisos ************************************* */
+    /* ********************************************************************************** */
 	
 	public void emitirAvisos() {
 		this.pagamentosAReceberCliente();
@@ -163,7 +183,12 @@ public class ListaPrincipalMB implements Serializable {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Crédito Liberado!", "Crédito PagSeguro liberado na data de hoje no valor de R$ " + pagamento.getSaldo() + " referente a compra em nome de " + pagamento.getNomePagante() + "."));
 		}
 	}
+	
+	 /* ********************************************************************************** */
 
+	/* ******************************** Gráfico Pie Mensal ******************************* */
+	/* ********************************************************************************** */
+	
 	private void createPieModelMesAnterior() {
 		pieModelMesAnterior = new PieChartModel();
     	
@@ -200,33 +225,6 @@ public class ListaPrincipalMB implements Serializable {
         pieModelGeral.setSeriesColors("93ABCD,2758BA,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
     }
     
-	private void createPieModelChequesEmitidos() {
-		NumberFormat nf = NumberFormat.getCurrencyInstance();
-		pieModelChequesEmitidos = new PieChartModel();
-
-		BigDecimal totalGeral = new BigDecimal("0");
-		BigDecimal totalMensal = new BigDecimal("0");
-		int mesAtual = retornarMes(new Date());
-		
-        for (ItemBaixa item : cheques) {
-			int mes = retornarMes(item.getData());
-			
-			totalGeral = totalGeral.add(item.getValor());
-			
-			if (mesAtual == mes) {
-				totalMensal = totalMensal.add(item.getValor());
-				
-				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-				pieModelChequesEmitidos.set(formato.format(item.getData()) + " - " + item.getDescricao(), item.getValor());
-			}
-        }
-        
-        pieModelChequesEmitidos.setTitle("Cheques a compensar neste mês: " + nf.format(totalMensal) + " de um total de " + nf.format(totalGeral));
-        pieModelChequesEmitidos.setLegendPosition("w");
-        pieModelChequesEmitidos.setShowDataLabels(true);
-        pieModelChequesEmitidos.setDiameter(300);
-	}
-    
 	private PieChartModel montarPieChartModel(PieChartModel pieModel, List<BalancoWrapper> lista, String referencia) {
 		NumberFormat nf = NumberFormat.getCurrencyInstance();
 		
@@ -257,6 +255,43 @@ public class ListaPrincipalMB implements Serializable {
         
         return pieModel;
 	}
+    
+    /* ********************************************************************************** */
+    
+    /* ******************************* Gráfico Pie de Cheques Emitidos ****************** */
+	/* ********************************************************************************** */
+    
+	private void createPieModelChequesEmitidos() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		pieModelChequesEmitidos = new PieChartModel();
+
+		BigDecimal totalGeral = new BigDecimal("0");
+		BigDecimal totalMensal = new BigDecimal("0");
+		int mesAtual = retornarMes(new Date());
+		
+        for (ItemBaixa item : cheques) {
+			int mes = retornarMes(item.getData());
+			
+			totalGeral = totalGeral.add(item.getValor());
+			
+			if (mesAtual == mes) {
+				totalMensal = totalMensal.add(item.getValor());
+				
+				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+				pieModelChequesEmitidos.set(formato.format(item.getData()) + " - " + item.getDescricao(), item.getValor());
+			}
+        }
+        
+        pieModelChequesEmitidos.setTitle("Cheques a compensar neste mês: " + nf.format(totalMensal) + " de um total de " + nf.format(totalGeral));
+        pieModelChequesEmitidos.setLegendPosition("w");
+        pieModelChequesEmitidos.setShowDataLabels(true);
+        pieModelChequesEmitidos.setDiameter(300);
+	}
+	
+	/* ********************************************************************************** */
+    
+	/* ***************************** Gráfico Bar de Balanço ***************************** */
+	/* ********************************************************************************** */
 	
 	private void createBarModelBalanco() {
 		barModelBalanco = initBarModelBalanco();
@@ -308,17 +343,151 @@ public class ListaPrincipalMB implements Serializable {
         return model;
 	}
     
-    private String formatarData(int mes) {
-        Calendar c = Calendar.getInstance();
+    /* ********************************************************************************** */
+    
+    /* ************************* Gráfico Line de Balanço Mensal ************************* */
+	/* ********************************************************************************** */
+    
+	private void createLineModelsBalanco() {
+		lineModelBalanco = initLinearModelBalanco();
+		lineModelBalanco.setTitle("Balanço Mensal");
+		lineModelBalanco.setLegendPosition("e");
+		lineModelBalanco.setShowPointLabels(true);
+		lineModelBalanco.setSeriesColors("93ABCD,2758BA,FFCC33,58BA27,F74A4A"); //vermelho: F74A4A verde:58BA27 amarelo:FFCC33 azul:2758BA azul claro:93ABCD
+		lineModelBalanco.getAxes().put(AxisType.X, new CategoryAxis("Mês/Ano"));
+        Axis yAxis = lineModelBalanco.getAxis(AxisType.Y);
+        yAxis = lineModelBalanco.getAxis(AxisType.Y);
+        yAxis.setLabel("Valor");
+        yAxis.setMin(0);
+        yAxis.setMax(30000);
+	}
+    
+	private LineChartModel initLinearModelBalanco() {
+        LineChartModel model = new LineChartModel();
         
-        c.setTime(new Date());
-        c.add(Calendar.MONTH, mes);
+        model.addSeries(montarEntrada());
+        model.addSeries(montarPago());
+        model.addSeries(montarSaidas());
+        model.addSeries(montarRecebido());
+        model.addSeries(montarDespesa());
          
-        DateFormat df = new SimpleDateFormat("MMMM 'de' yyyy");
+        return model;
+	}
+	
+	private LineChartSeries montarEntrada() {
+        LineChartSeries entrada = new LineChartSeries();
+        entrada.setLabel("Comprado");
+ 
+        for (BalancoMensalWrapper item : entradas) {
+        	entrada.set(retornarMesPorExtenso(item.getMes()) + "/" + item.getAno(), item.getValor());
+		}
         
-        return df.format(c.getTime());
+        return entrada;
+	}
+	
+	private LineChartSeries montarSaidas() {
+       LineChartSeries saida = new LineChartSeries();
+        saida.setLabel("Vendido");
+ 
+        for (BalancoMensalWrapper item : saidas) {
+        	saida.set(retornarMesPorExtenso(item.getMes()) + "/" + item.getAno(), item.getValor());
+		}
+        
+        return saida;
+	}
+	
+	private LineChartSeries montarRecebido() {
+        LineChartSeries recebido = new LineChartSeries();
+        recebido.setLabel("Recebido");
+ 
+        for (BalancoMensalWrapper item : recebidos) {
+        	recebido.set(retornarMesPorExtenso(item.getMes()) + "/" + item.getAno(), item.getValor());
+		}
+        
+        return recebido;
+	}
+	
+	private LineChartSeries montarDespesa() {
+        LineChartSeries despesa = new LineChartSeries();
+        despesa.setLabel("Despesas");
+ 
+        for (BalancoMensalWrapper item : despesas) {
+        	despesa.set(retornarMesPorExtenso(item.getMes()) + "/" + item.getAno(), item.getValor());
+		}
+        
+        return despesa;
+	}
+	
+	private LineChartSeries montarPago() {
+        LineChartSeries pago = new LineChartSeries();
+        pago.setLabel("Pago");
+ 
+        for (BalancoMensalWrapper item : pagos) {
+        	pago.set(retornarMesPorExtenso(item.getMes()) + "/" + item.getAno(), item.getValor());
+		}
+        
+        return pago;
+	}
+	
+	private String retornarMesPorExtenso(int mes) {
+		switch (mes) {
+		case 1:
+		    return "Janeiro";
+		case 2:
+			return "fevereiro";
+		case 3:
+			return "Março";
+		case 4:
+			return "Abril";
+		case 5:
+			return "Maio";
+		case 6:
+			return "Junho";
+		case 7:
+			return "Julho";
+		case 8:
+			return "Agosto";
+		case 9:
+			return "Setembro";
+		case 10:
+			return "Outubro";
+		case 11:
+			return "Novembro";
+		case 12:
+			return "Dezembro";
+		default:
+			return null;
+		 }
+	}
+	
+	/* ********************************************************************************** */
+	
+    /* ************************* Gráfico Meter de Record de Vendas ********************** */
+	/* ********************************************************************************** 
+	
+    private void createMeterGaugeModels() {
+    	meterRecordVendas = initMeterGaugeModel();
+    	meterRecordVendas.setTitle("Custom Options");
+    	meterRecordVendas.setGaugeLabel("R$");
+    	meterRecordVendas.setGaugeLabelPosition("bottom");
     }
     
+    @SuppressWarnings("serial")
+	private MeterGaugeChartModel initMeterGaugeModel() {
+    	BigDecimal valor = principalService.buscarRecordVendas();
+    	
+        List<Number> intervals = new ArrayList<Number>(){{
+        	add(new BigInteger(valor.divide(new BigDecimal("4")).setScale(0, RoundingMode.HALF_EVEN).toString()));
+            add(new BigInteger(valor.divide(new BigDecimal("3")).setScale(0, RoundingMode.HALF_EVEN).toString()));
+            add(new BigInteger(valor.divide(new BigDecimal("4")).setScale(0, RoundingMode.HALF_EVEN).toString()));
+            add(new BigInteger(valor.setScale(0, RoundingMode.HALF_EVEN).toString()));
+        }};
+         
+        return new MeterGaugeChartModel(mesAtual.get(0).getValoresSaida(), intervals);
+    }
+    
+    /* ********************************************************************************** */
+
 	public List<BalancoWrapper> getMesAnterior() {
 		return mesAnterior;
 	}
@@ -365,6 +534,54 @@ public class ListaPrincipalMB implements Serializable {
 
 	public void setCheques(List<ItemBaixa> cheques) {
 		this.cheques = cheques;
+	}
+
+	public List<BalancoMensalWrapper> getEntradas() {
+		return entradas;
+	}
+
+	public void setEntradas(List<BalancoMensalWrapper> entradas) {
+		this.entradas = entradas;
+	}
+
+	public List<BalancoMensalWrapper> getSaidas() {
+		return saidas;
+	}
+
+	public void setSaidas(List<BalancoMensalWrapper> saidas) {
+		this.saidas = saidas;
+	}
+
+	public List<BalancoMensalWrapper> getRecebidos() {
+		return recebidos;
+	}
+
+	public void setRecebidos(List<BalancoMensalWrapper> recebidos) {
+		this.recebidos = recebidos;
+	}
+
+	public List<BalancoMensalWrapper> getDespesas() {
+		return despesas;
+	}
+
+	public void setDespesas(List<BalancoMensalWrapper> despesas) {
+		this.despesas = despesas;
+	}
+
+	public List<BalancoMensalWrapper> getPagos() {
+		return pagos;
+	}
+
+	public void setPagos(List<BalancoMensalWrapper> pagos) {
+		this.pagos = pagos;
+	}
+
+	public LineChartModel getLineModelBalanco() {
+		return lineModelBalanco;
+	}
+
+	public void setLineModelBalanco(LineChartModel lineModelBalanco) {
+		this.lineModelBalanco = lineModelBalanco;
 	}
 
 	public PieChartModel getPieModelMesAnterior() {

@@ -10,6 +10,7 @@ import br.com.importcg.dao.PessoaDAO;
 import br.com.importcg.enumeration.EnumTipoPessoa;
 import br.com.importcg.model.Pessoa;
 import br.com.importcg.util.Transacional;
+import br.com.importcg.wrapper.ProdutosCompradosPorCliente;
 import br.com.importcg.wrapper.QuantidadeCompradaWrapper;
 import br.com.importcg.wrapper.ValorCompradoWrapper;
 
@@ -60,5 +61,9 @@ public class PessoaService implements Serializable {
 
 	public List<ValorCompradoWrapper> buscarMaioresCompradoresPorValor() {
 		return pessoaDAO.buscarMaioresCompradoresPorValor();
+	}
+
+	public List<ProdutosCompradosPorCliente> buscarProdutosCompradosPorCliente(Long idCliente) {
+		return pessoaDAO.buscarProdutosCompradosPorCliente(idCliente);
 	}
 }
