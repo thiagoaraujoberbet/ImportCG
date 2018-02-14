@@ -21,7 +21,9 @@
 		<class>br.com.importcg.model.ItemDespesa</class>
  		<class>br.com.importcg.model.ItemEntrada</class>
 		<class>br.com.importcg.model.ItemFechamento</class>
+		<class>br.com.importcg.model.ItemOrcamento</class>
  		<class>br.com.importcg.model.ItemVenda</class>
+ 		<class>br.com.importcg.model.Orcamento</class>
 		<class>br.com.importcg.model.Pagamento</class>
 		<class>br.com.importcg.model.Pessoa</class>
 		<class>br.com.importcg.model.Produto</class>

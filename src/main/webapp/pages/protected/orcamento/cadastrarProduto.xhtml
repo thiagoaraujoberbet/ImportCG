@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces">
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
+                xmlns:o="http://omnifaces.org/ui" xmlns:of="http://omnifaces.org/functions">
               
     <div class="box box-primary">
 	            
@@ -9,32 +10,69 @@
 
 			<div class="ui-fluid">
 		           
-				<p:panelGrid id="cadastroProduto" columns="7" style="width:100%;">
+				<p:panelGrid id="cadastroProduto1" columns="9" style="width:100%;">
 				
 					<p:outputLabel value="Produto" for="produtos"/>
-					<p:selectOneMenu id="produtos" value="#{orcamentoMB.itemOrcamento.itemEntrada}" converter="itemEntradaConverter" var="i" filter="true" filterMatchMode="contains">
+					<p:selectOneMenu id="produtos" value="#{orcamentoMB.itemOrcamento.produto}" converter="produtoConverter" var="p" filter="true" filterMatchMode="contains">
 						<f:selectItem itemLabel="Selecione..."/>
-			            <f:selectItems value="#{orcamentoMB.itensEntrada}" var="itens" itemLabel="#{itens.produto.nome} | #{itens.produto.marca} | #{itens.produto.modelo} | #{itens.valorEmReal} | #{itens.quantidadeEstoque}" itemValue="#{produto}" />
+			            <f:selectItems value="#{orcamentoMB.produtos}" var="itens" itemLabel="#{itens.nome} | #{itens.marca} | #{itens.modelo}" itemValue="#{itens}" />
 			       
 			            <p:column>
-			               <h:outputText value="#{i.produto.nome}" />
+			               <h:outputText value="#{p.nome}" />
 			            </p:column>
 			
 			            <p:column>
-			               <h:outputText value="#{i.produto.marca}" />
+			               <h:outputText value="#{p.marca}" />
 			            </p:column>
 			           
 			            <p:column>
-			               <h:outputText value="#{i.produto.modelo}" />
+			               <h:outputText value="#{p.modelo}" />
+			            </p:column>
+			            
+			            <p:ajax event="change" listener="#{orcamentoMB.buscarValoresPagosPorIdProduto(orcamentoMB.itemOrcamento.produto.id)}" update="valores"></p:ajax>
+			           
+			        </p:selectOneMenu>
+			        
+		        </p:panelGrid>
+		        
+		        <p:spacer />
+			        
+		        <p:panelGrid id="cadastroProduto2" columns="9" style="width:100%;">
+			        
+   					<p:outputLabel value="Valores" for="valores"/>
+					<p:selectOneMenu id="valores" value="#{orcamentoMB.itemOrcamento.catalogoInternacional}" converter="catalogoInternacionalConverter" var="c" filter="true" filterMatchMode="contains">
+						<f:selectItem itemLabel="Selecione..."/>
+			            <f:selectItems value="#{orcamentoMB.valores}" var="itens" itemLabel="#{itens.nomeFornecedor} | #{of:formatDate(itens.data, 'dd/MM/yyyy')} | R$ #{itens.cotacao} | $ #{itens.valorEmDolar} | R$ #{itens.valorEmReal}" itemValue="#{itens}" />
+			       
+			            <p:column>
+			               <h:outputText value="#{c.nomeFornecedor}" />
+			            </p:column>
+			
+			            <p:column>
+			               <h:outputText value="#{c.data}">
+			               		<f:convertDateTime pattern="dd/MM/yyyy"/>
+			               </h:outputText>
 			            </p:column>
 			           
 			            <p:column>
-			               <h:outputText value="#{i.valorEmReal}" />
+			               <h:outputText value="#{c.cotacao}">
+			               		<f:convertNumber type="currency" currencySymbol="R$"/>
+			               </h:outputText>
 			            </p:column>
-			           
-			            <p:column>
-			               <h:outputText value="#{i.quantidadeEstoque}" />
+			            
+   			            <p:column>
+			               <h:outputText value="#{c.valorEmDolar}">
+			               		<f:convertNumber type="currency" currencySymbol="$"/>
+			               </h:outputText> 
 			            </p:column>
+			            
+   			            <p:column>
+			               <h:outputText value="#{c.valorEmReal}">
+			               		<f:convertNumber type="currency" currencySymbol="R$"/>
+			               </h:outputText>
+			            </p:column>
+			            
+			            <p:ajax event="change" listener="#{orcamentoMB.atualizarValor}" update="valor"></p:ajax>
 			           
 			        </p:selectOneMenu>
 			       
@@ -58,21 +96,37 @@
 		                     currentPageReportTemplate=""
 		                     rowsPerPageTemplate="5,10,15,20,30">
 		                     
-		            <p:column headerText="Produto" filterBy="#{item.produto.nome}" sortBy="#{item.produto.nome}" width="40%">
-		             	<h:outputText value="#{item.produto.nome} | #{item.produto.marca} | #{item.produto.modelo}"/>
+		            <p:column headerText="Produto" sortBy="#{item.produto.nome}">
+		             	<h:outputText value="#{item.produto.nome}"/>
 		            </p:column>
 		            
-		            <p:column headerText="Valor R$">
+  		            <p:column headerText="Marca" sortBy="#{item.produto.marca}">
+		            	<h:outputText value="#{item.produto.marca}" />
+		            </p:column>
+		            
+   		            <p:column headerText="Modelo" sortBy="#{item.produto.modelo}">
+		            	<h:outputText value="#{item.produto.modelo}" />
+		            </p:column>
+		            
+  		            <p:column headerText="Categoria" sortBy="#{item.produto.categoria.descricao}">
+		            	<h:outputText value="#{item.produto.categoria.descricao}" />
+		            </p:column>
+		            
+   		            <p:column headerText="Fornecedor" sortBy="#{item.catalogoInternacional.fornecedor.nome}">
+		            	<h:outputText value="#{item.catalogoInternacional.fornecedor.nome}" />
+		            </p:column>
+		            
+		            <p:column headerText="Valor R$" width="7%" styleClass="align-right">
 		            	<h:outputText value="#{item.valor}">
 		            		<f:convertNumber type="currency" currencySymbol="R$"/>
 		            	</h:outputText>
 		            </p:column>
 		            
-		            <p:column headerText="Qtde">
+		            <p:column headerText="Qtde" width="5%" styleClass="align-center">
 		            	<h:outputText value="#{item.quantidade}" />
 		            </p:column>
 		            
-		            <p:column headerText="Total R$">
+		            <p:column headerText="Total R$" width="7%" styleClass="align-right">
 		            	<h:outputText value="#{item.quantidade * item.valor}">
 		            		<f:convertNumber type="currency" currencySymbol="R$"/>
 		            	</h:outputText>
@@ -82,8 +136,6 @@
 				     	<p:commandButton update="@form" icon="fa fa-pencil" title="Editar" styleClass="btn-primary">
 					        <f:setPropertyActionListener value="true" target="#{orcamentoMB.edicaoItem}" />
 					        <f:setPropertyActionListener value="#{item}" target="#{orcamentoMB.itemOrcamento}" />
-					        <f:setPropertyActionListener value="#{item.valor}" target="#{orcamentoMB.valorAtual}" />
-					        <f:setPropertyActionListener value="#{item.quantidade}" target="#{orcamentoMB.quantidadeAtual}" />
 					    </p:commandButton>
 					</p:column>
 					

@@ -35,6 +35,10 @@ public class ItemOrcamento implements Serializable {
 	@JoinColumn(name="idProduto", nullable=false)
 	private Produto produto;
 	
+	@ManyToOne
+	@JoinColumn(name="idCatalogoInternacional")
+	private CatalogoInternacional catalogoInternacional;
+	
 	private BigDecimal valor = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
 	private Integer quantidade = Integer.parseInt("0");
@@ -65,6 +69,14 @@ public class ItemOrcamento implements Serializable {
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public CatalogoInternacional getCatalogoInternacional() {
+		return catalogoInternacional;
+	}
+
+	public void setCatalogoInternacional(CatalogoInternacional catalogoInternacional) {
+		this.catalogoInternacional = catalogoInternacional;
 	}
 
 	public BigDecimal getValor() {

@@ -13,14 +13,18 @@ import javax.inject.Named;
 
 import br.com.importcg.enumeration.EnumTipoPessoa;
 import br.com.importcg.model.Caixa;
+import br.com.importcg.model.CatalogoInternacional;
 import br.com.importcg.model.ItemOrcamento;
 import br.com.importcg.model.Orcamento;
 import br.com.importcg.model.Pessoa;
+import br.com.importcg.model.Produto;
 import br.com.importcg.service.CaixaService;
+import br.com.importcg.service.CatalogoInternacionalService;
 import br.com.importcg.service.EstoqueService;
 import br.com.importcg.service.ItemOrcamentoService;
 import br.com.importcg.service.OrcamentoService;
 import br.com.importcg.service.PessoaService;
+import br.com.importcg.service.ProdutoService;
 import br.com.importcg.util.FacesUtil;
 
 @Named
@@ -38,8 +42,10 @@ public class OrcamentoMB implements Serializable {
 	private List<Caixa> caixas = new ArrayList<>();
 	private List<Pessoa> clientes = new ArrayList<>();
 	private List<Pessoa> funcionarios = new ArrayList<>();
+	private List<Produto> produtos = new ArrayList<>();
 	private List<ItemOrcamento> itensOrcamento = new ArrayList<>();
 	private List<ItemOrcamento> itensOrcamentoSelecionados = new ArrayList<>();
+	private List<CatalogoInternacional> valores = new ArrayList<>();
 	
 	private boolean edicaoItem = false;
 	
@@ -61,6 +67,12 @@ public class OrcamentoMB implements Serializable {
 	
 	@Inject
 	private CaixaService caixaService;
+	
+	@Inject
+	private ProdutoService produtoService;
+	
+	@Inject
+	private CatalogoInternacionalService catalogoInternacionalService;
 	
 	public void inicializar() {
 		if (idOrcamento != null) {
@@ -84,6 +96,10 @@ public class OrcamentoMB implements Serializable {
 		if (caixas.isEmpty()) {
 			caixas = caixaService.listarTodos();
 		}
+		
+		if (produtos.isEmpty()) {
+			produtos = produtoService.listarTodos();
+		}
 	}
 
 	public void salvar(boolean msg) {
@@ -92,7 +108,7 @@ public class OrcamentoMB implements Serializable {
 		this.inicializarItemOrcamento();
 		
 		if (msg)
-			FacesUtil.addInfoMessage("Orcamento cadastrada com sucesso!");
+			FacesUtil.addInfoMessage("Orçamento cadastrado com sucesso!");
 	}
 	
 	public void salvarItem() {
@@ -173,6 +189,14 @@ public class OrcamentoMB implements Serializable {
 		this.atualizarOrcamentoNegativa(itemOrcamento.getQuantidade(), itemOrcamento.getValor());
 		
 		FacesUtil.addInfoMessage("Item(s) excluido(s) com sucesso!");
+	}
+	
+	public void buscarValoresPagosPorIdProduto(Long idProduto) {
+		valores = catalogoInternacionalService.buscarValoresPagosPorIdProduto(idProduto);
+	}
+	
+	public void atualizarValor() {
+		itemOrcamento.setValor(itemOrcamento.getCatalogoInternacional().getValorEmReal());
 	}
 	
 	public Orcamento getOrcamento() {
@@ -261,5 +285,21 @@ public class OrcamentoMB implements Serializable {
 
 	public void setValorAtual(BigDecimal valorAtual) {
 		this.valorAtual = valorAtual;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+
+	public List<CatalogoInternacional> getValores() {
+		return valores;
+	}
+
+	public void setValores(List<CatalogoInternacional> valores) {
+		this.valores = valores;
 	}
 }

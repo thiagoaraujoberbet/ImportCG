@@ -268,3 +268,21 @@ FROM   u684253104_impcg.itemVenda iv
          ON iv.idProduto = pr.idProduto
 WHERE  p.idPessoa = 24
 ORDER  BY v.dataVenda DESC;  
+
+/* 	MB   -> OrcamentoMB 
+	Tela -> cadastrarProduto.xhtml
+	CatalogoInternacionalDAO
+	buscarValoresPagosPorIdProduto
+    Retorna os valores pagos no produto passado como parametro
+*/   
+SELECT c.idProduto,
+       f.nome,
+       c.data,
+       c.cotacao,
+       c.valorEmDolar,
+       c.valorEmReal
+FROM   u684253104_impcg.catalogoInternacional c
+       JOIN u684253104_impcg.fornecedor f
+         ON c.idFornecedor = f.idFornecedor
+WHERE  c.idProduto = 6
+ORDER  BY c.data DESC;  

@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `u684253104_impcg` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `u684253104_impcg`;
--- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
 --
 -- Host: localhost    Database: u684253104_impcg
 -- ------------------------------------------------------
--- Server version	5.7.20
+-- Server version	5.7.20-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -380,18 +380,21 @@ DROP TABLE IF EXISTS `itemOrcamento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `itemOrcamento` (
-  `idItemOrcamento` bigint(20) NOT NULL,
+  `idItemOrcamento` bigint(20) NOT NULL AUTO_INCREMENT,
   `idOrcamento` bigint(20) NOT NULL,
   `idProduto` bigint(20) NOT NULL,
+  `idCatalogoInternacional` bigint(20) DEFAULT NULL,
   `valor` decimal(19,2) DEFAULT NULL,
   `quantidade` int(11) DEFAULT NULL,
   PRIMARY KEY (`idItemOrcamento`),
   UNIQUE KEY `idItemOrcamento_UNIQUE` (`idItemOrcamento`),
   KEY `FKkclxdu4d4knl36hyyl9g8vg3e` (`idOrcamento`),
   KEY `FK83edv833l91vcffhnsp4rsp4r` (`idProduto`),
+  KEY `FKrbfw3tacjquhpaljog6nxc7mr` (`idCatalogoInternacional`),
   CONSTRAINT `FK83edv833l91vcffhnsp4rsp4r` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
-  CONSTRAINT `FKkclxdu4d4knl36hyyl9g8vg3e` FOREIGN KEY (`idOrcamento`) REFERENCES `orcamento` (`idOrcamento`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `FKkclxdu4d4knl36hyyl9g8vg3e` FOREIGN KEY (`idOrcamento`) REFERENCES `orcamento` (`idOrcamento`),
+  CONSTRAINT `FKrbfw3tacjquhpaljog6nxc7mr` FOREIGN KEY (`idCatalogoInternacional`) REFERENCES `catalogoInternacional` (`idCatalogoInternacional`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -427,7 +430,7 @@ DROP TABLE IF EXISTS `orcamento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `orcamento` (
-  `idOrcamento` bigint(20) NOT NULL,
+  `idOrcamento` bigint(20) NOT NULL AUTO_INCREMENT,
   `idCliente` bigint(20) DEFAULT NULL,
   `idFuncionario` bigint(20) NOT NULL,
   `data` date NOT NULL,
@@ -439,7 +442,7 @@ CREATE TABLE `orcamento` (
   KEY `FKh6jbqscspwp3d3qaa2n681o1t` (`idFuncionario`),
   CONSTRAINT `FKh6jbqscspwp3d3qaa2n681o1t` FOREIGN KEY (`idFuncionario`) REFERENCES `pessoa` (`idPessoa`),
   CONSTRAINT `FKpixerpmnsdgm9524nucf7axo1` FOREIGN KEY (`idCliente`) REFERENCES `pessoa` (`idPessoa`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -515,7 +518,7 @@ CREATE TABLE `produto` (
   `dataAlteracao` date DEFAULT NULL,
   PRIMARY KEY (`idProduto`),
   UNIQUE KEY `idProduto_UNIQUE` (`idProduto`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -553,7 +556,7 @@ CREATE TABLE `retirada` (
   UNIQUE KEY `idRetirada_UNIQUE` (`idRetirada`),
   KEY `FK1ae050xs5eoqkdlmwc62rk3xo` (`idCaixa`),
   CONSTRAINT `FK1ae050xs5eoqkdlmwc62rk3xo` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -574,7 +577,7 @@ CREATE TABLE `tramite` (
   UNIQUE KEY `idTramite_UNIQUE` (`idTramite`),
   KEY `FKwenqm1061y3eq8n296w73njr` (`idCaixa`),
   CONSTRAINT `FKwenqm1061y3eq8n296w73njr` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=272 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=276 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -629,4 +632,4 @@ CREATE TABLE `venda` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-14 10:22:17
+-- Dump completed on 2018-02-14 19:00:09

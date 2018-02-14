@@ -239,3 +239,14 @@ JOIN venda v ON iv.idVenda = v.idVenda
 where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 6 MONTH)), 1)) and last_day(sysdate() - INTERVAL 5 MONTH)
 GROUP BY MONTH(v.dataVenda);
 		
+SELECT c.idProduto,
+       f.nome,
+       c.data,
+       c.cotacao,
+       c.valorEmDolar,
+       c.valorEmReal
+FROM   u684253104_impcg.catalogoInternacional c
+       JOIN u684253104_impcg.fornecedor f
+         ON c.idFornecedor = f.idFornecedor
+WHERE  c.idProduto = 6
+ORDER  BY c.data DESC;  

@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "catalogoInternacional")
@@ -54,6 +55,9 @@ public class CatalogoInternacional implements Serializable {
 	@Column(nullable=false)
 	@Temporal(value = TemporalType.DATE)
 	private Date data;
+	
+	@Transient
+	private String nomeFornecedor;
 
 	public CatalogoInternacional() {
 		super();
@@ -131,6 +135,14 @@ public class CatalogoInternacional implements Serializable {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public String getNomeFornecedor() {
+		return nomeFornecedor;
+	}
+
+	public void setNomeFornecedor(String nomeFornecedor) {
+		this.nomeFornecedor = nomeFornecedor;
 	}
 
 	@Override

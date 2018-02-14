@@ -59,8 +59,8 @@
 	
 	                        <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>	                        
 	                        
-	                        <p:column headerText="Data Orcamento" filterBy="#{orcamento.dataOrcamentoFormatada}" sortBy="#{orcamento.dataOrcamentoFormatada}" style="width:10%; text-align:center;">
- 	                        	<h:link value="#{orcamento.dataOrcamentoFormatada}" outcome="manterOrcamento.xhtml">
+	                        <p:column headerText="Data" filterBy="#{orcamento.dataFormatada}" sortBy="#{orcamento.dataFormatada}" style="width:10%; text-align:center;">
+ 	                        	<h:link value="#{orcamento.dataFormatada}" outcome="manterOrcamento.xhtml">
 	                        		<f:param name="id" value="#{orcamento.id}"/>
 	                        	</h:link>
 	                        </p:column>
@@ -69,7 +69,11 @@
 	                        	<h:outputText value="#{orcamento.cliente.nome}" />
 	                        </p:column>
 	                        
-   	                        <p:column headerText="Valor Orcamento" style="width:10%; text-align:right;">
+   	                        <p:column headerText="Vendedor" filterBy="#{orcamento.funcionario.nome}" sortBy="#{orcamento.funcionario.nome}">
+	                        	<h:outputText value="#{orcamento.funcionario.nome}" />
+	                        </p:column>
+	                        
+   	                        <p:column headerText="Valor" style="width:10%; text-align:right;">
 	                        	<h:outputText value="#{orcamento.valorTotal}">
 	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 	                        	</h:outputText>

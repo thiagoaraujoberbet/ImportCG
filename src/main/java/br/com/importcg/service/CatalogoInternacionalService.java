@@ -40,4 +40,8 @@ public class CatalogoInternacionalService implements Serializable {
 	public List<CatalogoInternacional> porIdProduto(Long idProduto) {
 		return catalogoInternacionalDAO.porIdProduto(idProduto);		
 	}
+
+	public List<CatalogoInternacional> buscarValoresPagosPorIdProduto(Long idProduto) {
+		return catalogoInternacionalDAO.buscarValoresPagosPorIdProduto(idProduto);
+	}
 }
