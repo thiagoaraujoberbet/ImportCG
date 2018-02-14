@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces">
+                
+	<div class="box box-primary">
+		<div class="box-header with-border">
+	        <div id="main-buttons" class="hidden-sm hidden-xs">
+	            <p:commandButton value="Salvar" update="@form" icon="fa fa-check" action="#{orcamentoMB.salvar(true)}" styleClass="btn-primary" rendered="#{!orcamentoMB.orcamento.edicao}"/>
+	            <p:spacer width="5"/>
+	            <p:commandButton value="Voltar" immediate="true" action="listarOrcamento?faces-redirect=true" process="@this" icon="fa fa-close"/>
+	            <p:spacer width="5"/>
+	            <p:commandButton value="Excluir" process="@this" icon="fa fa-trash" action="#{orcamentoMB.excluir()}" styleClass="btn-danger" rendered="#{orcamentoMB.orcamento.edicao}"/>
+	        </div>
+	                
+	        <p:splitButton value="Salvar" update="@form" icon="fa fa-check" action="#{orcamentoMB.salvar(true)}" styleClass="hidden-md hidden-lg btn-primary">
+	            <p:menuitem value="Excluir" process="@this" icon="fa fa-trash" action="#{orcamentoMB.excluir()}" rendered="#{orcamentoMB.orcamento.edicao}" />
+	            <p:separator/>
+	            <p:menuitem value="Voltar" action="listarOrcamento?faces-redirect=true" process="@this" icon="fa fa-close"/>
+	        </p:splitButton>
+	
+	        <p:separator/>
+	
+	      	<div class="ui-fluid">
+	                
+				<p:panelGrid id="cadastroOrcamento1" columns="6" style="width:100%;">
+				
+					<p:outputLabel value="Data da Orcamento" for="dataCompra"/>
+					<p:calendar id="dataCompra" value="#{orcamentoMB.orcamento.data}" pattern="dd/MM/yyyy" mask="true" disabled="#{orcamentoMB.orcamento.id ne null}"/>
+					
+					<p:outputLabel value="Valor Total" for="valorTotal"/>
+					<p:inputText id="valorTotal" value="#{orcamentoMB.orcamento.valorTotal}" disabled="true">
+						<f:convertNumber type="currency" currencySymbol="R$"/>
+					</p:inputText>
+					
+					<p:outputLabel value="Quantidade Total" for="quantidadeTotal"/>
+					<p:inputText id="quantidadeTotal" value="#{orcamentoMB.orcamento.quantidadeTotal}" disabled="true"/>
+					
+				</p:panelGrid>
+			
+				<p:spacer />
+			
+				<p:panelGrid id="cadastroOrcamento2" columns="4" style="width:100%;">
+				
+					<p:outputLabel value="Cliente" for="clientes"/>
+					<p:selectOneMenu id="clientes" value="#{orcamentoMB.orcamento.cliente}" converter="pessoaConverter" var="c" filter="true" filterMatchMode="contains" disabled="#{orcamentoMB.orcamento.id ne null}">
+						<f:selectItem itemLabel="Selecione..."/>
+			            <f:selectItems value="#{orcamentoMB.clientes}" var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente}" />
+			        
+			            <p:column>
+			                <h:outputText value="#{c.nome}" />
+			            </p:column>
+			 		
+			        </p:selectOneMenu>
+			        
+   					<p:outputLabel value="Vendedor" for="funcionarios"/>
+					<p:selectOneMenu id="funcionarios" value="#{orcamentoMB.orcamento.funcionario}" converter="pessoaConverter" var="f" filter="true" filterMatchMode="contains" disabled="#{orcamentoMB.orcamento.id ne null}">
+						<f:selectItem itemLabel="Selecione..."/>
+			            <f:selectItems value="#{orcamentoMB.funcionarios}" var="funcionario" itemLabel="#{funcionario.nome}" itemValue="#{funcionario}" />
+			        
+			            <p:column>
+			                <h:outputText value="#{f.nome}" />
+			            </p:column>
+			 		
+			        </p:selectOneMenu>
+				
+				</p:panelGrid>
+			
+			</div>
+	                
+		</div>
+	            
+	</div>
+                
+</ui:composition>

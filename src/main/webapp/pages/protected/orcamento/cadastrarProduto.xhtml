@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces">
+              
+    <div class="box box-primary">
+	            
+  		<div class="box-header with-border">
+
+			<div class="ui-fluid">
+		           
+				<p:panelGrid id="cadastroProduto" columns="7" style="width:100%;">
+				
+					<p:outputLabel value="Produto" for="produtos"/>
+					<p:selectOneMenu id="produtos" value="#{orcamentoMB.itemOrcamento.itemEntrada}" converter="itemEntradaConverter" var="i" filter="true" filterMatchMode="contains">
+						<f:selectItem itemLabel="Selecione..."/>
+			            <f:selectItems value="#{orcamentoMB.itensEntrada}" var="itens" itemLabel="#{itens.produto.nome} | #{itens.produto.marca} | #{itens.produto.modelo} | #{itens.valorEmReal} | #{itens.quantidadeEstoque}" itemValue="#{produto}" />
+			       
+			            <p:column>
+			               <h:outputText value="#{i.produto.nome}" />
+			            </p:column>
+			
+			            <p:column>
+			               <h:outputText value="#{i.produto.marca}" />
+			            </p:column>
+			           
+			            <p:column>
+			               <h:outputText value="#{i.produto.modelo}" />
+			            </p:column>
+			           
+			            <p:column>
+			               <h:outputText value="#{i.valorEmReal}" />
+			            </p:column>
+			           
+			            <p:column>
+			               <h:outputText value="#{i.quantidadeEstoque}" />
+			            </p:column>
+			           
+			        </p:selectOneMenu>
+			       
+					<p:outputLabel value="Valor R$" for="valor"/>
+					<p:inputNumber id="valor" value="#{orcamentoMB.itemOrcamento.valor}"/>
+					
+					<p:outputLabel value="Qtde" for="quantidade"/>
+					<p:inputText id="quantidade" value="#{orcamentoMB.itemOrcamento.quantidade}" maxlength="3"/>
+					
+					<p:commandButton action="#{orcamentoMB.salvarItem()}" update="@form" icon="fa fa-plus" title="Adicionar" styleClass="btn-success"/>
+				       
+				</p:panelGrid>
+		
+				<p:spacer />
+		       
+				<p:dataTable id="itemOrcamentoTable" widgetVar="itemOrcamentoTable" rows="5"	 
+		        			 value="#{orcamentoMB.itensOrcamento}" var="item" rowKey="#{item.id}"
+		                     paginator="true" 	                                 
+		                     paginatorPosition="bottom"	                                 
+		                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+		                     currentPageReportTemplate=""
+		                     rowsPerPageTemplate="5,10,15,20,30">
+		                     
+		            <p:column headerText="Produto" filterBy="#{item.produto.nome}" sortBy="#{item.produto.nome}" width="40%">
+		             	<h:outputText value="#{item.produto.nome} | #{item.produto.marca} | #{item.produto.modelo}"/>
+		            </p:column>
+		            
+		            <p:column headerText="Valor R$">
+		            	<h:outputText value="#{item.valor}">
+		            		<f:convertNumber type="currency" currencySymbol="R$"/>
+		            	</h:outputText>
+		            </p:column>
+		            
+		            <p:column headerText="Qtde">
+		            	<h:outputText value="#{item.quantidade}" />
+		            </p:column>
+		            
+		            <p:column headerText="Total R$">
+		            	<h:outputText value="#{item.quantidade * item.valor}">
+		            		<f:convertNumber type="currency" currencySymbol="R$"/>
+		            	</h:outputText>
+		            </p:column>
+		            
+		           	<p:column styleClass="align-center" width="10%">
+				     	<p:commandButton update="@form" icon="fa fa-pencil" title="Editar" styleClass="btn-primary">
+					        <f:setPropertyActionListener value="true" target="#{orcamentoMB.edicaoItem}" />
+					        <f:setPropertyActionListener value="#{item}" target="#{orcamentoMB.itemOrcamento}" />
+					        <f:setPropertyActionListener value="#{item.valor}" target="#{orcamentoMB.valorAtual}" />
+					        <f:setPropertyActionListener value="#{item.quantidade}" target="#{orcamentoMB.quantidadeAtual}" />
+					    </p:commandButton>
+					</p:column>
+					
+		           	<p:column styleClass="align-center" width="10%">
+				     	<p:commandButton action="#{orcamentoMB.excluirItens()}" update="@form" process="@this" icon="fa fa-trash" title="Excluir" styleClass="btn-danger">
+					        <f:setPropertyActionListener value="#{item}" target="#{orcamentoMB.itemOrcamento}" />
+					    </p:commandButton>
+					</p:column>
+		            	
+		        </p:dataTable>
+		       
+			</div>
+	
+   		</div>
+	            	
+    </div>
+    
+</ui:composition>

@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `u684253104_impcg` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `u684253104_impcg`;
--- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
 -- Host: localhost    Database: u684253104_impcg
 -- ------------------------------------------------------
--- Server version	5.7.20-0ubuntu0.16.04.1
+-- Server version	5.7.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -119,7 +119,7 @@ CREATE TABLE `catalogoInternacional` (
   CONSTRAINT `FKbkk2fjqfm3tr4bv7ala0jcq9n` FOREIGN KEY (`idFornecedor`) REFERENCES `fornecedor` (`idFornecedor`),
   CONSTRAINT `FKcg9wpjqhw2l2dpkb5bj0y1jh3` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKxmtseedf86cau3qthkv58uji` FOREIGN KEY (`idItemEntrada`) REFERENCES `itemEntrada` (`idItemEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,7 +197,7 @@ CREATE TABLE `entrada` (
   `despesaLancada` bit(1) NOT NULL,
   PRIMARY KEY (`idEntrada`),
   UNIQUE KEY `idEntrada_UNIQUE` (`idEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -369,7 +369,29 @@ CREATE TABLE `itemEntrada` (
   CONSTRAINT `FKjyakb0b8tpnhe763ijq096ssh` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKle7ytd45iqwof5gwxm47d3284` FOREIGN KEY (`idFornecedor`) REFERENCES `fornecedor` (`idFornecedor`),
   CONSTRAINT `FKx2pq54u6nqee1ct3guex6bnr` FOREIGN KEY (`idEntrada`) REFERENCES `entrada` (`idEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=172 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `itemOrcamento`
+--
+
+DROP TABLE IF EXISTS `itemOrcamento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `itemOrcamento` (
+  `idItemOrcamento` bigint(20) NOT NULL,
+  `idOrcamento` bigint(20) NOT NULL,
+  `idProduto` bigint(20) NOT NULL,
+  `valor` decimal(19,2) DEFAULT NULL,
+  `quantidade` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idItemOrcamento`),
+  UNIQUE KEY `idItemOrcamento_UNIQUE` (`idItemOrcamento`),
+  KEY `FKkclxdu4d4knl36hyyl9g8vg3e` (`idOrcamento`),
+  KEY `FK83edv833l91vcffhnsp4rsp4r` (`idProduto`),
+  CONSTRAINT `FK83edv833l91vcffhnsp4rsp4r` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
+  CONSTRAINT `FKkclxdu4d4knl36hyyl9g8vg3e` FOREIGN KEY (`idOrcamento`) REFERENCES `orcamento` (`idOrcamento`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -394,7 +416,30 @@ CREATE TABLE `itemVenda` (
   CONSTRAINT `FK5eyxa71d0qvmircij2jqhtajl` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKq0wpxloynk627fqxtuykjxuur` FOREIGN KEY (`idVenda`) REFERENCES `venda` (`idVenda`),
   CONSTRAINT `FKq99iiopsfwkm3rskreq6cg7qh` FOREIGN KEY (`idItemEntrada`) REFERENCES `itemEntrada` (`idItemEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=204 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `orcamento`
+--
+
+DROP TABLE IF EXISTS `orcamento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `orcamento` (
+  `idOrcamento` bigint(20) NOT NULL,
+  `idCliente` bigint(20) DEFAULT NULL,
+  `idFuncionario` bigint(20) NOT NULL,
+  `data` date NOT NULL,
+  `valorTotal` decimal(19,2) DEFAULT NULL,
+  `quantidadeTotal` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idOrcamento`),
+  UNIQUE KEY `idOrcamento_UNIQUE` (`idOrcamento`),
+  KEY `FKpixerpmnsdgm9524nucf7axo1` (`idCliente`),
+  KEY `FKh6jbqscspwp3d3qaa2n681o1t` (`idFuncionario`),
+  CONSTRAINT `FKh6jbqscspwp3d3qaa2n681o1t` FOREIGN KEY (`idFuncionario`) REFERENCES `pessoa` (`idPessoa`),
+  CONSTRAINT `FKpixerpmnsdgm9524nucf7axo1` FOREIGN KEY (`idCliente`) REFERENCES `pessoa` (`idPessoa`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -424,7 +469,7 @@ CREATE TABLE `pagamento` (
   KEY `FK2jyyepu1tqd46buhn0pcs78q3` (`idVenda`),
   CONSTRAINT `FK2jyyepu1tqd46buhn0pcs78q3` FOREIGN KEY (`idVenda`) REFERENCES `venda` (`idVenda`),
   CONSTRAINT `FKisk5alom9yolr7brwq967ejd7` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=252 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=254 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -529,7 +574,7 @@ CREATE TABLE `tramite` (
   UNIQUE KEY `idTramite_UNIQUE` (`idTramite`),
   KEY `FKwenqm1061y3eq8n296w73njr` (`idCaixa`),
   CONSTRAINT `FKwenqm1061y3eq8n296w73njr` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=270 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=272 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -572,7 +617,7 @@ CREATE TABLE `venda` (
   KEY `FK2l1gbv70y170sammw1guliyj8` (`idFuncionario`),
   CONSTRAINT `FK2l1gbv70y170sammw1guliyj8` FOREIGN KEY (`idFuncionario`) REFERENCES `pessoa` (`idPessoa`),
   CONSTRAINT `FK6eyxfbxmeg9tn95pob30peuev` FOREIGN KEY (`idCliente`) REFERENCES `pessoa` (`idPessoa`)
-) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=172 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -584,4 +629,4 @@ CREATE TABLE `venda` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-09 16:32:33
+-- Dump completed on 2018-02-14 10:22:17
