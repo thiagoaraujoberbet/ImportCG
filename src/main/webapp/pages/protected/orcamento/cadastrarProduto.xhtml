@@ -82,6 +82,9 @@
 					<p:outputLabel value="Qtde" for="quantidade"/>
 					<p:inputText id="quantidade" value="#{orcamentoMB.itemOrcamento.quantidade}" maxlength="3"/>
 					
+					<p:outputLabel value="Valor Venda R$" for="valorVenda"/>
+					<p:inputNumber id="valorVenda" value="#{orcamentoMB.itemOrcamento.valorVenda}"/>
+					
 					<p:commandButton action="#{orcamentoMB.salvarItem()}" update="@form" icon="fa fa-plus" title="Adicionar" styleClass="btn-success"/>
 				       
 				</p:panelGrid>
@@ -132,14 +135,29 @@
 		            	</h:outputText>
 		            </p:column>
 		            
-		           	<p:column styleClass="align-center" width="10%">
+  		            <p:column headerText="Valor Venda R$" width="7%" styleClass="align-right">
+		            	<h:outputText value="#{item.valorVenda}">
+		            		<f:convertNumber type="currency" currencySymbol="R$"/>
+		            	</h:outputText>
+		            </p:column>
+		            
+   		            <p:column headerText="Lucro R$" width="7%" styleClass="align-right">
+		            	<h:outputText value="#{(item.valorVenda - item.valor) * item.quantidade}" style="color: #238E23;">
+		            		<f:convertNumber type="currency" currencySymbol="R$"/>
+		            	</h:outputText>
+		            </p:column>
+		            
+		           	<p:column styleClass="align-center" width="5%">
 				     	<p:commandButton update="@form" icon="fa fa-pencil" title="Editar" styleClass="btn-primary">
 					        <f:setPropertyActionListener value="true" target="#{orcamentoMB.edicaoItem}" />
 					        <f:setPropertyActionListener value="#{item}" target="#{orcamentoMB.itemOrcamento}" />
+   					        <f:setPropertyActionListener value="#{item.valor}" target="#{orcamentoMB.valorAtual}" />
+					        <f:setPropertyActionListener value="#{item.quantidade}" target="#{orcamentoMB.quantidadeAtual}" />
+					        <f:setPropertyActionListener value="#{item.valorVenda}" target="#{orcamentoMB.valorVendaAtual}" />
 					    </p:commandButton>
 					</p:column>
 					
-		           	<p:column styleClass="align-center" width="10%">
+		           	<p:column styleClass="align-center" width="5%">
 				     	<p:commandButton action="#{orcamentoMB.excluirItens()}" update="@form" process="@this" icon="fa fa-trash" title="Excluir" styleClass="btn-danger">
 					        <f:setPropertyActionListener value="#{item}" target="#{orcamentoMB.itemOrcamento}" />
 					    </p:commandButton>

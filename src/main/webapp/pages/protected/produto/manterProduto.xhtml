@@ -42,9 +42,20 @@
 							<p:outputLabel value="Produto" for="nome"/>
 							<p:inputText id="nome" value="#{produtoMB.produto.nome}" style="width:100%;" required="true" requiredMessage="O nome do produto é obrigatório!"/>	
 							
+							<p:outputLabel value="Prefixo" for="prefixo"/>
+							<p:inputText id="prefixo" value="#{produtoMB.produto.prefixo}" style="width:100%;" required="true" requiredMessage="O prefixo do produto é obrigatório!"/>
+						</p:panelGrid>
+						
+						<p:spacer />
+						
+						<p:panelGrid id="capaPanel2" columns="2" style="width:100%;">	
 							<p:outputLabel value="Descrição" for="descricao"/>
 							<p:inputTextarea id="descricao" value="#{produtoMB.produto.descricao}" style="width:100%;" required="true" requiredMessage="A descrição do produto é obrigatório!"/>
-							
+						</p:panelGrid>
+						
+						<p:spacer />
+						
+						<p:panelGrid id="capaPanel3" columns="8" style="width:100%;">
 							<p:outputLabel value="Categoria" for="categoria"/>
 							<p:selectOneMenu id="categoria" value="#{produtoMB.produto.categoria}" style="width:100%;" required="true" requiredMessage="A categoria do produto é obrigatório!">
 								<f:selectItem itemLabel="Selecione..."/>
@@ -74,7 +85,7 @@
                     <p:separator/>
                     
                     <div class="ui-fluid">
-                    	<p:panelGrid id="capaPanel2" columns="11" style="width:100%;" rendered="#{produtoMB.idProduto ne null}">
+                    	<p:panelGrid id="capaPanel4" columns="11" style="width:100%;" rendered="#{produtoMB.idProduto ne null}">
 							<p:outputLabel value="Fornecedor" for="fornecedores"/>
 							<p:selectOneMenu id="fornecedores" value="#{produtoMB.catalogoInternacional.fornecedor}" converter="fornecedorConverter" var="f" filter="true" filterMatchMode="contains">
 								<f:selectItem itemLabel="Selecione..."/>
@@ -103,7 +114,7 @@
 							<p:commandButton action="#{produtoMB.salvarCatalogoInternacional()}" update="@form" icon="fa fa-plus" title="Adicionar" styleClass="btn-success"/>
                     	</p:panelGrid>
                     	
-                    	<p:panelGrid id="capaPanel3" columns="1" style="width:100%;" rendered="#{produtoMB.idProduto ne null}">
+                    	<p:panelGrid id="capaPanel5" columns="1" style="width:100%;" rendered="#{produtoMB.idProduto ne null}">
 	   	                    <p:dataTable id="catalogoInternacionalTable" widgetVar="catalogoInternacionalTable" rows="5"	 
 			                    			 value="#{produtoMB.catalogosInternacional}" var="item" rowKey="#{item.id}"
 			                                 paginator="true" 	                                 
@@ -160,6 +171,10 @@
                 </div>
                 
             </div>
+            
+            <p:galleria value="#{produtoMB.images}" var="image" panelWidth="512" panelHeight="512" showCaption="true">
+			    <p:graphicImage name="fotos/#{image}" alt="Image Description for #{image}" title="#{image}"/>
+			</p:galleria>
             
         </h:form>
 

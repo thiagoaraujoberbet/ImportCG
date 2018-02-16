@@ -42,6 +42,8 @@ public class ItemOrcamento implements Serializable {
 	private BigDecimal valor = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 	
 	private Integer quantidade = Integer.parseInt("0");
+	
+	private BigDecimal valorVenda = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
 
 	public ItemOrcamento() {
 		super();
@@ -95,6 +97,14 @@ public class ItemOrcamento implements Serializable {
 		this.quantidade = quantidade;
 	}
 	
+	public BigDecimal getValorVenda() {
+		return valorVenda;
+	}
+
+	public void setValorVenda(BigDecimal valorVenda) {
+		this.valorVenda = valorVenda;
+	}
+
 	public boolean isInclusao() {
 		return getId() == null ? true : false;
 	}

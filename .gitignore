@@ -1,2 +1,4 @@
 /target/
 .DS_Store
+src/main/webapp/resources/fotos/
+.directory

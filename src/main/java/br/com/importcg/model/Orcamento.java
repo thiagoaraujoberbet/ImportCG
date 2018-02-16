@@ -48,6 +48,8 @@ public class Orcamento implements Serializable {
 	
 	private BigDecimal valorTotal;
 	
+	private BigDecimal lucroTotal;
+	
 	private Integer quantidadeTotal;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "orcamento", cascade = CascadeType.ALL)	
@@ -95,6 +97,14 @@ public class Orcamento implements Serializable {
 
 	public void setValorTotal(BigDecimal valorTotal) {
 		this.valorTotal = valorTotal;
+	}
+
+	public BigDecimal getLucroTotal() {
+		return lucroTotal;
+	}
+
+	public void setLucroTotal(BigDecimal lucroTotal) {
+		this.lucroTotal = lucroTotal;
 	}
 
 	public Integer getQuantidadeTotal() {

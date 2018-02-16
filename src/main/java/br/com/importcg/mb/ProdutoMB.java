@@ -40,6 +40,8 @@ public class ProdutoMB implements Serializable {
 	private List<Fornecedor> fornecedores = new ArrayList<>();
 	private List<CatalogoInternacional> catalogosInternacional = new ArrayList<>();
 	
+	private List<String> images;
+	
 	@Inject
 	private ProdutoService produtoService;
 	
@@ -56,6 +58,11 @@ public class ProdutoMB implements Serializable {
 		if (idProduto != null) {
 			produto = produtoService.porId(idProduto);
 			setVendido(itemVendaService.verificarProdutoVendido(produto.getId()));
+			
+	        images = new ArrayList<String>();
+	        for (int i = 1; i <= 2; i++) {
+	            images.add(produto.getPrefixo() + i + ".jpg");
+	        }
 		} else produto.setDataCriacao(new Date());
 		
 		if (fornecedores.isEmpty())
@@ -169,5 +176,13 @@ public class ProdutoMB implements Serializable {
 
 	public void setCatalogosInternacional(List<CatalogoInternacional> catalogosInternacional) {
 		this.catalogosInternacional = catalogosInternacional;
+	}
+
+	public List<String> getImages() {
+		return images;
+	}
+
+	public void setImages(List<String> images) {
+		this.images = images;
 	}
 }

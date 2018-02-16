@@ -70,11 +70,11 @@
 	                        	<h:outputText value="#{estoque.modeloProduto}"/>
 	                        </p:column>
 	                        
-                        	<p:column headerText="Em Estoque" style="width:6%; text-align:center;">
+                        	<p:column headerText="Estoque" width="7%;" style="text-align:center;" sortBy="#{estoque.quantidade}">
 	                        	<h:outputText value="#{estoque.quantidade}"/>
 	                        </p:column>
 	                        
-                           	<p:column headerText="Qtde Vendida" style="width:6%; text-align:center;">
+                           	<p:column headerText="Vendido" width="7%;" style="text-align:center;" sortBy="#{estoque.quantidadeTotalVenda}">
 	                        	<h:outputText value="#{estoque.quantidadeTotalVenda}"/>
 	                        </p:column>
 	                        	

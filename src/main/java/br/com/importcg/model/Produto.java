@@ -46,6 +46,8 @@ public class Produto implements Serializable {
 	
 	private String modelo;
 	
+	private String prefixo;
+	
 	@Temporal(value = TemporalType.DATE)
 	private Date dataCriacao;
 	
@@ -105,6 +107,14 @@ public class Produto implements Serializable {
 
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
+	}
+
+	public String getPrefixo() {
+		return prefixo;
+	}
+
+	public void setPrefixo(String prefixo) {
+		this.prefixo = prefixo;
 	}
 
 	public Date getDataCriacao() {

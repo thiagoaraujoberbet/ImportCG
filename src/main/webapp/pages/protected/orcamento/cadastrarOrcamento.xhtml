@@ -23,13 +23,18 @@
 	
 	      	<div class="ui-fluid">
 	                
-				<p:panelGrid id="cadastroOrcamento1" columns="6" style="width:100%;">
+				<p:panelGrid id="cadastroOrcamento1" columns="8" style="width:100%;">
 				
 					<p:outputLabel value="Data da Orcamento" for="dataCompra"/>
 					<p:calendar id="dataCompra" value="#{orcamentoMB.orcamento.data}" pattern="dd/MM/yyyy" mask="true" disabled="#{orcamentoMB.orcamento.id ne null}"/>
 					
 					<p:outputLabel value="Valor Total" for="valorTotal"/>
 					<p:inputText id="valorTotal" value="#{orcamentoMB.orcamento.valorTotal}" disabled="true">
+						<f:convertNumber type="currency" currencySymbol="R$"/>
+					</p:inputText>
+					
+					<p:outputLabel value="Lucro Total" for="lucroTotal"/>
+					<p:inputText id="lucroTotal" value="#{orcamentoMB.orcamento.lucroTotal}" disabled="true">
 						<f:convertNumber type="currency" currencySymbol="R$"/>
 					</p:inputText>
 					

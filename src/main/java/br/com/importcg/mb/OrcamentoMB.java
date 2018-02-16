@@ -12,15 +12,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.importcg.enumeration.EnumTipoPessoa;
-import br.com.importcg.model.Caixa;
 import br.com.importcg.model.CatalogoInternacional;
 import br.com.importcg.model.ItemOrcamento;
 import br.com.importcg.model.Orcamento;
 import br.com.importcg.model.Pessoa;
 import br.com.importcg.model.Produto;
-import br.com.importcg.service.CaixaService;
 import br.com.importcg.service.CatalogoInternacionalService;
-import br.com.importcg.service.EstoqueService;
 import br.com.importcg.service.ItemOrcamentoService;
 import br.com.importcg.service.OrcamentoService;
 import br.com.importcg.service.PessoaService;
@@ -39,7 +36,6 @@ public class OrcamentoMB implements Serializable {
 	private Orcamento orcamento = new Orcamento();
 	private ItemOrcamento itemOrcamento = new ItemOrcamento();
 	
-	private List<Caixa> caixas = new ArrayList<>();
 	private List<Pessoa> clientes = new ArrayList<>();
 	private List<Pessoa> funcionarios = new ArrayList<>();
 	private List<Produto> produtos = new ArrayList<>();
@@ -52,6 +48,7 @@ public class OrcamentoMB implements Serializable {
 	private Long idOrcamento;
 	private Integer quantidadeAtual = 0;
 	private BigDecimal valorAtual = BigDecimal.ZERO;
+	private BigDecimal valorVendaAtual = BigDecimal.ZERO;
 	
 	@Inject
 	private OrcamentoService orcamentoService;
@@ -61,12 +58,6 @@ public class OrcamentoMB implements Serializable {
 	
 	@Inject
 	private ItemOrcamentoService itemOrcamentoService;
-	
-	@Inject
-	private EstoqueService estoqueService;
-	
-	@Inject
-	private CaixaService caixaService;
 	
 	@Inject
 	private ProdutoService produtoService;
@@ -82,6 +73,7 @@ public class OrcamentoMB implements Serializable {
 		} else {
 			orcamento.setData(new Date());
 			orcamento.setValorTotal(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN));
+			orcamento.setLucroTotal(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN));
 			orcamento.setQuantidadeTotal(new Integer(0));
 		}
 		
@@ -91,10 +83,6 @@ public class OrcamentoMB implements Serializable {
 		
 		if (funcionarios.isEmpty()) {
 			funcionarios = pessoaService.listarTodos(EnumTipoPessoa.FUNCIONARIO);
-		}
-		
-		if (caixas.isEmpty()) {
-			caixas = caixaService.listarTodos();
 		}
 		
 		if (produtos.isEmpty()) {
@@ -114,57 +102,35 @@ public class OrcamentoMB implements Serializable {
 	public void salvarItem() {
 		itemOrcamento = itemOrcamentoService.salvar(itemOrcamento);
 		
-		if (isEdicaoItem()) {
-			this.salvarItemEditado();
-		} else {
-			this.salvarItemNovo();
-		}
-		
-		itensOrcamento = itemOrcamentoService.porIdOrcamento(itemOrcamento.getOrcamento().getId());
+		this.atualizarOrcamento();
 		
 		FacesUtil.addInfoMessage("Item cadastrado com sucesso!");
 	}
 	
-	private void salvarItemEditado() {
-		if (!itemOrcamento.getQuantidade().equals(quantidadeAtual)) {
-			if (itemOrcamento.getQuantidade() > quantidadeAtual) {
-				estoqueService.atualizarEstoqueNegativo(itemOrcamento.getQuantidade() - quantidadeAtual, itemOrcamento.getProduto().getId());
-				this.atualizarOrcamentoPositiva(itemOrcamento.getQuantidade() - quantidadeAtual, itemOrcamento.getValor());
-			} else {
-				estoqueService.atualizarEstoquePositivo(quantidadeAtual - itemOrcamento.getQuantidade(), itemOrcamento.getProduto());
-				this.atualizarOrcamentoNegativa(quantidadeAtual - itemOrcamento.getQuantidade(), itemOrcamento.getValor());
-			}
-		} else if  (!itemOrcamento.getValor().equals(valorAtual)) {
-			if (itemOrcamento.getValor().compareTo(valorAtual) == 1) {
-				this.atualizarOrcamentoPositiva(new Integer(0), itemOrcamento.getValor().subtract(valorAtual));
-			} else {
-				this.atualizarOrcamentoNegativa(new Integer(0), valorAtual.subtract(itemOrcamento.getValor()));
-			}
+	private void atualizarOrcamento() {
+		itensOrcamento = itemOrcamentoService.porIdOrcamento(itemOrcamento.getOrcamento().getId());
+		
+		int quantidadeTotal = 0;
+		BigDecimal valorTotal = new BigDecimal("0");
+		BigDecimal valorVenda = new BigDecimal("0");
+		
+		for (ItemOrcamento item : itensOrcamento) {
+			quantidadeTotal = quantidadeTotal + item.getQuantidade();
+			valorTotal = valorTotal.add(item.getValor().multiply(new BigDecimal(item.getQuantidade())));
+			valorVenda = valorVenda.add(item.getValorVenda().multiply(new BigDecimal(item.getQuantidade())));
 		}
+		
+		orcamento = orcamentoService.porId(orcamento.getId());
+		
+		orcamento.setQuantidadeTotal(quantidadeTotal);
+		orcamento.setValorTotal(valorTotal);
+		orcamento.setLucroTotal(valorVenda.subtract(valorTotal));
+		
+		this.salvar(false);
 		
 		setEdicaoItem(false);
 	}
-	
-	private void salvarItemNovo() {
-		estoqueService.atualizarEstoqueNegativo(itemOrcamento.getQuantidade(), itemOrcamento.getProduto().getId());
-		this.atualizarOrcamentoPositiva(itemOrcamento.getQuantidade(), itemOrcamento.getValor());
-	}
 
-	private void atualizarOrcamentoPositiva(Integer quantidade, BigDecimal valor) {
-		orcamento = orcamentoService.porId(orcamento.getId());
-		orcamento.setValorTotal(orcamento.getValorTotal().add(valor.multiply(new BigDecimal(quantidade))));
-		orcamento.setQuantidadeTotal(orcamento.getQuantidadeTotal() + quantidade);
-		
-		this.salvar(false);
-	}
-	
-	private void atualizarOrcamentoNegativa(Integer quantidade, BigDecimal valor) {
-		orcamento = orcamentoService.porId(orcamento.getId());
-		orcamento.setValorTotal(orcamento.getValorTotal().subtract(valor.multiply(new BigDecimal(quantidade))));
-		orcamento.setQuantidadeTotal(orcamento.getQuantidadeTotal() - quantidade);
-		
-		this.salvar(false);
-	}
 	
 	private void inicializarItemOrcamento() {
 		itemOrcamento = new ItemOrcamento();
@@ -172,10 +138,6 @@ public class OrcamentoMB implements Serializable {
 	}
 	
 	public String excluir() {
-		for (ItemOrcamento itemOrcamento : itensOrcamento) {
-			estoqueService.atualizarEstoquePositivo(itemOrcamento.getQuantidade(), itemOrcamento.getProduto());
-		} 
-		
 		orcamentoService.excluir(orcamento);
 		
 		return "listarOrcamento.xhtml?faces-redirect=true";
@@ -185,8 +147,7 @@ public class OrcamentoMB implements Serializable {
 		itemOrcamentoService.excluir(itemOrcamento);
 		itensOrcamento.remove(itemOrcamento);
 		
-		estoqueService.atualizarEstoquePositivo(itemOrcamento.getQuantidade(), itemOrcamento.getProduto());
-		this.atualizarOrcamentoNegativa(itemOrcamento.getQuantidade(), itemOrcamento.getValor());
+		this.atualizarOrcamento();
 		
 		FacesUtil.addInfoMessage("Item(s) excluido(s) com sucesso!");
 	}
@@ -223,14 +184,6 @@ public class OrcamentoMB implements Serializable {
 		this.idOrcamento = idOrcamento;
 	}
 	
-	public List<Caixa> getCaixas() {
-		return caixas;
-	}
-
-	public void setCaixas(List<Caixa> caixas) {
-		this.caixas = caixas;
-	}
-
 	public List<Pessoa> getClientes() {
 		return clientes;
 	}
@@ -285,6 +238,14 @@ public class OrcamentoMB implements Serializable {
 
 	public void setValorAtual(BigDecimal valorAtual) {
 		this.valorAtual = valorAtual;
+	}
+
+	public BigDecimal getValorVendaAtual() {
+		return valorVendaAtual;
+	}
+
+	public void setValorVendaAtual(BigDecimal valorVendaAtual) {
+		this.valorVendaAtual = valorVendaAtual;
 	}
 
 	public List<Produto> getProdutos() {
