@@ -244,7 +244,7 @@ CREATE TABLE `estoque` (
   UNIQUE KEY `idEstoque_UNIQUE` (`idEstoque`),
   KEY `FKgumrkw95wo8v0tvdwjmor525w` (`idProduto`),
   CONSTRAINT `FKgumrkw95wo8v0tvdwjmor525w` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`)
-) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -384,8 +384,9 @@ CREATE TABLE `itemOrcamento` (
   `idOrcamento` bigint(20) NOT NULL,
   `idProduto` bigint(20) NOT NULL,
   `idCatalogoInternacional` bigint(20) DEFAULT NULL,
-  `valor` decimal(19,2) DEFAULT NULL,
-  `quantidade` int(11) DEFAULT NULL,
+  `valor` decimal(19,2) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `valorVenda` decimal(19,2) NOT NULL,
   PRIMARY KEY (`idItemOrcamento`),
   UNIQUE KEY `idItemOrcamento_UNIQUE` (`idItemOrcamento`),
   KEY `FKkclxdu4d4knl36hyyl9g8vg3e` (`idOrcamento`),
@@ -394,7 +395,7 @@ CREATE TABLE `itemOrcamento` (
   CONSTRAINT `FK83edv833l91vcffhnsp4rsp4r` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKkclxdu4d4knl36hyyl9g8vg3e` FOREIGN KEY (`idOrcamento`) REFERENCES `orcamento` (`idOrcamento`),
   CONSTRAINT `FKrbfw3tacjquhpaljog6nxc7mr` FOREIGN KEY (`idCatalogoInternacional`) REFERENCES `catalogoInternacional` (`idCatalogoInternacional`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -435,6 +436,7 @@ CREATE TABLE `orcamento` (
   `idFuncionario` bigint(20) NOT NULL,
   `data` date NOT NULL,
   `valorTotal` decimal(19,2) DEFAULT NULL,
+  `lucroTotal` decimal(19,2) DEFAULT NULL,
   `quantidadeTotal` int(11) DEFAULT NULL,
   PRIMARY KEY (`idOrcamento`),
   UNIQUE KEY `idOrcamento_UNIQUE` (`idOrcamento`),
@@ -442,7 +444,7 @@ CREATE TABLE `orcamento` (
   KEY `FKh6jbqscspwp3d3qaa2n681o1t` (`idFuncionario`),
   CONSTRAINT `FKh6jbqscspwp3d3qaa2n681o1t` FOREIGN KEY (`idFuncionario`) REFERENCES `pessoa` (`idPessoa`),
   CONSTRAINT `FKpixerpmnsdgm9524nucf7axo1` FOREIGN KEY (`idCliente`) REFERENCES `pessoa` (`idPessoa`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -510,15 +512,16 @@ DROP TABLE IF EXISTS `produto`;
 CREATE TABLE `produto` (
   `idProduto` bigint(20) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
-  `descricao` varchar(255) DEFAULT NULL,
+  `descricao` varchar(4000) DEFAULT NULL,
   `categoria` varchar(255) DEFAULT NULL,
   `marca` varchar(255) DEFAULT NULL,
   `modelo` varchar(255) DEFAULT NULL,
+  `prefixo` varchar(20) DEFAULT NULL,
   `dataCriacao` date DEFAULT NULL,
   `dataAlteracao` date DEFAULT NULL,
   PRIMARY KEY (`idProduto`),
   UNIQUE KEY `idProduto_UNIQUE` (`idProduto`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -577,7 +580,7 @@ CREATE TABLE `tramite` (
   UNIQUE KEY `idTramite_UNIQUE` (`idTramite`),
   KEY `FKwenqm1061y3eq8n296w73njr` (`idCaixa`),
   CONSTRAINT `FKwenqm1061y3eq8n296w73njr` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=276 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=278 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -632,4 +635,4 @@ CREATE TABLE `venda` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-14 19:00:09
+-- Dump completed on 2018-02-16 17:17:56
