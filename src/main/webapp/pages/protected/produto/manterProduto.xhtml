@@ -114,6 +114,8 @@
 							<p:commandButton action="#{produtoMB.salvarCatalogoInternacional()}" update="@form" icon="fa fa-plus" title="Adicionar" styleClass="btn-success"/>
                     	</p:panelGrid>
                     	
+                    	<p:spacer/>
+                    	
                     	<p:panelGrid id="capaPanel5" columns="1" style="width:100%;" rendered="#{produtoMB.idProduto ne null}">
 	   	                    <p:dataTable id="catalogoInternacionalTable" widgetVar="catalogoInternacionalTable" rows="5"	 
 			                    			 value="#{produtoMB.catalogosInternacional}" var="item" rowKey="#{item.id}"
@@ -168,13 +170,18 @@
 	                    </p:panelGrid>
                     </div>
                     
+                    <p:spacer/>
+                    
+		            <div class="ui-fluid">
+			            <p:galleria value="#{produtoMB.images}" var="image" panelWidth="512" panelHeight="512" showCaption="true">
+						    <p:graphicImage name="fotos/#{image}" alt="Image Description for #{image}" title="#{image}"/>
+						</p:galleria>
+					</div>
+					
                 </div>
                 
             </div>
             
-            <p:galleria value="#{produtoMB.images}" var="image" panelWidth="512" panelHeight="512" showCaption="true">
-			    <p:graphicImage name="fotos/#{image}" alt="Image Description for #{image}" title="#{image}"/>
-			</p:galleria>
             
         </h:form>
 

@@ -54,9 +54,20 @@ public class Orcamento implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "orcamento", cascade = CascadeType.ALL)	
 	private List<ItemOrcamento> itensOrcamento;
-
+	
 	public Orcamento() {
 		super();
+	}
+
+	public Orcamento(Pessoa cliente, Pessoa funcionario, Date data, BigDecimal valorTotal, BigDecimal lucroTotal, Integer quantidadeTotal) {
+		super();
+		
+		this.cliente = cliente;
+		this.funcionario = funcionario;
+		this.data = data;
+		this.valorTotal = valorTotal;
+		this.lucroTotal = lucroTotal;
+		this.quantidadeTotal = quantidadeTotal;
 	}
 
 	public Long getId() {

@@ -61,7 +61,7 @@ public class ProdutoMB implements Serializable {
 			
 	        images = new ArrayList<String>();
 	        for (int i = 1; i <= 2; i++) {
-	            images.add(produto.getPrefixo() + i + ".jpg");
+	            images.add(produto.getPrefixo() + "_" + i + ".jpg");
 	        }
 		} else produto.setDataCriacao(new Date());
 		

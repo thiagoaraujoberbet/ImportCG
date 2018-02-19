@@ -19,6 +19,9 @@ import br.com.importcg.model.Entrada;
 import br.com.importcg.model.Fornecedor;
 import br.com.importcg.model.ItemDespesa;
 import br.com.importcg.model.ItemEntrada;
+import br.com.importcg.model.ItemOrcamento;
+import br.com.importcg.model.Orcamento;
+import br.com.importcg.model.Pessoa;
 import br.com.importcg.model.Produto;
 import br.com.importcg.service.CatalogoInternacionalService;
 import br.com.importcg.service.DespesaService;
@@ -27,6 +30,8 @@ import br.com.importcg.service.EstoqueService;
 import br.com.importcg.service.FornecedorService;
 import br.com.importcg.service.ItemDespesaService;
 import br.com.importcg.service.ItemEntradaService;
+import br.com.importcg.service.ItemOrcamentoService;
+import br.com.importcg.service.OrcamentoService;
 import br.com.importcg.service.ProdutoService;
 import br.com.importcg.util.FacesUtil;
 
@@ -78,7 +83,13 @@ public class EntradaMB implements Serializable {
 	private DespesaService despesaService;
 	
 	@Inject
-	private ItemDespesaService itemdespesaService;
+	private ItemDespesaService itemDespesaService;
+	
+	@Inject
+	private OrcamentoService orcamentoService;
+	
+	@Inject
+	private ItemOrcamentoService itemOrcamentoService;
 	
 	public void inicializar() {
 		if (idEntrada != null) {
@@ -168,6 +179,42 @@ public class EntradaMB implements Serializable {
 		itemEntrada.setEntrada(entrada);
 	}
 	
+	public void gerarOrcamento() {
+		Pessoa cliente = new Pessoa();
+		cliente.setId(74L);
+		
+		Pessoa funcionario = new Pessoa();
+		funcionario.setId(3L);
+		
+		Orcamento orcamento = new Orcamento(cliente, funcionario, new Date(), new BigDecimal("0"), new BigDecimal("0"), new Integer(0));
+		orcamento = orcamentoService.salvar(orcamento);
+		
+		BigDecimal valorTotal = new BigDecimal("0");
+		Integer quantidadeTotal = new Integer(0);
+		
+		for (ItemEntrada item : itensEntrada) {
+			ItemOrcamento itemOrcamento = new ItemOrcamento();
+			itemOrcamento.setCatalogoInternacional(null);
+			itemOrcamento.setOrcamento(orcamento);
+			itemOrcamento.setProduto(item.getProduto());
+			itemOrcamento.setQuantidade(item.getQuantidade());
+			itemOrcamento.setValor(item.getValorEmReal());
+			itemOrcamento.setValorVenda(new BigDecimal("0"));
+			
+			valorTotal = valorTotal.add(item.getValorEmReal().multiply(new BigDecimal(item.getQuantidade())));
+			quantidadeTotal = quantidadeTotal + item.getQuantidade();
+			
+			itemOrcamentoService.salvar(itemOrcamento);
+		}
+		
+		orcamento = orcamentoService.porId(orcamento.getId());
+		orcamento.setValorTotal(valorTotal);
+		orcamento.setQuantidadeTotal(quantidadeTotal);
+		orcamentoService.salvar(orcamento);
+		
+		FacesUtil.addInfoMessage("Orçamento gerado com sucesso!");
+	}
+	
 	public String excluir() {
 		for (ItemEntrada itemEntrada : itensEntrada) {
 			estoqueService.atualizarEstoqueNegativo(itemEntrada.getQuantidade(), itemEntrada.getProduto().getId());
@@ -205,7 +252,7 @@ public class EntradaMB implements Serializable {
 	
 	private void salvarItemDespesa() {
 		itemDespesa = new ItemDespesa(despesa, entrada, "Produtos para venda", EnumTipoDespesa.COMPRAPRODUTO, entrada.getValorTotal());
-		itemDespesa = itemdespesaService.salvar(itemDespesa);
+		itemDespesa = itemDespesaService.salvar(itemDespesa);
 	}
 	
 	private void setarDespesaEntrada() {
