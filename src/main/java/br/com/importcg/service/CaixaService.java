@@ -1,6 +1,7 @@
 package br.com.importcg.service;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -48,5 +49,9 @@ public class CaixaService implements Serializable {
 
 	public Caixa buscarContaPagSeguroDisponivel() {
 		return caixaDAO.buscarContaPagSeguroDisponivel();
+	}
+
+	public BigDecimal obterSaldoTotalCaixa() {
+		return caixaDAO.obterSaldoTotalCaixa();
 	}
 }

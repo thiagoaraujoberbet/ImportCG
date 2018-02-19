@@ -29,6 +29,7 @@ import org.primefaces.model.chart.PieChartModel;
 
 import br.com.importcg.model.ItemBaixa;
 import br.com.importcg.model.Pagamento;
+import br.com.importcg.service.CaixaService;
 import br.com.importcg.service.ItemBaixaService;
 import br.com.importcg.service.PagamentoService;
 import br.com.importcg.service.PrincipalService;
@@ -53,6 +54,9 @@ public class ListaPrincipalMB implements Serializable {
 	
 	@Inject
 	private ItemBaixaService itemBaixaService;
+	
+	@Inject
+	private CaixaService caixaService;
 	
 	/* ***************** Gráfico Pie Mensal ******************************************* */
 	private List<BalancoWrapper> mesAnterior = new ArrayList<>();
@@ -155,6 +159,15 @@ public class ListaPrincipalMB implements Serializable {
     }
 	
 	/* ********************************************************************************** */
+    
+	/* ************************************* Dashboard ********************************** */
+    /* ********************************************************************************** */
+    
+    public BigDecimal buscarValorEmCaixa() {
+    	return caixaService.obterSaldoTotalCaixa();
+    }
+    
+    /* ********************************************************************************** */
 	
 	/* ************************************* Avisos ************************************* */
     /* ********************************************************************************** */

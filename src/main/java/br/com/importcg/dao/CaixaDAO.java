@@ -1,10 +1,12 @@
 package br.com.importcg.dao;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import br.com.importcg.enumeration.EnumTipoConta;
 import br.com.importcg.exception.NegocioException;
@@ -55,5 +57,14 @@ public class CaixaDAO implements Serializable {
 	public Caixa buscarContaPagSeguroDisponivel() {
 		return (Caixa) manager.createQuery("SELECT c FROM Caixa c WHERE c.conta.nome = :nomeConta", Caixa.class)
 				.setParameter("nomeConta", "Conta Digital (Disponível)").getSingleResult();
+	}
+
+	public BigDecimal obterSaldoTotalCaixa() {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT SUM(c.valor) FROM u684253104_impcg.caixa c ");
+
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		return (BigDecimal) query.getSingleResult();
 	}
 }
