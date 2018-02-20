@@ -1,6 +1,7 @@
 package br.com.importcg.service;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -51,5 +52,9 @@ public class ItemBaixaService implements Serializable {
 
 	public List<ItemBaixa> buscarChequesEmitidos() {
 		return itemBaixaDAO.buscarChequesEmitidos();
+	}
+
+	public BigDecimal obterSaldoTotalAPagar() {
+		return itemBaixaDAO.obterSaldoTotalAPagar();
 	}
 }

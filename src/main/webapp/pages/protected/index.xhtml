@@ -53,28 +53,28 @@
 			</div>
 			<div class="col-md-3 col-sm-6 col-xs-12">
 				<div class="info-box">
-					<span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
+					<span class="info-box-icon bg-blue"><i class="fa fa-money"></i></span>
 					<div class="info-box-content">
-						<span class="info-box-text">Em caixa</span>
-						<span class="info-box-number">#{listaPrincipalMB.buscarValorEmCaixa()}</span>
+						<span class="info-box-text">À Receber neste Mês</span>
+						<span class="info-box-number">#{listaPrincipalMB.buscarValorAReceber()}</span>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-3 col-sm-6 col-xs-12">
 				<div class="info-box">
-					<span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
+					<span class="info-box-icon bg-red"><i class="fa fa-money"></i></span>
 					<div class="info-box-content">
-						<span class="info-box-text">Em caixa</span>
-						<span class="info-box-number">#{listaPrincipalMB.buscarValorEmCaixa()}</span>
+						<span class="info-box-text">À Pagar neste Mês</span>
+						<span class="info-box-number">#{listaPrincipalMB.buscarValorAPagar()}</span>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-3 col-sm-6 col-xs-12">
 				<div class="info-box">
-					<span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
+					<span class="info-box-icon bg-yellow"><i class="fa fa-money"></i></span>
 					<div class="info-box-content">
-						<span class="info-box-text">Em caixa</span>
-						<span class="info-box-number">#{listaPrincipalMB.buscarValorEmCaixa()}</span>
+						<span class="info-box-text">Saldo Mensal Atual</span>
+						<span class="info-box-number">#{listaPrincipalMB.saldoMensalAtual}</span>
 					</div>
 				</div>
 			</div>
@@ -87,16 +87,16 @@
        		  <p:panelGrid columns="1" style="width: 100%;">
 			  	  <p:chart type="line" model="#{listaPrincipalMB.lineModelBalanco}" responsive="true"/>
 			  </p:panelGrid>
+			  
+          	  <p:panelGrid columns="1" style="width: 100%;">
+				   <p:chart type="bar" model="#{listaPrincipalMB.barModelBalanco}" responsive="true" />
+			  </p:panelGrid>
           
 	          <p:panelGrid columns="3" style="width: 100%;">
 	               <p:chart type="pie" model="#{listaPrincipalMB.pieModelMesAnterior}" responsive="true" />
 	               <p:chart type="pie" model="#{listaPrincipalMB.pieModelMesAtual}" responsive="true" />
 	               <p:chart type="pie" model="#{listaPrincipalMB.pieModelGeral}" responsive="true" />
 	          </p:panelGrid>
-	          
-          	  <p:panelGrid columns="1" style="width: 100%;">
-				   <p:chart type="bar" model="#{listaPrincipalMB.barModelBalanco}" responsive="true" />
-			  </p:panelGrid>
 			  
   	          <p:panelGrid columns="1" style="width: 100%;">
 	               <p:chart type="pie" model="#{listaPrincipalMB.pieModelChequesEmitidos}" responsive="true" />

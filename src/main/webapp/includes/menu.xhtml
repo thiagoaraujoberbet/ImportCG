@@ -10,141 +10,109 @@
                 <span>Home</span>
             </p:link>
         </li>
-        <li class="header">
-            Recursos Humanos
-        </li>
-        
-        <li>
-            <p:link href="/pages/protected/pessoa/listarCliente.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Clientes</span>
-            </p:link>
-        </li>
-        
-       	<li>
-            <p:link href="/pages/protected/fornecedor/listarFornecedor.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Fornecedores</span>
-            </p:link>
-        </li>
-        
-        <li>
-            <p:link href="/pages/protected/pessoa/listarFuncionario.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Funcionários</span>
-            </p:link>
-        </li>
-        
-      	<li class="header">
-            Recursos Material
-        </li>
-        
-         <li>
-            <p:link href="/pages/protected/catalogo/listarCatalogoPreco.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Catalogo de Preços</span>
-            </p:link>
-        </li>
-        
-        <li>
-            <p:link href="/pages/protected/estoque/listarEstoque.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Estoque</span>
-            </p:link>
-        </li>
-
-        <li>
-            <p:link href="/pages/protected/orcamento/listarOrcamento.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Orçamento</span>
-            </p:link>
-        </li>
-                
-        <li>
-            <p:link href="/pages/protected/produto/listarProduto.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Produtos</span>
-            </p:link>
-        </li>
-        
-        <li class="header">
-            Movimentação
-        </li>
-        
-        <li>
-            <p:link href="/pages/protected/entrada/listarEntrada.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Compras</span>
-            </p:link>
-        </li>
-        
-        <li>
-            <p:link href="/pages/protected/venda/listarVenda.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Vendas</span>
-            </p:link>
-        </li>
-        
-        <li class="header">
-            Financeiro
-        </li>
-        
-        <li>
-            <p:link href="/pages/protected/caixa/listarCaixa.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Fluxo de Caixa</span>
-            </p:link>
-        </li>
-        
-        <li>
-            <p:link href="/pages/protected/conta/listarConta.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Contas</span>
-            </p:link>
-        </li>
-        
-        <li>
-            <p:link href="/pages/protected/tramite/listarTramite.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Tramites</span>
-            </p:link>
-        </li>
-        
-      	<li>
-            <p:link href="/pages/protected/aplicacao/listarAplicacao.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Aplicações</span>
-            </p:link>
-        </li>
-        
-       	<li>
-            <p:link href="/pages/protected/retirada/listarRetirada.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Retiradas</span>
-            </p:link>
-        </li>
-        
-        <li>
-            <p:link href="/pages/protected/despesa/listarDespesa.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Despesas</span>
-            </p:link>
-        </li>
-        
-        <li>
-            <p:link href="/pages/protected/baixa/listarBaixa.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Baixas</span>
-            </p:link>
-        </li>
-        
-        <li>
-            <p:link href="/pages/protected/fechamento/listarFechamento.xhtml">
-                <i class="fa fa-edit"></i>
-                <span>Fechamento</span>
-            </p:link>
-        </li>
-    </ul>
-
+    
+    	<li>
+			<ul class="treeview-menu" style="display: block;">
+				<li class="treeview menu-open">
+					<a href="#"><i class="fa fa-group"></i>Recursos Humanos
+						<span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu" style="display: block;">
+						<li><a href="/ImportCG/pages/protected/catalogo/listarCatalogoPreco.xhtml">
+							<i class="fa fa-user-plus"></i>Clientes</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/estoque/listarEstoque.xhtml">
+							<i class="fa fa-truck"></i>Fornecedores</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/pessoa/listarFuncionario.xhtml">
+							<i class="fa fa-building"></i>Funcionários</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			
+			<ul class="treeview-menu" style="display: block;">
+				<li class="treeview menu-open">
+					<a href="#"><i class="fa fa-wrench"></i>Recursos Material
+						<span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu" style="display: block;">
+						<li><a href="/ImportCG/pages/protected/pessoa/listarCliente.xhtml">
+							<i class="fa fa-pie-chart"></i>Catalogo de Preços</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/fornecedor/listarFornecedor.xhtml">
+							<i class="fa fa-hourglass-1"></i>Estoque</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/orcamento/listarOrcamento.xhtml">
+							<i class="fa fa-gears"></i>Orçamento</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/produto/listarProduto.xhtml">
+							<i class="fa fa-tv"></i>Produtos</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			
+			<ul class="treeview-menu" style="display: block;">
+				<li class="treeview menu-open">
+					<a href="#"><i class="fa fa-edit"></i>Movimentação
+						<span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu" style="display: block;">
+						<li><a href="/ImportCG/pages/protected/entrada/listarEntrada.xhtml">
+							<i class="fa fa-cart-plus"></i>Compras</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/venda/listarVenda.xhtml">
+							<i class="fa fa-sign-out"></i>Vendas</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			
+			<ul class="treeview-menu" style="display: block;">
+				<li class="treeview menu-open">
+					<a href="#"><i class="fa fa-edit"></i>Financeiro
+						<span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu" style="display: block;">
+						<li><a href="/ImportCG/pages/protected/caixa/listarCaixa.xhtml">
+							<i class="fa fa-money"></i>Fluxo de Caixa</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/conta/listarConta.xhtml">
+							<i class="fa fa-bank"></i>Contas</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/tramite/listarTramite.xhtml">
+							<i class="fa fa-retweet"></i>Trâmites</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/aplicacao/listarAplicacao.xhtml">
+							<i class="fa fa-line-chart"></i>Aplicações</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/retirada/listarRetirada.xhtml">
+							<i class="fa fa-level-down"></i>Retiradas</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/despesa/listarDespesa.xhtml">
+							<i class="fa fa-thumbs-o-down"></i>Despesas</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/baixa/listarBaixa.xhtml">
+							<i class="fa fa-sort-amount-desc"></i>Baixas</a>
+						</li>
+						<li><a href="/ImportCG/pages/protected/fechamento/listarFechamento.xhtml">
+							<i class="fa fa-legal"></i>Fechamento</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		
+		</li>
+	
+ 	</ul>
 
 </ui:composition>

@@ -1,6 +1,7 @@
 package br.com.importcg.service;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -43,5 +44,9 @@ public class PagamentoService implements Serializable {
 
 	public List<Pagamento> buscarRecebimentosDiarioPagSeguro() {
 		return pagamentoDAO.buscarRecebimentosDiarioPagSeguro();
+	}
+
+	public BigDecimal obterSaldoTotalAReceber() {
+		return pagamentoDAO.obterSaldoTotalAReceber();
 	}
 }

@@ -1,10 +1,12 @@
 package br.com.importcg.dao;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import br.com.importcg.exception.NegocioException;
 import br.com.importcg.model.ItemBaixa;
@@ -68,5 +70,20 @@ public class ItemBaixaDAO implements Serializable {
 	public List<ItemBaixa> buscarChequesEmitidos() {
 		return manager.createQuery("SELECT i FROM ItemBaixa i WHERE i.baixado = :baixado AND i.cheque = :cheque ORDER BY i.data ASC", ItemBaixa.class)
 				.setParameter("baixado", Boolean.FALSE).setParameter("cheque", Boolean.TRUE).getResultList();
+	}
+
+	public BigDecimal obterSaldoTotalAPagar() {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT Sum(valor) ");
+		sql.append("FROM   u684253104_impcg.itemBaixa ib ");
+		sql.append("WHERE  ib.baixado = 0 ");
+		sql.append("       AND ib.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(), ");
+		sql.append("                                                   INTERVAL 1 month)), 1 ");
+		sql.append("                                  )) AND Last_day ");
+		sql.append("                              (Sysdate());");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		return (BigDecimal) query.getSingleResult();
 	}
 }

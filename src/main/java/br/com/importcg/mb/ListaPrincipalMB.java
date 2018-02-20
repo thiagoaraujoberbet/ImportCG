@@ -167,6 +167,14 @@ public class ListaPrincipalMB implements Serializable {
     	return caixaService.obterSaldoTotalCaixa();
     }
     
+    public BigDecimal buscarValorAReceber() {
+    	return pagamentoService.obterSaldoTotalAReceber();
+    }
+    
+    public BigDecimal buscarValorAPagar() {
+    	return itemBaixaService.obterSaldoTotalAPagar();
+    }
+    
     /* ********************************************************************************** */
 	
 	/* ************************************* Avisos ************************************* */

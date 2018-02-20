@@ -250,3 +250,22 @@ FROM   u684253104_impcg.catalogoInternacional c
          ON c.idFornecedor = f.idFornecedor
 WHERE  c.idProduto = 6
 ORDER  BY c.data DESC;  
+
+SELECT Sum(c.valor)
+FROM   u684253104_impcg.caixa c;
+
+SELECT Sum(valor)
+FROM   u684253104_impcg.pagamento p
+WHERE  p.pago = 0
+       AND p.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(),
+                                                   INTERVAL 1 month)), 1
+                                  )) AND Last_day
+                              (Sysdate());  
+                              
+SELECT Sum(valor)
+FROM   u684253104_impcg.itemBaixa ib
+WHERE  ib.baixado = 0
+       AND ib.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(),
+                                                   INTERVAL 1 month)), 1
+                                  )) AND Last_day
+                              (Sysdate());  

@@ -61,7 +61,8 @@ public class CaixaDAO implements Serializable {
 
 	public BigDecimal obterSaldoTotalCaixa() {
 		StringBuffer  sql = new StringBuffer();
-		sql.append("SELECT SUM(c.valor) FROM u684253104_impcg.caixa c ");
+		sql.append("SELECT Sum(c.valor) ");
+		sql.append("FROM   u684253104_impcg.caixa c");
 
 		Query query = manager.createNativeQuery(sql.toString());
 		
