@@ -40,6 +40,8 @@ public class Usuario implements Serializable {
 	@Column(nullable=false)
 	@Enumerated(EnumType.STRING)
 	private EnumRole role;
+	
+	private String caminhoImagem;
 
 	public Usuario() {
 		super();
@@ -83,6 +85,14 @@ public class Usuario implements Serializable {
 
 	public void setRole(EnumRole role) {
 		this.role = role;
+	}
+	
+	public String getCaminhoImagem() {
+		return caminhoImagem;
+	}
+
+	public void setCaminhoImagem(String caminhoImagem) {
+		this.caminhoImagem = caminhoImagem;
 	}
 	
 	public boolean isAdmin() {

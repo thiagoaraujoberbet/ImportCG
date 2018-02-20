@@ -30,6 +30,8 @@ public class LoginCheckFilter extends AbstractFilter implements Filter {
 			allowedURIs.add(fConfig.getInitParameter("loginActionURI"));
 			allowedURIs.add("/ImportCG/javax.faces.resource/theme.css.xhtml");
 			allowedURIs.add("/ImportCG/javax.faces.resource/eNpdjDEOwjAMRU9Es2dDiK0jF3BSF6w2dogddeHwDVREgsGS_d7_DiKmViD7qOrC9xoS8dDIq42fhe0EG6ok_BEkTFFYO5xI7fPoPDU03q7d5LXeiVvl8sC4OH1WKOjCWvHQhRLOEFF9lJSFkU3_zQaGJUFZXN_ekR1JoUyu.css.xhtml");
+			allowedURIs.add("/ImportCG/javax.faces.resource/eNp1ysEOwyAMA9Avanfnbyj1JhAhGQmHSfv4IsaJaidbz5YaCU8foC69G-rn8Ys96Vf-bJvk9opFl0_gihuRcEGx8U3q-qY0-8FsatXLTrFM82fvWzasZiDJ3jBNczzBzdbb8A4XTvJVdw.js.xhtml");
+			allowedURIs.add("/ImportCG/javax.faces.resource/eNpNi0EKwCAMBF-k9lAo-Js0RFohRlzBSx9f66mHPcwOw0DEZYMJ4hl45mJtN3TRkDNTQ0xWuqMhMJWw-8NvYerwv11GWs2sVRKxILJptSKl4zMv2_ApjQ.css.xhtml");
 			allowedURIs.add("/ImportCG/javax.faces.resource/eNorKMrMTU1LTE4ttsoqLE0tqtSHUHpZxTUFOOR0C3JK0zPzitHUJOcXpWII5Rbk56XmlaCrLU8sSS3KTSzK1oezgCoAwdg4rA.js.xhtml");	
 			allowedURIs.add("/ImportCG/javax.faces.resource/images/ui-icons_222222_256x240.png.xhtml");
 			allowedURIs.add("/ImportCG/javax.faces.resource/fonts/glyphicons-halflings-regular.woff2.xhtml");
@@ -41,7 +43,6 @@ public class LoginCheckFilter extends AbstractFilter implements Filter {
 			allowedURIs.add("/ImportCG/javax.faces.resource/iCheck/icheck.min.js.xhtml");
 			allowedURIs.add("/ImportCG/javax.faces.resource/bootstrap/fonts/glyphicons-halflings-regular.woff2.xhtml");
 			allowedURIs.add("/ImportCG/javax.faces.resource/bootstrap/fonts/glyphicons-halflings-regular.ttf.xhtml");
-			allowedURIs.add("/ImportCG/javax.faces.resource/eNpVjLEOwjAMRL-IZs-GEBsjP-CmLlit7RA76sLHEzIEMZzku-e7XIhxhYQWk3JWQXGbktk7_8gBjoWhbGFc_WVWdfMCOTYXhpuYpPOmuKr4CQ40ZfwDpEJJxUa4kHkfOi8tut2vg-S9Pkha5fLEtAV7VSgY5r3iF38AyEBMrg.css.xhtml");
 			allowedURIs.add("/ImportCG/javax.faces.resource/fonts/fontawesome-webfont.woff2.xhtml");
 			allowedURIs.add("/ImportCG/javax.faces.resource/fonts/fontawesome-webfont.woff.xhtml");
 			allowedURIs.add("/ImportCG/javax.faces.resource/fonts/fontawesome-webfont.ttf.xhtml");

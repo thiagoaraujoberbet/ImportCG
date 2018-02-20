@@ -2,6 +2,15 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
+	<div class="user-panel">
+		<div class="pull-left image">
+			<img src="#{(listaPrincipalMB.usuarioLogado()).getCaminhoImagem()}" class="img-circle" alt="User Image"/>
+		</div>
+		<div class="pull-left info">
+			<p>#{(listaPrincipalMB.usuarioLogado()).getNome()}</p>
+			<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+		</div>
+	</div>
     <div class="sidebar-form">
         <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Filtrar..."

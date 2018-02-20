@@ -17,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -29,6 +30,7 @@ import org.primefaces.model.chart.PieChartModel;
 
 import br.com.importcg.model.ItemBaixa;
 import br.com.importcg.model.Pagamento;
+import br.com.importcg.model.Usuario;
 import br.com.importcg.service.CaixaService;
 import br.com.importcg.service.ItemBaixaService;
 import br.com.importcg.service.PagamentoService;
@@ -99,6 +101,15 @@ public class ListaPrincipalMB implements Serializable {
 		this.inicializarGraficoLineBalancoMensal();
 	}
 	
+	public Usuario usuarioLogado() {
+		FacesContext facesContext = FacesContext.getCurrentInstance(); 
+		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+		
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		
+		return usuario;
+	}
+
 	/* ************************* Inicialização dos Componentes ************************** */
 	/* ********************************************************************************** */
 	

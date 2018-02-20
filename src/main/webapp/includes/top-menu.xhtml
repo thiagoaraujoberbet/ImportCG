@@ -5,17 +5,37 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions">
 
-    <ul class="nav navbar-nav">
-        <li class="dropdown user user-menu">
+        <ul class="nav navbar-nav">        
+			<li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <pe:gravatar id="userImage"
-                             value="nonexisting"/>
-                <h:form>
-                		<span class="hidden-xs">Thiago Araujo Berbet</span>
-                	<p:commandButton action="#{usuarioMB.logOut()}" value="Logout" ajax="false" styleClass="btn-primary" style="width: 127px;">
-                	</p:commandButton>
-                </h:form>
+              <img src="#{(listaPrincipalMB.usuarioLogado()).getCaminhoImagem()}" class="user-image" alt="User Image"/>
+              <span class="hidden-xs">#{(listaPrincipalMB.usuarioLogado()).getNome()}</span>
             </a>
-        </li>
-    </ul>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="#{(listaPrincipalMB.usuarioLogado()).getCaminhoImagem()}" class="img-circle" alt="User Image"/>
+
+                <p>
+                  #{(listaPrincipalMB.usuarioLogado()).getNome()}
+                  <small>Member since Nov. 2017</small>
+                </p>
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+	                <h:form>
+	                    <p:commandLink style="color: white" value="Sign out" styleClass="btn btn-default btn-flat" action="#{usuarioMB.logOut()}">
+	                        <i class="fa fa-sign-out fa-lg"></i>
+	                    </p:commandLink>
+	                </h:form>
+                </div>
+              </li>
+            </ul>
+          </li>
+          </ul>
+          
 </ui:composition>
