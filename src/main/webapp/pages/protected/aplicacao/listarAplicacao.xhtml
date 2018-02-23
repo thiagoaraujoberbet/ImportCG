@@ -54,19 +54,19 @@
 	                                 currentPageReportTemplate=""
 	                                 rowsPerPageTemplate="5,10,15,20,30">
 	                        
-  	                        <p:column headerText="Conta" style="width: 12%; text-align: center;">
+  	                        <p:column headerText="Conta" width="15%" style="text-align: center;">
 	                        	<h:outputText value="#{aplicacao.caixa.conta.nome}"/>
 	                        </p:column>
 	                        
-	                         <p:column headerText="Tipo" style="width: 12%; text-align: center;">
+	                         <p:column headerText="Tipo" width="10%" style="text-align: center;">
 	                        	<h:outputText value="#{aplicacao.caixa.conta.tipo.descricao}"/>
 	                        </p:column>
 	                        
-   	                        <p:column headerText="Instituição" style="width: 12%; text-align: center;">
+   	                        <p:column headerText="Instituição" width="10%" style="text-align: center;">
 	                        	<h:outputText value="#{aplicacao.caixa.conta.instituicao.descricao}"/>
 	                        </p:column>
 	                        
-   	                        <p:column headerText="Titular">
+   	                        <p:column headerText="Titular" width="15%">
 	                        	<h:outputText value="#{aplicacao.caixa.conta.funcionario.nome}"/>
 	                        </p:column>
 	                        
@@ -74,13 +74,13 @@
 	                        	<h:outputText value="#{aplicacao.descricao}"/>
 	                        </p:column>
 	                        
-  	                        <p:column headerText="Valor" style="width: 10%; text-align:right;">
+  	                        <p:column headerText="Valor" width="8%" style="text-align:right;">
 	                        	<h:outputText value="#{aplicacao.valor}">
 	                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 	                        	</h:outputText>
 	                        </p:column>
 	                        
-   	                        <p:column headerText="Data" style="width: 10%; text-align: center;">
+   	                        <p:column headerText="Data" width="8%" style="text-align: center;">
 	                        	<h:outputText value="#{aplicacao.data}">
 	                        		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	                        	</h:outputText>
