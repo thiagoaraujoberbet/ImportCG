@@ -54,7 +54,19 @@ public class ItemBaixaService implements Serializable {
 		return itemBaixaDAO.buscarChequesEmitidos();
 	}
 
-	public BigDecimal obterSaldoTotalAPagar() {
-		return itemBaixaDAO.obterSaldoTotalAPagar();
+	public BigDecimal obterSaldoTotalAPagarMesAtual() {
+		return itemBaixaDAO.obterSaldoTotalAPagarMesAtual();
+	}
+
+	public BigDecimal obterSaldoTotalAPagarProximoMes() {
+		return itemBaixaDAO.obterSaldoTotalAPagarProximoMes();
+	}
+
+	public BigDecimal obterSaldoTotalChequesACairMesAtual() {
+		return itemBaixaDAO.obterSaldoTotalChequesACairMesAtual();
+	}
+
+	public BigDecimal obterSaldoTotalChequesACairProximoMes() {
+		return itemBaixaDAO.obterSaldoTotalChequesACairProximoMes();
 	}
 }

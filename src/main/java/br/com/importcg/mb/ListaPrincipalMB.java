@@ -178,12 +178,28 @@ public class ListaPrincipalMB implements Serializable {
     	return caixaService.obterSaldoTotalCaixa();
     }
     
-    public BigDecimal buscarValorAReceber() {
-    	return pagamentoService.obterSaldoTotalAReceber();
+    public BigDecimal buscarValorAReceberMesAtual() {
+    	return pagamentoService.obterSaldoTotalAReceberMesAtual();
     }
     
-    public BigDecimal buscarValorAPagar() {
-    	return itemBaixaService.obterSaldoTotalAPagar();
+    public BigDecimal buscarValorAReceberProximoMes() {
+    	return pagamentoService.obterSaldoTotalAReceberProximoMes();
+    }
+    
+    public BigDecimal buscarValorAPagarMesAtual() {
+    	return itemBaixaService.obterSaldoTotalAPagarMesAtual();
+    }
+    
+    public BigDecimal buscarValorAPagarProximoMes() {
+    	return itemBaixaService.obterSaldoTotalAPagarProximoMes();
+    }
+    
+    public BigDecimal buscarChequeACairMesAtual() {
+    	return itemBaixaService.obterSaldoTotalChequesACairMesAtual();
+    }
+    
+    public BigDecimal buscarChequeACairProximoMes() {
+    	return itemBaixaService.obterSaldoTotalChequesACairProximoMes();
     }
     
     /* ********************************************************************************** */

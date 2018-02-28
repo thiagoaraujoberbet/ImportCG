@@ -263,6 +263,14 @@ WHERE  p.pago = 0
                               (Sysdate());  
                               
 SELECT Sum(valor)
+FROM   u684253104_impcg.pagamento p
+WHERE  p.pago = 0
+       AND p.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(),
+                                                   INTERVAL 0 month)), 1
+                                  )) AND Last_day
+                              (Sysdate() + INTERVAL 1 month);  
+                              
+SELECT Sum(valor)
 FROM   u684253104_impcg.itemBaixa ib
 WHERE  ib.baixado = 0
        AND ib.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(),

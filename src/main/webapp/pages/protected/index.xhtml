@@ -53,28 +53,67 @@
 			</div>
 			<div class="col-md-3 col-sm-6 col-xs-12">
 				<div class="info-box">
-					<span class="info-box-icon bg-blue"><i class="fa fa-money"></i></span>
+					<span class="info-box-icon bg-blue"><i class="fa fa-plus"></i></span>
 					<div class="info-box-content">
-						<span class="info-box-text">À Receber neste Mês</span>
-						<span class="info-box-number">#{listaPrincipalMB.buscarValorAReceber()}</span>
+						<span class="info-box-text">À Receber Neste Mês</span>
+						<span class="info-box-number">#{listaPrincipalMB.buscarValorAReceberMesAtual()}</span>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-3 col-sm-6 col-xs-12">
 				<div class="info-box">
-					<span class="info-box-icon bg-red"><i class="fa fa-money"></i></span>
+					<span class="info-box-icon bg-red"><i class="fa fa-minus"></i></span>
 					<div class="info-box-content">
-						<span class="info-box-text">À Pagar neste Mês</span>
-						<span class="info-box-number">#{listaPrincipalMB.buscarValorAPagar()}</span>
+						<span class="info-box-text">À Pagar Neste Mês</span>
+						<span class="info-box-number">#{listaPrincipalMB.buscarValorAPagarMesAtual()}</span>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-3 col-sm-6 col-xs-12">
 				<div class="info-box">
-					<span class="info-box-icon bg-yellow"><i class="fa fa-money"></i></span>
+					<span class="info-box-icon bg-yellow"><i class="fa fa-exclamation"></i></span>
+					<div class="info-box-content">
+						<span class="info-box-text">Cheques Neste Mês</span>
+						<span class="info-box-number">#{listaPrincipalMB.buscarChequeACairMesAtual()}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-3 col-sm-6 col-xs-12">
+				<div class="info-box">
+					<span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
 					<div class="info-box-content">
 						<span class="info-box-text">Saldo Mensal Atual</span>
 						<span class="info-box-number">#{listaPrincipalMB.saldoMensalAtual}</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-6 col-xs-12">
+				<div class="info-box">
+					<span class="info-box-icon bg-blue"><i class="fa fa-plus"></i></span>
+					<div class="info-box-content">
+						<span class="info-box-text">À Receb. Proximo Mês</span>
+						<span class="info-box-number">#{listaPrincipalMB.buscarValorAReceberProximoMes()}</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-6 col-xs-12">
+				<div class="info-box">
+					<span class="info-box-icon bg-red"><i class="fa fa-minus"></i></span>
+					<div class="info-box-content">
+						<span class="info-box-text">À Pagar Proximo Mês</span>
+						<span class="info-box-number">#{listaPrincipalMB.buscarValorAPagarProximoMes()}</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-6 col-xs-12">
+				<div class="info-box">
+					<span class="info-box-icon bg-yellow"><i class="fa fa-exclamation"></i></span>
+					<div class="info-box-content">
+						<span class="info-box-text">Cheques Proximo Mês</span>
+						<span class="info-box-number">#{listaPrincipalMB.buscarChequeACairProximoMes()}</span>
 					</div>
 				</div>
 			</div>

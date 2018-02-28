@@ -72,7 +72,7 @@ public class ItemBaixaDAO implements Serializable {
 				.setParameter("baixado", Boolean.FALSE).setParameter("cheque", Boolean.TRUE).getResultList();
 	}
 
-	public BigDecimal obterSaldoTotalAPagar() {
+	public BigDecimal obterSaldoTotalAPagarMesAtual() {
 		StringBuffer  sql = new StringBuffer();
 		sql.append("SELECT Sum(valor) ");
 		sql.append("FROM   u684253104_impcg.itemBaixa ib ");
@@ -83,6 +83,57 @@ public class ItemBaixaDAO implements Serializable {
 		sql.append("                              (Sysdate());");
 		
 		Query query = manager.createNativeQuery(sql.toString());
+		
+		return (BigDecimal) query.getSingleResult();
+	}
+
+	public BigDecimal obterSaldoTotalAPagarProximoMes() {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT Sum(valor) ");
+		sql.append("FROM   u684253104_impcg.itemBaixa ib ");
+		sql.append("WHERE  ib.baixado = 0 ");
+		sql.append("       AND ib.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(), ");
+		sql.append("                                                   INTERVAL 0 month)), 1 ");
+		sql.append("                                  )) AND Last_day ");
+		sql.append("                              (Sysdate() + INTERVAL 1 month);");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		return (BigDecimal) query.getSingleResult();
+	}
+
+	public BigDecimal obterSaldoTotalChequesACairMesAtual() {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT Sum(valor) ");
+		sql.append("FROM   u684253104_impcg.itemBaixa ib ");
+		sql.append("WHERE  ib.baixado = :baixado ");
+		sql.append("       AND ib.cheque = :cheque ");
+		sql.append("       AND ib.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(), ");
+		sql.append("                                                   INTERVAL 1 month)), 1 ");
+		sql.append("                                  )) AND Last_day ");
+		sql.append("                              (Sysdate());");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		query.setParameter("baixado", Boolean.FALSE);
+		query.setParameter("cheque", Boolean.TRUE);
+		
+		return (BigDecimal) query.getSingleResult();
+	}
+
+	public BigDecimal obterSaldoTotalChequesACairProximoMes() {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT Sum(valor) ");
+		sql.append("FROM   u684253104_impcg.itemBaixa ib ");
+		sql.append("WHERE  ib.baixado = :baixado ");
+		sql.append("       AND ib.cheque = :cheque ");
+		sql.append("       AND ib.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(), ");
+		sql.append("                                                   INTERVAL 0 month)), 1 ");
+		sql.append("                                  )) AND Last_day ");
+		sql.append("                              (Sysdate() + INTERVAL 1 month);");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		query.setParameter("baixado", Boolean.FALSE);
+		query.setParameter("cheque", Boolean.TRUE);
 		
 		return (BigDecimal) query.getSingleResult();
 	}

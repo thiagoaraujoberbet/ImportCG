@@ -46,7 +46,11 @@ public class PagamentoService implements Serializable {
 		return pagamentoDAO.buscarRecebimentosDiarioPagSeguro();
 	}
 
-	public BigDecimal obterSaldoTotalAReceber() {
-		return pagamentoDAO.obterSaldoTotalAReceber();
+	public BigDecimal obterSaldoTotalAReceberMesAtual() {
+		return pagamentoDAO.obterSaldoTotalAReceberMesAtual();
+	}
+
+	public BigDecimal obterSaldoTotalAReceberProximoMes() {
+		return pagamentoDAO.obterSaldoTotalAReceberProximoMes();
 	}
 }
