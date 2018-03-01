@@ -31,7 +31,9 @@
                         <p:spacer width="5"/>
                         <p:commandButton value="Lançar Despesa" update="@form" icon="fa fa-check"  action="#{entradaMB.lancarDespesa}" styleClass="btn-primary" 
                         	rendered="#{entradaMB.entrada.id ne null and !entradaMB.entrada.despesaLancada and !empty entradaMB.itensEntrada}"/>
-                        <p:commandButton value="Gerar Orçamento" update="@form" icon="fa fa-check"  action="#{entradaMB.gerarOrcamento}" styleClass="btn-primary" />
+                       	<p:spacer width="5"/>
+                        <p:commandButton value="Gerar Orçamento" update="@form" icon="fa fa-check"  action="#{entradaMB.gerarOrcamento}" styleClass="btn-primary" 
+                        	rendered="#{entradaMB.entrada.id ne null and !empty entradaMB.itensEntrada}"/>
                     </div>
                     
                     <p:splitButton value="Salvar" update="@form" icon="fa fa-check" action="#{entradaMB.salvar(true)}" styleClass="hidden-md hidden-lg btn-primary">
