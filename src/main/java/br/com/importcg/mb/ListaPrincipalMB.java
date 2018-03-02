@@ -2,6 +2,7 @@ package br.com.importcg.mb;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -175,31 +176,45 @@ public class ListaPrincipalMB implements Serializable {
     /* ********************************************************************************** */
     
     public BigDecimal buscarValorEmCaixa() {
-    	return caixaService.obterSaldoTotalCaixa();
+    	BigDecimal valor = caixaService.obterSaldoTotalCaixa();
+    	return valor == null || new BigDecimal("0").equals(valor) ? new BigDecimal("0")
+    			.setScale(2, RoundingMode.HALF_EVEN) : valor.setScale(2, RoundingMode.HALF_EVEN);
     }
     
     public BigDecimal buscarValorAReceberMesAtual() {
-    	return pagamentoService.obterSaldoTotalAReceberMesAtual();
+    	BigDecimal valor = pagamentoService.obterSaldoTotalAReceberMesAtual();
+    	return valor == null || new BigDecimal("0").equals(valor) ? new BigDecimal("0")
+    			.setScale(2, RoundingMode.HALF_EVEN) : valor.setScale(2, RoundingMode.HALF_EVEN);
     }
     
     public BigDecimal buscarValorAReceberProximoMes() {
-    	return pagamentoService.obterSaldoTotalAReceberProximoMes();
+    	BigDecimal valor = pagamentoService.obterSaldoTotalAReceberProximoMes();
+    	return valor == null || new BigDecimal("0").equals(valor) ? new BigDecimal("0")
+    			.setScale(2, RoundingMode.HALF_EVEN) : valor.setScale(2, RoundingMode.HALF_EVEN); 
     }
     
     public BigDecimal buscarValorAPagarMesAtual() {
-    	return itemBaixaService.obterSaldoTotalAPagarMesAtual();
+    	BigDecimal valor = itemBaixaService.obterSaldoTotalAPagarMesAtual();
+    	return valor == null || new BigDecimal("0").equals(valor) ? new BigDecimal("0")
+    			.setScale(2, RoundingMode.HALF_EVEN) : valor.setScale(2, RoundingMode.HALF_EVEN); 
     }
     
     public BigDecimal buscarValorAPagarProximoMes() {
-    	return itemBaixaService.obterSaldoTotalAPagarProximoMes();
+    	BigDecimal valor = itemBaixaService.obterSaldoTotalAPagarProximoMes();
+    	return valor == null || new BigDecimal("0").equals(valor) ? new BigDecimal("0")
+    			.setScale(2, RoundingMode.HALF_EVEN) : valor.setScale(2, RoundingMode.HALF_EVEN); 
     }
     
     public BigDecimal buscarChequeACairMesAtual() {
-    	return itemBaixaService.obterSaldoTotalChequesACairMesAtual();
+    	BigDecimal valor = itemBaixaService.obterSaldoTotalChequesACairMesAtual();
+    	return valor == null || new BigDecimal("0").equals(valor) ? new BigDecimal("0")
+    			.setScale(2, RoundingMode.HALF_EVEN) : valor.setScale(2, RoundingMode.HALF_EVEN); 
     }
     
     public BigDecimal buscarChequeACairProximoMes() {
-    	return itemBaixaService.obterSaldoTotalChequesACairProximoMes();
+    	BigDecimal valor = itemBaixaService.obterSaldoTotalChequesACairProximoMes();
+    	return valor == null || new BigDecimal("0").equals(valor) ? new BigDecimal("0")
+    			.setScale(2, RoundingMode.HALF_EVEN) : valor.setScale(2, RoundingMode.HALF_EVEN); 
     }
     
     /* ********************************************************************************** */
@@ -407,7 +422,7 @@ public class ListaPrincipalMB implements Serializable {
         yAxis = lineModelBalanco.getAxis(AxisType.Y);
         yAxis.setLabel("Valor");
         yAxis.setMin(0);
-        yAxis.setMax(30000);
+        yAxis.setMax(35000);
 	}
     
 	private LineChartModel initLinearModelBalanco() {
@@ -710,5 +725,9 @@ public class ListaPrincipalMB implements Serializable {
 
 	public void setSaldoMensalGeral(BigDecimal saldoMensalGeral) {
 		this.saldoMensalGeral = saldoMensalGeral;
+	}
+	
+	public BigDecimal getSaldoMensalAtualFormatado() {
+		return saldoMensalAtual.setScale(2, RoundingMode.HALF_EVEN);
 	}
 }
