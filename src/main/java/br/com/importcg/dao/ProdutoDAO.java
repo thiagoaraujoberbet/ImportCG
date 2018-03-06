@@ -48,7 +48,7 @@ public class ProdutoDAO implements Serializable {
 		sql.append("	SELECT p.id, p.nome, p.descricao, p.categoria, p.marca, p.modelo, p.dataCriacao, p.dataAlteracao, ");
 		sql.append("    CASE WHEN (SELECT COUNT(iv) from ItemVenda iv where iv.produto.id = p.id) > 0 THEN 'true' ELSE 'false' END AS vendido ");
 		sql.append("	FROM Produto p ");
-		sql.append("	ORDER BY p.nome ");
+		sql.append("	ORDER BY p.nome, p.marca, p.modelo ");
 		
 		Query query = manager.createQuery(sql.toString());
 		
