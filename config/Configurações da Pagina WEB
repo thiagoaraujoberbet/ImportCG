@@ -1,0 +1,68 @@
+Configurações de Pagina
+
+********************************************************************************************
+**** Para incluir texto customizado na pagina principal (Abaixo dos produtos populares) ****
+
+caminho: /var/www/http/modules/ps_customtext/ps_customtext.tpl
+
+Inserir no final (linha 26)
+
+<div id="custom-text">
+  {$cms_infos.text nofilter}
+</div>
+
+Na tela de administração do PrestaShop -> acessar Parâmetros Avançados -> Desempenho -> botão Limpar cache (canto superior direito)
+
+
+********************************************************************************************
+******************************** Para editar texto de promoções ****************************
+
+Acessar banco de dados (phpMyAdmin) -> tabela tb_info_lang -> alterar coluna "text"
+
+Na tela de administração do PrestaShop -> acessar Parâmetros Avançados -> Desempenho -> botão Limpar cache (canto superior direito)
+
+
+********************************************************************************************
+******************************* Para inserir banner de promoções ***************************
+
+caminho: /var/www/html/themes/classic/modules/ps_banner/ps_banner.tpl
+
+Inserir no final (linha 25)
+
+<a class="banner" href="{$banner_link}" title="{$banner_desc}">
+  {if isset($banner_img)}
+    <img src="{$banner_img}" alt="{$banner_desc}" title="{$banner_desc}" class="img-fluid">
+  {else}
+    <span>{$banner_desc}</span>
+  {/if}
+</a>
+
+Na tela de administração do PrestaShop -> acessar Parâmetros Avançados -> Desempenho -> botão Limpar cache (canto superior direito)
+
+Localização do banner para alteração: /var/www/html/modules/ps_banner/ps_banner.php (linha 74) 
+
+Caminho da imagem: /var/www/html/modules/ps_banner/img/sale70.png 
+Tamanho da imagem: 1110 x 214
+
+
+********************************************************************************************
+*************************** Para editar slides da pagina principal *************************
+
+caminho da imagem: /var/www/html/modules/ps_imageslider/images/
+Tamanho da imagem: 1110 x 340
+
+substituir as imagens desejadas (sample-1.jpg, sample-2.jpg, sample-3.jpg)
+
+Na tela de administração do PrestaShop -> acessar Parâmetros Avançados -> Desempenho -> botão Limpar cache (canto superior direito)
+
+
+********************************************************************************************
+**************** Para editar informações nos slides da pagina principal ********************
+
+Acessar banco de dados (phpMyAdmin) -> tabela tb_homeslider_slides_lang -> alterar as colunas desejadas
+
+Texto origem: <em breve>
+
+
+
+
