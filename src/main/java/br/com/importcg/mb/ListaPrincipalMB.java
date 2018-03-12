@@ -33,6 +33,7 @@ import br.com.importcg.model.ItemBaixa;
 import br.com.importcg.model.Pagamento;
 import br.com.importcg.model.Usuario;
 import br.com.importcg.service.CaixaService;
+import br.com.importcg.service.EstoqueService;
 import br.com.importcg.service.ItemBaixaService;
 import br.com.importcg.service.PagamentoService;
 import br.com.importcg.service.PrincipalService;
@@ -60,6 +61,9 @@ public class ListaPrincipalMB implements Serializable {
 	
 	@Inject
 	private CaixaService caixaService;
+	
+	@Inject
+	private EstoqueService estoqueService;
 	
 	/* ***************** Gráfico Pie Mensal ******************************************* */
 	private List<BalancoWrapper> mesAnterior = new ArrayList<>();
@@ -359,8 +363,10 @@ public class ListaPrincipalMB implements Serializable {
 	private void createBarModelBalanco() {
 		barModelBalanco = initBarModelBalanco();
 		
+		BigDecimal valorPatrimonio = this.calcularPatrimonio();
+		
 		NumberFormat nf = NumberFormat.getCurrencyInstance();
-		barModelBalanco.setTitle("Total a Receber: " + nf.format(valorReceber) + " / " + "Total a Pagar: " + nf.format(valorPagar));
+		barModelBalanco.setTitle("Total a Receber: " + nf.format(valorReceber) + " / " + "Total a Pagar: " + nf.format(valorPagar) + " / " + "Patrimônio: " + nf.format(valorPatrimonio));
 		barModelBalanco.setLegendPosition("ne");
          
         Axis xAxis = barModelBalanco.getAxis(AxisType.X);
@@ -372,6 +378,16 @@ public class ListaPrincipalMB implements Serializable {
         yAxis.setMax(15000);
 	}	
 	
+	private BigDecimal calcularPatrimonio() {
+		BigDecimal soma = this.buscarValorEmCaixa().add(valorReceber).add(this.buscarValorProdutosEmEstoque());
+		
+		return soma.subtract(valorPagar);
+	}
+
+	private BigDecimal buscarValorProdutosEmEstoque() {
+		return estoqueService.buscarValorProdutosEmEstoque();
+	}
+
 	private BarChartModel initBarModelBalanco() {
 		BarChartModel model = new BarChartModel();
 		

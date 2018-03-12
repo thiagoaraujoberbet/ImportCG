@@ -10,6 +10,7 @@ import br.com.importcg.model.ItemVenda;
 import br.com.importcg.util.Transacional;
 import br.com.importcg.wrapper.QuantidadeVendidaFuncionarioWrapper;
 import br.com.importcg.wrapper.ValorVendidoFuncionarioWrapper;
+import br.com.importcg.wrapper.VendasRealizadasWrapper;
 
 public class ItemVendaService implements Serializable {
 
@@ -49,5 +50,9 @@ public class ItemVendaService implements Serializable {
 
 	public List<QuantidadeVendidaFuncionarioWrapper> buscarQuantidadeVendidaFuncionario(Long idPessoa) {
 		return itemVendaDAO.buscarQuantidadeVendidaFuncionario(idPessoa);
+	}
+
+	public List<VendasRealizadasWrapper> buscarVendasRealizadasPorProduto(Long idProduto) {
+		return itemVendaDAO.buscarVendasRealizadasPorProduto(idProduto);
 	}
 }

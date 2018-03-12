@@ -1,6 +1,7 @@
 package br.com.importcg.dao;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,5 +117,29 @@ public class EstoqueDAO implements Serializable {
 		}
 		
 		return itens;
+	}
+
+	public BigDecimal buscarValorProdutosEmEstoque() {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT Sum(x.valorEmReal) ");
+		sql.append("FROM   (SELECT DISTINCT i.idItemEntrada, ");
+		sql.append("                        i.valorEmReal, ");
+		sql.append("                        p.idProduto, ");
+		sql.append("                        p.nome, ");
+		sql.append("                        p.marca, ");
+		sql.append("                        p.modelo, ");
+		sql.append("                        (SELECT Ifnull(Sum(ie.quantidade), 0) ");
+		sql.append("                         FROM   u684253104_impcg.itemEntrada ie ");
+		sql.append("                         WHERE  ie.idItemEntrada = i.idItemEntrada) - (SELECT Ifnull(Sum(iv.quantidade), 0) ");
+		sql.append("                                                                       FROM   u684253104_impcg.itemVenda iv ");
+		sql.append("                                                                       WHERE  iv.idItemEntrada = i.idItemEntrada) AS estoque ");
+		sql.append("        FROM   u684253104_impcg.itemEntrada i ");
+		sql.append("               INNER JOIN u684253104_impcg.produto p ");
+		sql.append("                       ON i.idProduto = p.idProduto) x ");
+		sql.append("WHERE  x.estoque > 0");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		
+		return (BigDecimal) query.getSingleResult();
 	}
 }

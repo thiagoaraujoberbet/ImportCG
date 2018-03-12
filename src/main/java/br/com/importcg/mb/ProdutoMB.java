@@ -18,6 +18,7 @@ import br.com.importcg.service.FornecedorService;
 import br.com.importcg.service.ItemVendaService;
 import br.com.importcg.service.ProdutoService;
 import br.com.importcg.util.FacesUtil;
+import br.com.importcg.wrapper.VendasRealizadasWrapper;
 
 @Named
 @ViewScoped
@@ -39,6 +40,7 @@ public class ProdutoMB implements Serializable {
 	private List<ProdutoImagem> imagens = new ArrayList<>();
 	private List<Fornecedor> fornecedores = new ArrayList<>();
 	private List<CatalogoInternacional> catalogosInternacional = new ArrayList<>();
+	private List<VendasRealizadasWrapper> vendasRealizadas = new ArrayList<>();
 	
 	private List<String> images;
 	
@@ -70,6 +72,9 @@ public class ProdutoMB implements Serializable {
 		
 		if (catalogosInternacional.isEmpty())
 			catalogosInternacional = catalogoInternacionalService.porIdProduto(idProduto);
+		
+		if (vendasRealizadas.isEmpty())
+			vendasRealizadas = itemVendaService.buscarVendasRealizadasPorProduto(idProduto);
 	}
 
 	public String salvar() {
@@ -184,5 +189,13 @@ public class ProdutoMB implements Serializable {
 
 	public void setImages(List<String> images) {
 		this.images = images;
+	}
+
+	public List<VendasRealizadasWrapper> getVendasRealizadas() {
+		return vendasRealizadas;
+	}
+
+	public void setVendasRealizadas(List<VendasRealizadasWrapper> vendasRealizadas) {
+		this.vendasRealizadas = vendasRealizadas;
 	}
 }

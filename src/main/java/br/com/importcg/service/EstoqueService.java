@@ -1,6 +1,7 @@
 package br.com.importcg.service;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -75,5 +76,9 @@ public class EstoqueService implements Serializable {
 
 	public List<EstoqueWrapper> buscarInformacoesEstoque() {
 		return estoqueDAO.buscarInformacoesEstoque();
+	}
+
+	public BigDecimal buscarValorProdutosEmEstoque() {
+		return estoqueDAO.buscarValorProdutosEmEstoque();
 	}
 }

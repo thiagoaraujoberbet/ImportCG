@@ -118,37 +118,37 @@
                     	<p:spacer/>
                     	
                     	<p:panelGrid id="capaPanel5" columns="1" style="width:100%;" rendered="#{produtoMB.idProduto ne null}">
-	   	                    <p:dataTable id="catalogoInternacionalTable" widgetVar="catalogoInternacionalTable" rows="5"	 
+	   	                    <p:dataTable id="catalogoInternacionalTable" widgetVar="catalogoInternacionalTable" rows="3"	 
 			                    			 value="#{produtoMB.catalogosInternacional}" var="item" rowKey="#{item.id}"
 			                                 paginator="true" 	                                 
 			                                 paginatorPosition="bottom"	                                 
 			                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 			                                 currentPageReportTemplate=""
-			                                 rowsPerPageTemplate="5,10,15,20,30">
+			                                 rowsPerPageTemplate="3,6,9,12,15,18,21">
 			                                 
 	   	                        <p:column headerText="Fornecedor">
 		                        	<h:outputText value="#{item.fornecedor.nome}"/>
 		                        </p:column>
 			                                 
-	   	                        <p:column headerText="Cotação">
+	   	                        <p:column headerText="Cotação" width="10%" style="text-align: right;">
 		                        	<h:outputText value="#{item.cotacao}">
 		                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 		                        	</h:outputText>
 		                        </p:column>
 		                        
-	   	                        <p:column headerText="Valor US$">
+	   	                        <p:column headerText="Valor US$" width="10%" style="text-align: right;">
 		                        	<h:outputText value="#{item.valorEmDolar}">
 		                        		<f:convertNumber type="currency" currencySymbol="US$"/>
 		                        	</h:outputText>
 		                        </p:column>
 		                        
-	  	   	                        <p:column headerText="Valor R$">
+	  	   	                        <p:column headerText="Valor R$" width="10%" style="text-align: right;">
 		                        	<h:outputText value="#{item.valorEmReal}">
 		                        		<f:convertNumber type="currency" currencySymbol="R$"/>
 		                        	</h:outputText>
 		                        </p:column>
 		                        
-	                          	<p:column headerText="Data">
+	                          	<p:column headerText="Data Compra" width="10%" style="text-align: center;">
 									<h:outputText value="#{item.data}">
 										<f:convertDateTime pattern="dd/MM/yyyy"/>
 									</h:outputText>	
@@ -169,14 +169,53 @@
 		                        	
 		                    </p:dataTable>
 	                    </p:panelGrid>
+	                    
                     </div>
                     
                     <p:spacer/>
                     
 		            <div class="ui-fluid">
-			            <p:galleria value="#{produtoMB.images}" var="image" panelWidth="512" panelHeight="512" showCaption="true">
-						    <p:graphicImage name="fotos/#{image}" alt="Image Description for #{image}" title="#{image}"/>
-						</p:galleria>
+		            
+		            	<p:panelGrid columns="2">
+                    	
+	                    	<p:panelGrid id="capaPanel6" columns="1" style="width:100%;" rendered="#{produtoMB.idProduto ne null}">
+		   	                    <p:dataTable id="vendidosTable" widgetVar="vendidosTable" rows="12"	 
+				                    			 value="#{produtoMB.vendasRealizadas}" var="item" rowKey="#{item.id}"
+				                                 paginator="true" 	                                 
+				                                 paginatorPosition="bottom"	                                 
+				                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+				                                 currentPageReportTemplate=""
+				                                 rowsPerPageTemplate="12,24,36,48">
+				                                 
+		   	                        <p:column headerText="Cliente">
+			                        	<h:outputText value="#{item.nome}"/>
+			                        </p:column>
+				                                 
+	  	   	                        <p:column headerText="Valor R$" width="20%" style="text-align: right;">
+			                        	<h:outputText value="#{item.valorVenda}">
+			                        		<f:convertNumber type="currency" currencySymbol="R$"/>
+			                        	</h:outputText>
+			                        </p:column>
+			                        
+   		   	                        <p:column headerText="Qtde" width="10%" style="text-align: center;">
+			                        	<h:outputText value="#{item.quantidade}"/>
+			                        </p:column>
+			                        
+		                          	<p:column headerText="Data da Venda" width="20%" style="text-align: center;">
+										<h:outputText value="#{item.dataVenda}">
+											<f:convertDateTime pattern="dd/MM/yyyy"/>
+										</h:outputText>	
+				                    </p:column>
+			                        
+			                    </p:dataTable>
+		                    </p:panelGrid>
+	                    
+				            <p:galleria value="#{produtoMB.images}" var="image" panelWidth="512" panelHeight="532" showCaption="true">
+							    <p:graphicImage name="fotos/#{image}" alt="Image Description for #{image}" title="#{image}"/>
+							</p:galleria>
+						
+						</p:panelGrid>
+						
 					</div>
 					
                 </div>

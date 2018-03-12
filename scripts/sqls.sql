@@ -277,3 +277,41 @@ WHERE  ib.baixado = 0
                                                    INTERVAL 1 month)), 1
                                   )) AND Last_day
                               (Sysdate());  
+                              
+SELECT * FROM u684253104_impcg.estoque e
+JOIN u684253104_impcg.produto p ON e.idProduto = p.idProduto
+JOIN u684253104_impcg.itemEntrada ie ON p.idProduto = ie.idProduto 
+WHERE quantidade > 0;    
+
+SELECT Sum(x.valorEmReal)
+FROM   (SELECT DISTINCT i.idItemEntrada,
+                        i.valorEmReal,
+                        p.idProduto,
+                        p.nome,
+                        p.marca,
+                        p.modelo,
+                        (SELECT Ifnull(Sum(ie.quantidade), 0)
+                         FROM   u684253104_impcg.itemEntrada ie
+                         WHERE  ie.idItemEntrada = i.idItemEntrada) - (SELECT Ifnull(Sum(iv.quantidade), 0)
+                                                                       FROM   u684253104_impcg.itemVenda iv
+                                                                       WHERE  iv.idItemEntrada = i.idItemEntrada) AS estoque
+        FROM   u684253104_impcg.itemEntrada i
+               INNER JOIN u684253104_impcg.produto p
+                       ON i.idProduto = p.idProduto) x
+WHERE  x.estoque > 0;
+
+SELECT c.nome,
+       iv.valor,
+       iv.quantidade,
+       v.dataVenda
+FROM   u684253104_impcg.itemVenda iv
+       JOIN u684253104_impcg.produto p
+         ON iv.idProduto = p.idProduto
+       JOIN u684253104_impcg.venda v
+         ON iv.idVenda = v.idVenda
+       JOIN u684253104_impcg.itemEntrada ie
+         ON iv.idItemEntrada = ie.idItemEntrada
+       JOIN u684253104_impcg.pessoa c
+         ON v.idCliente = c.idPessoa
+WHERE  p.idProduto = 6
+ORDER  BY v.dataVenda DESC;  
