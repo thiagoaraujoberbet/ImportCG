@@ -39,9 +39,9 @@ Inserir no final (linha 25)
 
 Na tela de administração do PrestaShop -> acessar Parâmetros Avançados -> Desempenho -> botão Limpar cache (canto superior direito)
 
-Localização do banner para alteração: /var/www/html/modules/ps_banner/ps_banner.php (linha 74) 
+Localização do banner para alteração: /var/www/html/modules/ps_banner/ps_banner.php (linha 74)
 
-Caminho da imagem: /var/www/html/modules/ps_banner/img/sale70.png 
+Caminho da imagem: /var/www/html/modules/ps_banner/img/sale70.png
 Tamanho da imagem: 1110 x 214
 
 
@@ -61,7 +61,10 @@ Na tela de administração do PrestaShop -> acessar Parâmetros Avançados -> De
 
 Acessar banco de dados (phpMyAdmin) -> tabela tb_homeslider_slides_lang -> alterar as colunas desejadas
 
-Texto origem: <em breve>
+Texto origem:
+
+<h2>EXCEPTEUR OCCAECAT</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique in tortor et dignissim. Quisque non tempor leo. Maecenas egestas sem elit</p>
 
 
 
