@@ -88,6 +88,11 @@
 	                        	<h:outputText value="#{venda.quantidadeTotal}" />
 	                        </p:column>
 	                        
+  	                        <p:column headerText="Situação" style="width:7%; text-align:center;">
+	                        	<h:outputText value="#{venda.situacao}" 
+	                        		style="#{venda.situacao eq 'OK' ? 'color: #238E23;' : 'color: #FF0000;'}"/>
+	                        </p:column>
+	                        
    	                        <p:column headerText="Vendedor" filterBy="#{venda.funcionario.nome}" sortBy="#{venda.funcionario.nome}" style="text-align:center;">
 	                        	<h:outputText value="#{venda.funcionario.nome}" />
 	                        </p:column>

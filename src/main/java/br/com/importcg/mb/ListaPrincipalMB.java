@@ -366,7 +366,9 @@ public class ListaPrincipalMB implements Serializable {
 		BigDecimal valorPatrimonio = this.calcularPatrimonio();
 		
 		NumberFormat nf = NumberFormat.getCurrencyInstance();
-		barModelBalanco.setTitle("Total a Receber: " + nf.format(valorReceber) + " / " + "Total a Pagar: " + nf.format(valorPagar) + " / " + "Patrimônio: " + nf.format(valorPatrimonio));
+		barModelBalanco.setTitle("A Receber: " + nf.format(valorReceber) + " / " + "A Pagar: " + nf.format(valorPagar) + " / " + 
+				"Patrimônio Bruto: " + nf.format(valorPatrimonio) + " / " + "Produtos: " + nf.format(this.buscarValorProdutosEmEstoque()) + " / " + 
+				"Patrimônio Liquido: " + nf.format(valorPatrimonio.subtract(this.buscarValorProdutosEmEstoque())));
 		barModelBalanco.setLegendPosition("ne");
          
         Axis xAxis = barModelBalanco.getAxis(AxisType.X);

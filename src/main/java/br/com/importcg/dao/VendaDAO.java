@@ -50,7 +50,15 @@ public class VendaDAO implements Serializable {
 		sql.append("SELECT v.idVenda, v.idCliente, pC.nome cliente, v.idFuncionario, pF.nome funcionario, v.dataVenda, v.valorTotal, v.quantidadeTotal, v.status, ");
 		sql.append("case when ");
 		sql.append("(select SUM(p.saldo) from pagamento p inner join venda ve on p.idVenda = ve.idVenda where p.pago = 0 and ve.idVenda = v.idVenda)  is null then 0 else ");
-		sql.append("(select SUM(p.saldo) from pagamento p inner join venda ve on p.idVenda = ve.idVenda where p.pago = 0 and ve.idVenda = v.idVenda) end as restante ");
+		sql.append("(select SUM(p.saldo) from pagamento p inner join venda ve on p.idVenda = ve.idVenda where p.pago = 0 and ve.idVenda = v.idVenda) end as restante, ");
+		sql.append("CASE ");
+		sql.append("         WHEN (SELECT 1 ");
+		sql.append("               FROM   pagamento p ");
+		sql.append("               WHERE  p.pago = 0 ");
+		sql.append("                      AND p.data < Sysdate() ");
+		sql.append("                      AND v.idVenda = p.idVenda) IS NOT NULL THEN \"Em Atraso\" ");
+		sql.append("         ELSE \"OK\" ");
+		sql.append("       END situacao ");
 		sql.append("FROM venda v ");
 		sql.append("INNER JOIN  pessoa pC ON v.idCliente = pC.idPessoa ");
 		sql.append("INNER JOIN  pessoa pF ON v.idFuncionario = pF.idPessoa ");
@@ -101,6 +109,10 @@ public class VendaDAO implements Serializable {
 			
 			if (item[9] != null) {
 				venda.setRestante(new BigDecimal(item[9].toString()));
+			}
+			
+			if (item[10] != null) {
+				venda.setSituacao(item[10].toString());
 			}
 			
 			vendas.add(venda);

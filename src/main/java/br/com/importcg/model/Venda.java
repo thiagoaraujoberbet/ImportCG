@@ -66,6 +66,9 @@ public class Venda implements Serializable {
 	
 	@Transient
 	private BigDecimal restante;
+	
+	@Transient
+	private String situacao;
 
 	public Venda() {
 		super();
@@ -133,6 +136,14 @@ public class Venda implements Serializable {
 
 	public void setRestante(BigDecimal restante) {
 		this.restante = restante;
+	}
+
+	public String getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(String situacao) {
+		this.situacao = situacao;
 	}
 
 	public boolean isInclusao() {
