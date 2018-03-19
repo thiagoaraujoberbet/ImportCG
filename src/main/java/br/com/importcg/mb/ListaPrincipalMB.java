@@ -367,8 +367,8 @@ public class ListaPrincipalMB implements Serializable {
 		
 		NumberFormat nf = NumberFormat.getCurrencyInstance();
 		barModelBalanco.setTitle("A Receber: " + nf.format(valorReceber) + " / " + "A Pagar: " + nf.format(valorPagar) + " / " + 
-				"Patrimônio Bruto: " + nf.format(valorPatrimonio) + " / " + "Produtos: " + nf.format(this.buscarValorProdutosEmEstoque()) + " / " + 
-				"Patrimônio Liquido: " + nf.format(valorPatrimonio.subtract(this.buscarValorProdutosEmEstoque())));
+				"Bruto: " + nf.format(valorPatrimonio) + " / " + "Produtos: " + nf.format(this.buscarValorProdutosEmEstoque()) + " / " + 
+				"Liquido: " + nf.format(valorPatrimonio.subtract(this.buscarValorProdutosEmEstoque())));
 		barModelBalanco.setLegendPosition("ne");
          
         Axis xAxis = barModelBalanco.getAxis(AxisType.X);
