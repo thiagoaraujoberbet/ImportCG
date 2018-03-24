@@ -16,6 +16,7 @@ import br.com.importcg.enumeration.EnumTipoDespesa;
 import br.com.importcg.model.CatalogoInternacional;
 import br.com.importcg.model.Despesa;
 import br.com.importcg.model.Entrada;
+import br.com.importcg.model.Estoque;
 import br.com.importcg.model.Fornecedor;
 import br.com.importcg.model.ItemDespesa;
 import br.com.importcg.model.ItemEntrada;
@@ -124,49 +125,40 @@ public class EntradaMB implements Serializable {
 
 	public void salvarItem() {
 		itemEntrada = itemEntradaService.salvar(itemEntrada);
-		
-		if (isEdicaoItem()) {
-			if (!itemEntrada.getQuantidade().equals(quantidadeAtual)) {
-				if (itemEntrada.getQuantidade() > quantidadeAtual) {
-					estoqueService.atualizarEstoquePositivo(itemEntrada.getQuantidade() - quantidadeAtual, itemEntrada.getProduto());
-					this.atualizarEntradaPositiva(itemEntrada.getQuantidade() - quantidadeAtual, itemEntrada.getValorEmReal());
-				} else {
-					estoqueService.atualizarEstoqueNegativo(quantidadeAtual - itemEntrada.getQuantidade(), itemEntrada.getProduto().getId());
-					this.atualizarEntradaNegativa(quantidadeAtual - itemEntrada.getQuantidade(), itemEntrada.getValorEmReal());
-				}
-			} else if  (!itemEntrada.getValorEmReal().equals(valorAtual)) {
-				if (itemEntrada.getValorEmReal().compareTo(valorAtual) == 1) {
-					this.atualizarEntradaPositiva(new Integer(0), itemEntrada.getValorEmReal().subtract(valorAtual));
-				} else {
-					this.atualizarEntradaNegativa(new Integer(0), valorAtual.subtract(itemEntrada.getValorEmReal()));
-				}
-			}
-			
-			setEdicaoItem(false);
-		} else {
-			this.salvarCatalogoInternacional();
-			
-			estoqueService.atualizarEstoquePositivo(itemEntrada.getQuantidade(), itemEntrada.getProduto());
-			this.atualizarEntradaPositiva(itemEntrada.getQuantidade(), itemEntrada.getValorEmReal());
-		}
-		
-		itensEntrada = itemEntradaService.porIdEntrada(itemEntrada.getEntrada().getId());
+		this.atualizarEstoque(itemEntrada.getProduto(), itemEntrada.getQuantidade());
+		this.atualizarEntrada();
 		
 		FacesUtil.addInfoMessage("Item cadastrado com sucesso!");
 	}
 	
-	private void atualizarEntradaPositiva(Integer quantidade, BigDecimal valor) {
-		entrada.setValorTotal(entrada.getValorTotal().add(valor.multiply(new BigDecimal(quantidade))));
-		entrada.setQuantidadeTotal(entrada.getQuantidadeTotal() + quantidade);
+	private void atualizarEntrada() {
+		itensEntrada = itemEntradaService.porIdEntrada(itemEntrada.getEntrada().getId());
+		
+		int quantidadeTotal = 0;
+		BigDecimal valorTotal = new BigDecimal("0");
+		
+		for (ItemEntrada item : itensEntrada) {
+			quantidadeTotal = quantidadeTotal + item.getQuantidade();
+			valorTotal = valorTotal.add(item.getValorEmReal().multiply(new BigDecimal(item.getQuantidade())));
+		}
+		
+		entrada = entradaService.porId(entrada.getId());
+		
+		entrada.setQuantidadeTotal(quantidadeTotal);
+		entrada.setValorTotal(valorTotal);
 		
 		this.salvar(false);
 	}
 	
-	private void atualizarEntradaNegativa(Integer quantidade, BigDecimal valor) {
-		entrada.setValorTotal(entrada.getValorTotal().subtract(valor.multiply(new BigDecimal(quantidade))));
-		entrada.setQuantidadeTotal(entrada.getQuantidadeTotal() - quantidade);
-		
-		this.salvar(false);
+	private void atualizarEstoque(Produto produto, Integer quantidade) {
+		Estoque estoque = estoqueService.verificarProdutoEmEstoque(produto.getId());
+		if (estoque != null) {
+			BigDecimal estoqueAtual = itemEntradaService.buscarQtdeItensDisponiveisParaVendaPorIdProduto(produto.getId());
+			estoque.setQuantidade(((BigDecimal)estoqueAtual).intValue());
+			estoqueService.salvar(estoque);
+		} else {
+			estoqueService.salvarEstoque(quantidade, produto);
+		}
 	}
 	
 	private void salvarCatalogoInternacional() {
@@ -217,7 +209,7 @@ public class EntradaMB implements Serializable {
 	
 	public String excluir() {
 		for (ItemEntrada itemEntrada : itensEntrada) {
-			estoqueService.atualizarEstoqueNegativo(itemEntrada.getQuantidade(), itemEntrada.getProduto().getId());
+//			estoqueService.atualizarEstoqueNegativo(itemEntrada.getQuantidade(), itemEntrada.getProduto().getId());
 		} 
 		
 		entradaService.excluir(entrada);
@@ -227,8 +219,8 @@ public class EntradaMB implements Serializable {
 	
 	public void excluirItensEntradaSelecionados() {
 		for (ItemEntrada itemEntrada : itensEntradaSelecionados) {
-			estoqueService.atualizarEstoqueNegativo(itemEntrada.getQuantidade(), itemEntrada.getProduto().getId());
-			this.atualizarEntradaNegativa(itemEntrada.getQuantidade(), itemEntrada.getValorEmReal());
+//			estoqueService.atualizarEstoqueNegativo(itemEntrada.getQuantidade(), itemEntrada.getProduto().getId());
+//			this.atualizarEntradaNegativa(itemEntrada.getQuantidade(), itemEntrada.getValorEmReal());
 			
 			itemEntradaService.excluir(itemEntrada);
 			itensEntrada.remove(itemEntrada);

@@ -141,10 +141,10 @@ public class VendaMB implements Serializable {
 	private void salvarItemEditado() {
 		if (!itemVenda.getQuantidade().equals(quantidadeAtual)) {
 			if (itemVenda.getQuantidade() > quantidadeAtual) {
-				estoqueService.atualizarEstoqueNegativo(itemVenda.getQuantidade() - quantidadeAtual, itemVenda.getProduto().getId());
+//				estoqueService.atualizarEstoqueNegativo(itemVenda.getQuantidade() - quantidadeAtual, itemVenda.getProduto().getId());
 				this.atualizarVendaPositiva(itemVenda.getQuantidade() - quantidadeAtual, itemVenda.getValor());
 			} else {
-				estoqueService.atualizarEstoquePositivo(quantidadeAtual - itemVenda.getQuantidade(), itemVenda.getProduto());
+//				estoqueService.atualizarEstoquePositivo(quantidadeAtual - itemVenda.getQuantidade(), itemVenda.getProduto());
 				this.atualizarVendaNegativa(quantidadeAtual - itemVenda.getQuantidade(), itemVenda.getValor());
 			}
 		} else if  (!itemVenda.getValor().equals(valorAtual)) {
@@ -159,7 +159,7 @@ public class VendaMB implements Serializable {
 	}
 	
 	private void salvarItemNovo() {
-		estoqueService.atualizarEstoqueNegativo(itemVenda.getQuantidade(), itemVenda.getProduto().getId());
+//		estoqueService.atualizarEstoqueNegativo(itemVenda.getQuantidade(), itemVenda.getProduto().getId());
 		this.atualizarVendaPositiva(itemVenda.getQuantidade(), itemVenda.getValor());
 	}
 
@@ -223,7 +223,7 @@ public class VendaMB implements Serializable {
 
 	public String excluir() {
 		for (ItemVenda itemVenda : itensVenda) {
-			estoqueService.atualizarEstoquePositivo(itemVenda.getQuantidade(), itemVenda.getProduto());
+//			estoqueService.atualizarEstoquePositivo(itemVenda.getQuantidade(), itemVenda.getProduto());
 		} 
 		
 		vendaService.excluir(venda);
@@ -235,7 +235,7 @@ public class VendaMB implements Serializable {
 		itemVendaService.excluir(itemVenda);
 		itensVenda.remove(itemVenda);
 		
-		estoqueService.atualizarEstoquePositivo(itemVenda.getQuantidade(), itemVenda.getProduto());
+//		estoqueService.atualizarEstoquePositivo(itemVenda.getQuantidade(), itemVenda.getProduto());
 		this.atualizarVendaNegativa(itemVenda.getQuantidade(), itemVenda.getValor());
 		
 		FacesUtil.addInfoMessage("Item(s) excluido(s) com sucesso!");

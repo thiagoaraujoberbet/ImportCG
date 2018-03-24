@@ -33,28 +33,7 @@ public class EstoqueService implements Serializable {
 	}
 	
 	@Transacional
-	public void atualizarEstoquePositivo(Integer quantidade, Produto produto) {
-		Estoque estoque = estoqueDAO.verificarProdutoEmEstoque(produto.getId());
-		
-		if (estoque != null) {
-			estoque.setQuantidade(estoque.getQuantidade() + quantidade);
-			estoqueDAO.salvar(estoque);
-		} else {
-			this.salvarEstoque(quantidade, produto);
-		}
-	}
-	
-	@Transacional
-	public void atualizarEstoqueNegativo(Integer quantidade, Long idProduto) {
-		Estoque estoque = estoqueDAO.verificarProdutoEmEstoque(idProduto);
-		
-		if (estoque != null) {
-			estoque.setQuantidade(estoque.getQuantidade() - quantidade);
-			estoqueDAO.salvar(estoque);
-		} 
-	}
-	
-	private void salvarEstoque(Integer quantidade, Produto produto) {
+	public void salvarEstoque(Integer quantidade, Produto produto) {
 		Estoque estoque = new Estoque();
 		estoque.setProduto(produto);
 		estoque.setQuantidade(quantidade);

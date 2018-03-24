@@ -59,7 +59,7 @@ public class ListaVendaMB implements Serializable {
 		List<ItemVenda> itensVenda = itemVendaService.porIdVenda(idVenda);
 		
 		for (ItemVenda itemVenda : itensVenda) {
-			estoqueService.atualizarEstoquePositivo(itemVenda.getQuantidade(), itemVenda.getProduto());
+//			estoqueService.atualizarEstoquePositivo(itemVenda.getQuantidade(), itemVenda.getProduto());
 		} 
 	}
 

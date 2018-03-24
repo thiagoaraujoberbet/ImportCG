@@ -105,4 +105,20 @@ public class ItemEntradaDAO implements Serializable {
 		
 		return itensEntrada;
 	}
+
+	public BigDecimal buscarQtdeItensDisponiveisParaVendaPorIdProduto(Long idProduto) {
+		StringBuffer  sql = new StringBuffer();
+		sql.append("SELECT SUM(ie.quantidade) ");
+		sql.append("FROM   u684253104_impcg.itemEntrada ie ");
+		sql.append("WHERE  ie.idProduto = :idProduto ");
+		sql.append("       AND NOT EXISTS (SELECT * ");
+		sql.append("                       FROM   u684253104_impcg.itemVenda iv ");
+		sql.append("                       WHERE  iv.idItemEntrada = ie.idItemEntrada ");
+		sql.append("                              AND iv.idProduto = ie.idProduto)");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		query.setParameter("idProduto", idProduto);
+		
+		return (BigDecimal) query.getSingleResult();
+	}
 }

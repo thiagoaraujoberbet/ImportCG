@@ -59,7 +59,7 @@ public class ListaEntradaMB implements Serializable {
 		List<ItemEntrada> itensEntrada = itemEntradaService.porIdEntrada(idEntrada);
 		
 		for (ItemEntrada itemEntrada : itensEntrada) {
-			estoqueService.atualizarEstoqueNegativo(itemEntrada.getQuantidade(), itemEntrada.getProduto().getId());
+//			estoqueService.atualizarEstoqueNegativo(itemEntrada.getQuantidade(), itemEntrada.getProduto().getId());
 		} 
 	}
 

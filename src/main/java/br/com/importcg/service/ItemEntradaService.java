@@ -1,6 +1,7 @@
 package br.com.importcg.service;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,5 +40,9 @@ public class ItemEntradaService implements Serializable {
 
 	public List<ItemEntrada> buscarItensParaVenda() {
 		return itemEntradaDAO.buscarItensParaVenda();
+	}
+
+	public BigDecimal buscarQtdeItensDisponiveisParaVendaPorIdProduto(Long idProduto) {
+		return itemEntradaDAO.buscarQtdeItensDisponiveisParaVendaPorIdProduto(idProduto);
 	}
 }
