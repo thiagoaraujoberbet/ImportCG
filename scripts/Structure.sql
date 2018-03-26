@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `u684253104_impcg` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `u684253104_impcg`;
--- MySQL dump 10.13  Distrib 5.7.21, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: u684253104_impcg
+-- Host: localhost    Database: u684253104_impcg
 -- ------------------------------------------------------
--- Server version	5.7.21-0ubuntu0.16.04.1
+-- Server version	5.7.20-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -56,7 +56,7 @@ CREATE TABLE `aplicacao` (
   UNIQUE KEY `idAplicacao_UNIQUE` (`idAplicacao`),
   KEY `FKlnmaij18kkhajo2asxi07dvvm` (`idCaixa`),
   CONSTRAINT `FKlnmaij18kkhajo2asxi07dvvm` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +74,7 @@ CREATE TABLE `baixa` (
   `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`idBaixa`),
   UNIQUE KEY `idBaixa_UNIQUE` (`idBaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +119,7 @@ CREATE TABLE `catalogoInternacional` (
   CONSTRAINT `FKbkk2fjqfm3tr4bv7ala0jcq9n` FOREIGN KEY (`idFornecedor`) REFERENCES `fornecedor` (`idFornecedor`),
   CONSTRAINT `FKcg9wpjqhw2l2dpkb5bj0y1jh3` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKxmtseedf86cau3qthkv58uji` FOREIGN KEY (`idItemEntrada`) REFERENCES `itemEntrada` (`idItemEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=199 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=221 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +179,7 @@ CREATE TABLE `despesa` (
   `baixaGerada` bit(1) NOT NULL,
   PRIMARY KEY (`idDespesa`),
   UNIQUE KEY `idDespesa_UNIQUE` (`idDespesa`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,7 +197,7 @@ CREATE TABLE `entrada` (
   `despesaLancada` bit(1) NOT NULL,
   PRIMARY KEY (`idEntrada`),
   UNIQUE KEY `idEntrada_UNIQUE` (`idEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,7 +244,7 @@ CREATE TABLE `estoque` (
   UNIQUE KEY `idEstoque_UNIQUE` (`idEstoque`),
   KEY `FKgumrkw95wo8v0tvdwjmor525w` (`idProduto`),
   CONSTRAINT `FKgumrkw95wo8v0tvdwjmor525w` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`)
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -338,7 +338,7 @@ CREATE TABLE `itemBaixa` (
   CONSTRAINT `FK2llrqykmcs3dy6paxfb6q2701` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`),
   CONSTRAINT `FK9djmbja444w8w9qagfoci68c3` FOREIGN KEY (`idItemDespesa`) REFERENCES `itemDespesa` (`idItemDespesa`),
   CONSTRAINT `FKr2f43md20jss1j4r3m2dmvaas` FOREIGN KEY (`idBaixa`) REFERENCES `baixa` (`idBaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -361,7 +361,7 @@ CREATE TABLE `itemDespesa` (
   KEY `FKi5g91vg4lf0rnsnou9ot12gcb` (`idEntrada`),
   CONSTRAINT `FKi5g91vg4lf0rnsnou9ot12gcb` FOREIGN KEY (`idEntrada`) REFERENCES `entrada` (`idEntrada`),
   CONSTRAINT `FKrdr2v8kaimdegi71g1gwe4kq` FOREIGN KEY (`idDespesa`) REFERENCES `despesa` (`idDespesa`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -388,7 +388,7 @@ CREATE TABLE `itemEntrada` (
   CONSTRAINT `FKjyakb0b8tpnhe763ijq096ssh` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKle7ytd45iqwof5gwxm47d3284` FOREIGN KEY (`idFornecedor`) REFERENCES `fornecedor` (`idFornecedor`),
   CONSTRAINT `FKx2pq54u6nqee1ct3guex6bnr` FOREIGN KEY (`idEntrada`) REFERENCES `entrada` (`idEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=277 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,7 +414,7 @@ CREATE TABLE `itemOrcamento` (
   CONSTRAINT `FK83edv833l91vcffhnsp4rsp4r` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKkclxdu4d4knl36hyyl9g8vg3e` FOREIGN KEY (`idOrcamento`) REFERENCES `orcamento` (`idOrcamento`),
   CONSTRAINT `FKrbfw3tacjquhpaljog6nxc7mr` FOREIGN KEY (`idCatalogoInternacional`) REFERENCES `catalogoInternacional` (`idCatalogoInternacional`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -439,7 +439,7 @@ CREATE TABLE `itemVenda` (
   CONSTRAINT `FK5eyxa71d0qvmircij2jqhtajl` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKq0wpxloynk627fqxtuykjxuur` FOREIGN KEY (`idVenda`) REFERENCES `venda` (`idVenda`),
   CONSTRAINT `FKq99iiopsfwkm3rskreq6cg7qh` FOREIGN KEY (`idItemEntrada`) REFERENCES `itemEntrada` (`idItemEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=273 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -463,7 +463,7 @@ CREATE TABLE `orcamento` (
   KEY `FKh6jbqscspwp3d3qaa2n681o1t` (`idFuncionario`),
   CONSTRAINT `FKh6jbqscspwp3d3qaa2n681o1t` FOREIGN KEY (`idFuncionario`) REFERENCES `pessoa` (`idPessoa`),
   CONSTRAINT `FKpixerpmnsdgm9524nucf7axo1` FOREIGN KEY (`idCliente`) REFERENCES `pessoa` (`idPessoa`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -493,7 +493,7 @@ CREATE TABLE `pagamento` (
   KEY `FK2jyyepu1tqd46buhn0pcs78q3` (`idVenda`),
   CONSTRAINT `FK2jyyepu1tqd46buhn0pcs78q3` FOREIGN KEY (`idVenda`) REFERENCES `venda` (`idVenda`),
   CONSTRAINT `FKisk5alom9yolr7brwq967ejd7` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=306 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=352 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -518,7 +518,7 @@ CREATE TABLE `pessoa` (
   `enderecoComercial` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idPessoa`),
   UNIQUE KEY `idPessoa_UNIQUE` (`idPessoa`)
-) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -540,7 +540,7 @@ CREATE TABLE `produto` (
   `dataAlteracao` date DEFAULT NULL,
   PRIMARY KEY (`idProduto`),
   UNIQUE KEY `idProduto_UNIQUE` (`idProduto`)
-) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -578,7 +578,7 @@ CREATE TABLE `retirada` (
   UNIQUE KEY `idRetirada_UNIQUE` (`idRetirada`),
   KEY `FK1ae050xs5eoqkdlmwc62rk3xo` (`idCaixa`),
   CONSTRAINT `FK1ae050xs5eoqkdlmwc62rk3xo` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -599,7 +599,7 @@ CREATE TABLE `tramite` (
   UNIQUE KEY `idTramite_UNIQUE` (`idTramite`),
   KEY `FKwenqm1061y3eq8n296w73njr` (`idCaixa`),
   CONSTRAINT `FKwenqm1061y3eq8n296w73njr` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=302 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=330 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -643,7 +643,7 @@ CREATE TABLE `venda` (
   KEY `FK2l1gbv70y170sammw1guliyj8` (`idFuncionario`),
   CONSTRAINT `FK2l1gbv70y170sammw1guliyj8` FOREIGN KEY (`idFuncionario`) REFERENCES `pessoa` (`idPessoa`),
   CONSTRAINT `FK6eyxfbxmeg9tn95pob30peuev` FOREIGN KEY (`idCliente`) REFERENCES `pessoa` (`idPessoa`)
-) ENGINE=InnoDB AUTO_INCREMENT=203 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -655,4 +655,4 @@ CREATE TABLE `venda` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-10 11:16:04
+-- Dump completed on 2018-03-26 17:32:11
