@@ -15,10 +15,12 @@ import br.com.importcg.enumeration.EnumFormaPagamento;
 import br.com.importcg.enumeration.EnumStatusVenda;
 import br.com.importcg.enumeration.EnumTipoPessoa;
 import br.com.importcg.model.Caixa;
+import br.com.importcg.model.Estoque;
 import br.com.importcg.model.ItemEntrada;
 import br.com.importcg.model.ItemVenda;
 import br.com.importcg.model.Pagamento;
 import br.com.importcg.model.Pessoa;
+import br.com.importcg.model.Produto;
 import br.com.importcg.model.Venda;
 import br.com.importcg.service.CaixaService;
 import br.com.importcg.service.EstoqueService;
@@ -126,59 +128,42 @@ public class VendaMB implements Serializable {
 		itemVenda.setProduto(itemVenda.getItemEntrada().getProduto());
 		itemVenda = itemVendaService.salvar(itemVenda);
 		
-		if (isEdicaoItem()) {
-			this.salvarItemEditado();
-		} else {
-			this.salvarItemNovo();
-		}
-		
-		itensEntrada = itemEntradaService.buscarItensParaVenda();
-		itensVenda = itemVendaService.porIdVenda(itemVenda.getVenda().getId());
+		this.atualizarEstoque(itemVenda.getProduto(), itemVenda.getQuantidade());
+		this.atualizarVenda();
 		
 		FacesUtil.addInfoMessage("Item cadastrado com sucesso!");
 	}
 	
-	private void salvarItemEditado() {
-		if (!itemVenda.getQuantidade().equals(quantidadeAtual)) {
-			if (itemVenda.getQuantidade() > quantidadeAtual) {
-//				estoqueService.atualizarEstoqueNegativo(itemVenda.getQuantidade() - quantidadeAtual, itemVenda.getProduto().getId());
-				this.atualizarVendaPositiva(itemVenda.getQuantidade() - quantidadeAtual, itemVenda.getValor());
-			} else {
-//				estoqueService.atualizarEstoquePositivo(quantidadeAtual - itemVenda.getQuantidade(), itemVenda.getProduto());
-				this.atualizarVendaNegativa(quantidadeAtual - itemVenda.getQuantidade(), itemVenda.getValor());
-			}
-		} else if  (!itemVenda.getValor().equals(valorAtual)) {
-			if (itemVenda.getValor().compareTo(valorAtual) == 1) {
-				this.atualizarVendaPositiva(new Integer(0), itemVenda.getValor().subtract(valorAtual));
-			} else {
-				this.atualizarVendaNegativa(new Integer(0), valorAtual.subtract(itemVenda.getValor()));
-			}
+	private void atualizarVenda() {
+		itensVenda = itemVendaService.porIdVenda(itemVenda.getVenda().getId());
+		
+		int quantidadeTotal = 0;
+		BigDecimal valorTotal = new BigDecimal("0");
+		
+		for (ItemVenda item : itensVenda) {
+			quantidadeTotal = quantidadeTotal + item.getQuantidade();
+			valorTotal = valorTotal.add(item.getValor().multiply(new BigDecimal(item.getQuantidade())));
 		}
 		
-		setEdicaoItem(false);
+		venda = vendaService.porId(venda.getId());
+		
+		venda.setQuantidadeTotal(quantidadeTotal);
+		venda.setValorTotal(valorTotal);
+		
+		this.salvar(false);
 	}
 	
-	private void salvarItemNovo() {
-//		estoqueService.atualizarEstoqueNegativo(itemVenda.getQuantidade(), itemVenda.getProduto().getId());
-		this.atualizarVendaPositiva(itemVenda.getQuantidade(), itemVenda.getValor());
+	private void atualizarEstoque(Produto produto, Integer quantidade) {
+		Estoque estoque = estoqueService.verificarProdutoEmEstoque(produto.getId());
+		if (estoque != null) {
+			BigDecimal estoqueAtual = itemEntradaService.buscarItensParaVendaPorIdProduto(produto.getId());
+			estoque.setQuantidade(((BigDecimal)estoqueAtual).intValue());
+			estoqueService.salvar(estoque);
+		} else {
+			estoqueService.salvarEstoque(quantidade, produto);
+		}
 	}
 
-	private void atualizarVendaPositiva(Integer quantidade, BigDecimal valor) {
-		venda = vendaService.porId(venda.getId());
-		venda.setValorTotal(venda.getValorTotal().add(valor.multiply(new BigDecimal(quantidade))));
-		venda.setQuantidadeTotal(venda.getQuantidadeTotal() + quantidade);
-		
-		this.salvar(false);
-	}
-	
-	private void atualizarVendaNegativa(Integer quantidade, BigDecimal valor) {
-		venda = vendaService.porId(venda.getId());
-		venda.setValorTotal(venda.getValorTotal().subtract(valor.multiply(new BigDecimal(quantidade))));
-		venda.setQuantidadeTotal(venda.getQuantidadeTotal() - quantidade);
-		
-		this.salvar(false);
-	}
-	
 	private void inicializarItemVenda() {
 		itemVenda = new ItemVenda();
 		itemVenda.setVenda(venda);
@@ -222,11 +207,11 @@ public class VendaMB implements Serializable {
 	}
 
 	public String excluir() {
-		for (ItemVenda itemVenda : itensVenda) {
-//			estoqueService.atualizarEstoquePositivo(itemVenda.getQuantidade(), itemVenda.getProduto());
-		} 
-		
 		vendaService.excluir(venda);
+		
+		for (ItemVenda itemVenda : itensVenda) {
+			this.atualizarEstoque(itemVenda.getProduto(), itemVenda.getQuantidade());
+		} 
 		
 		return "listarVenda.xhtml?faces-redirect=true";
 	}
@@ -235,8 +220,8 @@ public class VendaMB implements Serializable {
 		itemVendaService.excluir(itemVenda);
 		itensVenda.remove(itemVenda);
 		
-//		estoqueService.atualizarEstoquePositivo(itemVenda.getQuantidade(), itemVenda.getProduto());
-		this.atualizarVendaNegativa(itemVenda.getQuantidade(), itemVenda.getValor());
+		this.atualizarEstoque(itemVenda.getProduto(), itemVenda.getQuantidade());
+		this.atualizarVenda();
 		
 		FacesUtil.addInfoMessage("Item(s) excluido(s) com sucesso!");
 	}

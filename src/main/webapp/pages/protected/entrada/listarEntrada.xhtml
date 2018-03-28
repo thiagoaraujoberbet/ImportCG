@@ -40,17 +40,11 @@
             	<div class="box box-primary">
                 	<div class="box-header with-border">
                     	<p:commandButton action="manterEntrada?faces-redirect=true" ajax="false" icon="fa fa-plus" value="Novo" styleClass="btn-primary"/>
-                    	<p:spacer width="5"/>
-	                    <p:commandButton value="Excluir" icon="fa fa-trash" styleClass="btn-danger" action="#{listaEntradaMB.excluirSelecionadas}" 
-	                    	process="@form" update="@form" rendered="false"/>
-	                    <p:spacer width="5"/>
-	                    <p:commandButton value="Visualizar" oncomplete="PF('entradasSelecionadas').show()" update="@(.ui-dialog)"  styleClass="btn-info" icon="fa fa-search" rendered="#{listaEntradaMB.entradas.size() > 0}"/>
 	                                     
 	                    <p:separator/>
 	                    
 	                    <p:dataTable id="entradaTable" widgetVar="entradaTable" rows="10"	 
 	                    			 value="#{listaEntradaMB.entradas}" var="entrada" rowKey="#{entrada.id}"
-	                    			 selection="#{listaEntradaMB.entradasSelecionadas}"                   			 
 	                                 paginator="true" 	                                 
 	                                 paginatorPosition="bottom"	                                 
 	                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
@@ -84,14 +78,6 @@
 	            </div>
         	</h:form>
         	
-        	<p:dialog header="Entradas Selecionadas" widgetVar="entradasSelecionadas" height="250"
-                  	  width="600" responsive="true" styleClass="box-success">
-	            <p:dataList id="listaEntradasSelecionadas" value="#{listaEntradaMB.entradasSelecionadas}" var="entrada"
-	                        type="definition">
-							DATA DA COMPRA: #{entrada.dataCompraFormatada} - VALOR DA COMPRA: #{entrada.valorTotal} - QUANTIDADE: #{entrada.quantidadeTotal}  
-	            </p:dataList>
-			</p:dialog>
-        
     </ui:define>
 
 </ui:composition>

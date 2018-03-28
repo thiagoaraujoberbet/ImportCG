@@ -121,4 +121,19 @@ public class ItemEntradaDAO implements Serializable {
 		
 		return (BigDecimal) query.getSingleResult();
 	}
+
+	public BigDecimal buscarItensParaVendaPorIdProduto(Long idProduto) {
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("	SELECT ");
+		sql.append("		(select IFNULL(sum(ie.quantidade), 0) from itemEntrada ie where ie.idItemEntrada = i.idItemEntrada) - ");
+		sql.append("		(select IFNULL(sum(iv.quantidade), 0) from itemVenda iv where iv.idItemEntrada = i.idItemEntrada) AS estoque ");
+		sql.append("	FROM itemEntrada i ");
+		sql.append("	WHERE i.idProduto = :idProduto ");
+		
+		Query query = manager.createNativeQuery(sql.toString());
+		query.setParameter("idProduto", idProduto);
+		
+		return (BigDecimal) query.getSingleResult();
+	}
 }

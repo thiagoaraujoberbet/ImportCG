@@ -45,4 +45,8 @@ public class ItemEntradaService implements Serializable {
 	public BigDecimal buscarQtdeItensDisponiveisParaVendaPorIdProduto(Long idProduto) {
 		return itemEntradaDAO.buscarQtdeItensDisponiveisParaVendaPorIdProduto(idProduto);
 	}
+
+	public BigDecimal buscarItensParaVendaPorIdProduto(Long idProduto) {
+		return itemEntradaDAO.buscarItensParaVendaPorIdProduto(idProduto);
+	}
 }

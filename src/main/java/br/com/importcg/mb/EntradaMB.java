@@ -112,15 +112,13 @@ public class EntradaMB implements Serializable {
 		}
 	}
 
-	public String salvar(boolean msg) {
+	public void salvar(boolean msg) {
 		entrada = entradaService.salvar(entrada);
 		
 		this.inicializarItemEntrada();
 		
 		if (msg)
 			FacesUtil.addInfoMessage("Entrada cadastrada com sucesso!");
-		
-		return "";
 	}
 
 	public void salvarItem() {
