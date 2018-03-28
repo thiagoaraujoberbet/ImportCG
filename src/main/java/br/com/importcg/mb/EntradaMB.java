@@ -125,6 +125,8 @@ public class EntradaMB implements Serializable {
 
 	public void salvarItem() {
 		itemEntrada = itemEntradaService.salvar(itemEntrada);
+		
+		this.salvarCatalogoInternacional();
 		this.atualizarEstoque(itemEntrada.getProduto(), itemEntrada.getQuantidade());
 		this.atualizarEntrada();
 		
@@ -208,22 +210,22 @@ public class EntradaMB implements Serializable {
 	}
 	
 	public String excluir() {
-		for (ItemEntrada itemEntrada : itensEntrada) {
-//			estoqueService.atualizarEstoqueNegativo(itemEntrada.getQuantidade(), itemEntrada.getProduto().getId());
-		} 
-		
 		entradaService.excluir(entrada);
+		
+		for (ItemEntrada itemEntrada : itensEntrada) {
+			this.atualizarEstoque(itemEntrada.getProduto(), itemEntrada.getQuantidade());
+		} 
 			
 		return "listarEntrada.xhtml?faces-redirect=true";
 	}
 	
 	public void excluirItensEntradaSelecionados() {
 		for (ItemEntrada itemEntrada : itensEntradaSelecionados) {
-//			estoqueService.atualizarEstoqueNegativo(itemEntrada.getQuantidade(), itemEntrada.getProduto().getId());
-//			this.atualizarEntradaNegativa(itemEntrada.getQuantidade(), itemEntrada.getValorEmReal());
-			
 			itemEntradaService.excluir(itemEntrada);
 			itensEntrada.remove(itemEntrada);
+			
+			this.atualizarEstoque(itemEntrada.getProduto(), itemEntrada.getQuantidade());
+			this.atualizarEntrada();
 		}
 				
 		FacesUtil.addInfoMessage("Item(s) excluido(s) com sucesso!");

@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `u684253104_impcg` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `u684253104_impcg`;
--- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.21, for Linux (x86_64)
 --
--- Host: localhost    Database: u684253104_impcg
+-- Host: 127.0.0.1    Database: u684253104_impcg
 -- ------------------------------------------------------
--- Server version	5.7.20-0ubuntu0.16.04.1
+-- Server version	5.7.21-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -130,7 +130,7 @@ CREATE TABLE `caixa` (
 
 LOCK TABLES `caixa` WRITE;
 /*!40000 ALTER TABLE `caixa` DISABLE KEYS */;
-INSERT INTO `caixa` VALUES (1,6,715.00),(2,7,60.00),(3,4,0.00),(4,8,0.00),(5,1,0.00),(6,9,0.00),(7,2,2683.01),(8,3,0.00);
+INSERT INTO `caixa` VALUES (1,6,715.00),(2,7,0.00),(3,4,0.00),(4,8,0.00),(5,1,0.00),(6,9,0.00),(7,2,1725.55),(8,3,0.00);
 /*!40000 ALTER TABLE `caixa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +158,7 @@ CREATE TABLE `catalogoInternacional` (
   CONSTRAINT `FKbkk2fjqfm3tr4bv7ala0jcq9n` FOREIGN KEY (`idFornecedor`) REFERENCES `fornecedor` (`idFornecedor`),
   CONSTRAINT `FKcg9wpjqhw2l2dpkb5bj0y1jh3` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKxmtseedf86cau3qthkv58uji` FOREIGN KEY (`idItemEntrada`) REFERENCES `itemEntrada` (`idItemEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=221 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -276,7 +276,7 @@ CREATE TABLE `entrada` (
   `despesaLancada` bit(1) NOT NULL,
   PRIMARY KEY (`idEntrada`),
   UNIQUE KEY `idEntrada_UNIQUE` (`idEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -544,7 +544,7 @@ CREATE TABLE `itemEntrada` (
   CONSTRAINT `FKjyakb0b8tpnhe763ijq096ssh` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`),
   CONSTRAINT `FKle7ytd45iqwof5gwxm47d3284` FOREIGN KEY (`idFornecedor`) REFERENCES `fornecedor` (`idFornecedor`),
   CONSTRAINT `FKx2pq54u6nqee1ct3guex6bnr` FOREIGN KEY (`idEntrada`) REFERENCES `entrada` (`idEntrada`)
-) ENGINE=InnoDB AUTO_INCREMENT=277 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=289 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -813,7 +813,7 @@ CREATE TABLE `retirada` (
   UNIQUE KEY `idRetirada_UNIQUE` (`idRetirada`),
   KEY `FK1ae050xs5eoqkdlmwc62rk3xo` (`idCaixa`),
   CONSTRAINT `FK1ae050xs5eoqkdlmwc62rk3xo` FOREIGN KEY (`idCaixa`) REFERENCES `caixa` (`idCaixa`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -822,7 +822,7 @@ CREATE TABLE `retirada` (
 
 LOCK TABLES `retirada` WRITE;
 /*!40000 ALTER TABLE `retirada` DISABLE KEYS */;
-INSERT INTO `retirada` VALUES (1,5,'Compras (Mercado)','2018-02-12',61.68),(2,1,'Lanche(30), Açai(20),Janta(49),Lavagem do Carro(50)','2018-02-19',149.00),(3,5,'Pagamento 2° parcela Fotos do Casamento (Johnny)','2018-02-23',550.00),(4,1,'Gasolina para trazer o Civic de Tres Lagoas','2018-02-26',150.00),(5,7,'Pagamento 1º Cheque (Iphone 8 PLUS) da Luana','2018-02-28',608.00),(6,7,'190,00 (2 Red Label e 1 Black Label) Pagos por Thiago Araujo Berbet','2018-03-05',190.00),(7,7,'Pagamento Final dos Convites de Casamento para os Padrinhos','2018-03-06',665.00),(8,7,'Pagamento à Luana (Valor Emprestado a ImportCG)','2018-03-07',547.00),(9,6,'Pagamento do Consorcio Itau','2018-03-12',763.98),(10,8,'Pagamento Semestral das Aulas de Dança (300,00 tirados dos 800,00 Aplicados, restando agora 500,00)','2018-03-09',300.00),(11,7,'2 Whisky\'s para o Casamento','2018-03-17',97.24),(12,7,'Pagamento Parcela de Março do Carro','2018-03-23',1056.00);
+INSERT INTO `retirada` VALUES (1,5,'Compras (Mercado)','2018-02-12',61.68),(2,1,'Lanche(30), Açai(20),Janta(49),Lavagem do Carro(50)','2018-02-19',149.00),(3,5,'Pagamento 2° parcela Fotos do Casamento (Johnny)','2018-02-23',550.00),(4,1,'Gasolina para trazer o Civic de Tres Lagoas','2018-02-26',150.00),(5,7,'Pagamento 1º Cheque (Iphone 8 PLUS) da Luana','2018-02-28',608.00),(6,7,'190,00 (2 Red Label e 1 Black Label) Pagos por Thiago Araujo Berbet','2018-03-05',190.00),(7,7,'Pagamento Final dos Convites de Casamento para os Padrinhos','2018-03-06',665.00),(8,7,'Pagamento à Luana (Valor Emprestado a ImportCG)','2018-03-07',547.00),(9,6,'Pagamento do Consorcio Itau','2018-03-12',763.98),(10,8,'Pagamento Semestral das Aulas de Dança (300,00 tirados dos 800,00 Aplicados, restando agora 500,00)','2018-03-09',300.00),(11,7,'2 Whisky\'s para o Casamento','2018-03-17',97.24),(12,7,'Pagamento Parcela de Março do Carro','2018-03-23',1056.00),(13,7,'Pagamento 3° parcela Fotos do Casamento (Johnny)','2018-03-28',550.00),(14,7,'3º Parcela do IPVA do CIVIC','2018-03-28',407.46);
 /*!40000 ALTER TABLE `retirada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -930,4 +930,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-26 17:31:31
+-- Dump completed on 2018-03-28 16:23:29

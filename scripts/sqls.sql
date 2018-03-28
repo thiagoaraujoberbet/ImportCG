@@ -323,7 +323,7 @@ select idVenda,
 Case when (select 1 from u684253104_impcg.pagamento p Where p.pago = 0 and p.data < sysdate() and v.idVenda = p.idVenda) is not null Then "Em Atraso" Else "OK" End Situacao
 from u684253104_impcg.venda v;
 
-SELECT SUM(ie.quantidade)
+SELECT CASE WHEN SUM(ie.quantidade) is null THEN 0 ELSE SUM(ie.quantidade) END
 FROM   u684253104_impcg.itemEntrada ie
 WHERE  ie.idProduto = 140
        AND NOT EXISTS (SELECT *

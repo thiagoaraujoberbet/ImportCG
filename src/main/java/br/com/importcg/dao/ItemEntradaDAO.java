@@ -108,7 +108,7 @@ public class ItemEntradaDAO implements Serializable {
 
 	public BigDecimal buscarQtdeItensDisponiveisParaVendaPorIdProduto(Long idProduto) {
 		StringBuffer  sql = new StringBuffer();
-		sql.append("SELECT SUM(ie.quantidade) ");
+		sql.append("SELECT CASE WHEN SUM(ie.quantidade) is null THEN 0 ELSE SUM(ie.quantidade) END ");
 		sql.append("FROM   u684253104_impcg.itemEntrada ie ");
 		sql.append("WHERE  ie.idProduto = :idProduto ");
 		sql.append("       AND NOT EXISTS (SELECT * ");
