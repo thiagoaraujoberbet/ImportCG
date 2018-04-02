@@ -169,6 +169,8 @@ public class EntradaMB implements Serializable {
 	private void inicializarItemEntrada() {
 		itemEntrada = new ItemEntrada();
 		itemEntrada.setEntrada(entrada);
+		
+		idEntrada = entrada.getId();
 	}
 	
 	public void gerarOrcamento() {

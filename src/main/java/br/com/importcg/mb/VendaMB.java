@@ -170,6 +170,8 @@ public class VendaMB implements Serializable {
 		
 		pagamento = new Pagamento();
 		pagamento.setVenda(venda);
+		
+		idVenda = venda.getId();
 	}
 	
 	public void salvarPagamento() {
