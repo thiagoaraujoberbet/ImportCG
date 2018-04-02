@@ -30,7 +30,7 @@ public class PrincipalDAO implements Serializable {
 		sql.append("SELECT ");
 		sql.append("(SELECT SUM(e.valorTotal) from entrada e ");
 		sql.append("	where e.dataCompra between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) entradas, ");
-		sql.append("(SELECT SUM(iv.valor) from itemVenda iv ");
+		sql.append("(SELECT SUM(iv.valor * iv.quantidade) from itemVenda iv ");
 		sql.append("	JOIN venda v ON iv.idVenda = v.idVenda ");
 		sql.append("	where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 2 MONTH)), 1)) and last_day(sysdate() - INTERVAL 1 MONTH)) saidas, ");
 		sql.append("(SELECT SUM(p.saldo) from pagamento p ");
@@ -84,7 +84,7 @@ public class PrincipalDAO implements Serializable {
 		sql.append("SELECT ");
 		sql.append("(SELECT SUM(e.valorTotal) from entrada e ");
 		sql.append("	where e.dataCompra between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate())) entradas, ");
-		sql.append("(SELECT SUM(iv.valor) from itemVenda iv ");
+		sql.append("(SELECT SUM(iv.valor * iv.quantidade) from itemVenda iv ");
 		sql.append("	JOIN venda v ON iv.idVenda = v.idVenda ");
 		sql.append("	where v.dataVenda between (SELECT ADDDATE(LAST_DAY(SUBDATE(CURDATE(), INTERVAL 1 MONTH)), 1)) and last_day(sysdate())) saidas, ");
 		sql.append("(SELECT SUM(p.saldo) from pagamento p ");
@@ -137,7 +137,7 @@ public class PrincipalDAO implements Serializable {
 		
 		sql.append("SELECT ");
 		sql.append("(SELECT SUM(e.valorTotal) from entrada e) entradas, ");
-		sql.append("(SELECT SUM(iv.valor) from itemVenda iv) saidas, ");
+		sql.append("(SELECT SUM(iv.valor * iv.quantidade) from itemVenda iv) saidas, ");
 		sql.append("(SELECT SUM(p.saldo) from pagamento p WHERE p.pago = 1) recebido, ");
 		sql.append("(SELECT SUM(ib.valor) from itemBaixa ib ");
 		sql.append("	inner join itemDespesa d ON ib.idItemDespesa = d.idItemDespesa ");

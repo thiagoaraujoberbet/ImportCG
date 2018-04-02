@@ -325,8 +325,15 @@ from u684253104_impcg.venda v;
 
 SELECT CASE WHEN SUM(ie.quantidade) is null THEN 0 ELSE SUM(ie.quantidade) END
 FROM   u684253104_impcg.itemEntrada ie
-WHERE  ie.idProduto = 140
+WHERE  ie.idProduto = 57
        AND NOT EXISTS (SELECT *
                        FROM   u684253104_impcg.itemVenda iv
                        WHERE  iv.idItemEntrada = ie.idItemEntrada
                               AND iv.idProduto = ie.idProduto);  
+                              
+                              
+SELECT SUM(
+(select IFNULL(sum(ie.quantidade), 0) from u684253104_impcg.itemEntrada ie where ie.idItemEntrada = i.idItemEntrada) - 
+(select IFNULL(sum(iv.quantidade), 0) from u684253104_impcg.itemVenda iv where iv.idItemEntrada = i.idItemEntrada)) AS estoque
+FROM u684253104_impcg.itemEntrada i
+WHERE i.idProduto = 57;
