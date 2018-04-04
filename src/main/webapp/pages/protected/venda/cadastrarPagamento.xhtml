@@ -175,7 +175,7 @@
                     </p:column>
                     
                     <p:column headerText="Recebido?" width="10%">
-						<p:commandButton value="#{item.pago ? 'Sim' : 'Não'}" update="@form" styleClass="#{item.pago ? 'btn-success' : 'btn-danger'}" action="#{vendaMB.confirmarRecebimento()}"
+						<p:commandButton value="#{item.pago ? 'Pago' : 'Receber'}" update="@form" styleClass="#{item.pago ? 'btn-success' : 'btn-danger'}" action="#{vendaMB.confirmarRecebimento()}"
 							disabled="#{(item.forma eq 'DEBITO' or item.forma eq 'CREDITO' or item.venda.status eq 'VENDACONCLUIDA') and item.pago}">
 							<f:setPropertyActionListener value="#{item}" target="#{vendaMB.pagamento}" />
 						</p:commandButton>	
