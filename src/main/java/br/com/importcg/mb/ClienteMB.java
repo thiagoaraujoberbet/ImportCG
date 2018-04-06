@@ -11,9 +11,13 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.importcg.enumeration.EnumTipoMsgTimeline;
 import br.com.importcg.enumeration.EnumTipoPessoa;
+import br.com.importcg.enumeration.EnumTipoTimeline;
 import br.com.importcg.model.Pessoa;
+import br.com.importcg.model.Timeline;
 import br.com.importcg.service.PessoaService;
+import br.com.importcg.service.TimelineService;
 import br.com.importcg.util.FacesUtil;
 import br.com.importcg.wrapper.ProdutosCompradosPorCliente;
 
@@ -34,6 +38,9 @@ public class ClienteMB implements Serializable {
 	
 	@Inject
 	private PessoaService pessoaService;
+	
+	@Inject
+	private TimelineService timelineService;
 	
 	public void inicializar() {
 		if (idCliente != null) {
@@ -60,6 +67,9 @@ public class ClienteMB implements Serializable {
 	
 	public String salvar() {
 		pessoaService.salvar(cliente);
+		
+		timelineService.salvar(new Timeline(EnumTipoTimeline.CADASTROCLIENTE, EnumTipoMsgTimeline.SIMPLES,"fa fa-user bg-aqua", "Novo Cliente!", 
+				cliente.getNome() + " é nosso(a) mais novo(a) cliente.", new Date()));
 		
 		if (cliente.isEdicao())
 			FacesUtil.addInfoMessage("Cliente editado com sucesso!");
