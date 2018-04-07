@@ -172,7 +172,7 @@ public class PagamentoDAO implements Serializable {
 	public BigDecimal obterSaldoTotalAReceberMesAtual() {
 		StringBuffer  sql = new StringBuffer();
 		sql.append("SELECT Sum(valor) ");
-		sql.append("FROM   u684253104_impcg.pagamento p ");
+		sql.append("FROM   pagamento p ");
 		sql.append("WHERE  p.pago = 0 ");
 		sql.append("       AND p.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(), ");
 		sql.append("                                                   INTERVAL 1 month)), 1 ");
@@ -187,7 +187,7 @@ public class PagamentoDAO implements Serializable {
 	public BigDecimal obterSaldoTotalAReceberProximoMes() {
 		StringBuffer  sql = new StringBuffer();
 		sql.append("SELECT Sum(valor) ");
-		sql.append("FROM   u684253104_impcg.pagamento p ");
+		sql.append("FROM   pagamento p ");
 		sql.append("WHERE  p.pago = 0 ");
 		sql.append("       AND p.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(), ");
 		sql.append("                                                   INTERVAL 0 month)), 1 ");

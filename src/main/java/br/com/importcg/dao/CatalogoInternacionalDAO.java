@@ -60,8 +60,8 @@ public class CatalogoInternacionalDAO implements Serializable {
 		sql.append("       c.cotacao, ");
 		sql.append("       c.valorEmDolar, ");
 		sql.append("       c.valorEmReal ");
-		sql.append("FROM   u684253104_impcg.catalogoInternacional c ");
-		sql.append("       JOIN u684253104_impcg.fornecedor f ");
+		sql.append("FROM   catalogoInternacional c ");
+		sql.append("       JOIN fornecedor f ");
 		sql.append("         ON c.idFornecedor = f.idFornecedor ");
 		sql.append("WHERE  c.idProduto = :idProduto ");
 		sql.append("ORDER  BY c.data DESC;");

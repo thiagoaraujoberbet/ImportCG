@@ -80,6 +80,10 @@ public class TimelineMB implements Serializable {
 		return new SimpleDateFormat("dd/MM/yyyy").format(data);
 	}
 	
+	public String formatarHora(Date data) {
+		return new SimpleDateFormat("HH:mm:ss").format(data);
+	}
+	
 	private String selecionarCorData() {
 		if ("bg-red".equals(corUltimaData)) 
 			return "bg-green";

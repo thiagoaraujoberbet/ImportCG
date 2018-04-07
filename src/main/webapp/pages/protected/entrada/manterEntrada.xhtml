@@ -47,7 +47,7 @@
                     <p:separator/>
 
                     <div class="ui-fluid">
-						<p:panelGrid id="capaPanel" columns="8" style="width:100%;">
+						<p:panelGrid id="capaPanel" columns="10" style="width:100%;">
 						
 							<p:outputLabel value="Data da Compra" for="dataCompra"/>
 							<p:calendar id="dataCompra" value="#{entradaMB.entrada.dataCompra}" pattern="dd/MM/yyyy" mask="true" disabled="#{entradaMB.entrada.id ne null}"/>
@@ -57,6 +57,13 @@
 							
 							<p:outputLabel value="Quantidade Total" for="quantidadeTotal"/>
 							<p:inputText id="quantidadeTotal" value="#{entradaMB.entrada.quantidadeTotal}" disabled="true"/>
+							
+							<p:outputLabel value="Origem" for="origem"/>
+							<p:selectOneMenu id="origem" value="#{entradaMB.entrada.origem}" style="width:100%;" required="true" requiredMessage="A origem da compra é obrigatória!">
+								<f:selectItem itemLabel="Selecione..."/>
+								<f:selectItem itemLabel="Internet" itemValue="INTERNET"/>
+								<f:selectItem itemLabel="Pedro Juan Caballero" itemValue="PEDROJUANCABALLERO"/>
+							</p:selectOneMenu>
 							
 							<p:outputLabel value="Despesa Lançada?" for="despesaLancada"/>
 							<p:selectBooleanButton id="despesaLancada" value="#{entradaMB.entrada.despesaLancada}" onLabel="Sim" offLabel="Não" 

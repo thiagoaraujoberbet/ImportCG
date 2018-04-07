@@ -9,6 +9,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.com.importcg.enumeration.EnumOrigemCompra;
 
 @Entity
 @Table(name = "entrada")
@@ -39,6 +43,10 @@ public class Entrada implements Serializable {
 	private BigDecimal valorTotal;
 	
 	private Integer quantidadeTotal;
+	
+	@Column(nullable=false)
+	@Enumerated(EnumType.STRING)
+	private EnumOrigemCompra origem;
 	
 	@Column(nullable=false)
 	private boolean despesaLancada = Boolean.FALSE;
@@ -82,6 +90,14 @@ public class Entrada implements Serializable {
 		this.quantidadeTotal = quantidadeTotal;
 	}	
 	
+	public EnumOrigemCompra getOrigem() {
+		return origem;
+	}
+
+	public void setOrigem(EnumOrigemCompra origem) {
+		this.origem = origem;
+	}
+
 	public boolean isDespesaLancada() {
 		return despesaLancada;
 	}

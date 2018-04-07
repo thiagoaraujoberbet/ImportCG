@@ -68,15 +68,19 @@ public class ClienteMB implements Serializable {
 	public String salvar() {
 		pessoaService.salvar(cliente);
 		
-		timelineService.salvar(new Timeline(EnumTipoTimeline.CADASTROCLIENTE, EnumTipoMsgTimeline.SIMPLES,"fa fa-user bg-aqua", "Novo Cliente!", 
-				cliente.getNome() + " é nosso(a) mais novo(a) cliente.", new Date()));
-		
-		if (cliente.isEdicao())
+		if (cliente.isEdicao()) {
 			FacesUtil.addInfoMessage("Cliente editado com sucesso!");
-		else
+		} else {
+			this.gerarTimeline();
 			FacesUtil.addInfoMessage("Cliente cadastrado com sucesso!");
+		}
 		
 		return "listarCliente.xhtml?faces-redirect=true";
+	}
+	
+	private void gerarTimeline() {
+		timelineService.salvar(new Timeline(EnumTipoTimeline.CADASTROCLIENTE, EnumTipoMsgTimeline.SIMPLES,"fa fa-user bg-aqua", "Novo Cliente!", 
+				cliente.getNome() + " é nosso(a) mais novo(a) cliente.", new Date()));
 	}
 	
 	public String excluir() {

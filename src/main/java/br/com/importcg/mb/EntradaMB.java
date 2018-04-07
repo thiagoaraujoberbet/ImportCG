@@ -11,8 +11,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.importcg.enumeration.EnumOrigemCompra;
 import br.com.importcg.enumeration.EnumStatusBaixa;
 import br.com.importcg.enumeration.EnumTipoDespesa;
+import br.com.importcg.enumeration.EnumTipoMsgTimeline;
+import br.com.importcg.enumeration.EnumTipoTimeline;
 import br.com.importcg.model.CatalogoInternacional;
 import br.com.importcg.model.Despesa;
 import br.com.importcg.model.Entrada;
@@ -24,6 +27,7 @@ import br.com.importcg.model.ItemOrcamento;
 import br.com.importcg.model.Orcamento;
 import br.com.importcg.model.Pessoa;
 import br.com.importcg.model.Produto;
+import br.com.importcg.model.Timeline;
 import br.com.importcg.service.CatalogoInternacionalService;
 import br.com.importcg.service.DespesaService;
 import br.com.importcg.service.EntradaService;
@@ -34,6 +38,7 @@ import br.com.importcg.service.ItemEntradaService;
 import br.com.importcg.service.ItemOrcamentoService;
 import br.com.importcg.service.OrcamentoService;
 import br.com.importcg.service.ProdutoService;
+import br.com.importcg.service.TimelineService;
 import br.com.importcg.util.FacesUtil;
 
 @Named
@@ -91,6 +96,9 @@ public class EntradaMB implements Serializable {
 	
 	@Inject
 	private ItemOrcamentoService itemOrcamentoService;
+	
+	@Inject
+	private TimelineService timelineService;
 	
 	public void inicializar() {
 		if (idEntrada != null) {
@@ -235,6 +243,7 @@ public class EntradaMB implements Serializable {
 		this.salvarDespesa();
 		this.salvarItemDespesa();
 		this.setarDespesaEntrada();
+		this.gerarTimeline();
 		
 		FacesUtil.addInfoMessage("Despesa lançada com sucesso!");
 	}
@@ -252,6 +261,23 @@ public class EntradaMB implements Serializable {
 	private void setarDespesaEntrada() {
 		entrada.setDespesaLancada(Boolean.TRUE);
 		entradaService.salvar(entrada);
+	}
+	
+	private void gerarTimeline() {
+		timelineService.salvar(new Timeline(EnumTipoTimeline.COMPRA, EnumTipoMsgTimeline.DUPLA,"fa fa-cart-plus bg-green", "Novos Produtos!", 
+				"Compra realizada dia " + entrada.getDataCompraFormatada() + this.retornarOrigem() + entrada.getOrigem().getDescricao() +
+				", somando a quantidade de " + entrada.getQuantidadeTotal() + " item(s) e o valor total de R$ " + entrada.getValorTotal() + 
+				".", new Date()));
+	}
+	
+	private String retornarOrigem() {
+		if (EnumOrigemCompra.INTERNET.equals(entrada.getOrigem())) {
+			return " na ";
+		} else if (EnumOrigemCompra.PEDROJUANCABALLERO.equals(entrada.getOrigem())) {
+			return " em ";
+		} else {
+			return " na/em ";
+		}
 	}
 
 	public void calcularValorEmReal() {

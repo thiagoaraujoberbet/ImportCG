@@ -75,7 +75,7 @@ public class ItemBaixaDAO implements Serializable {
 	public BigDecimal obterSaldoTotalAPagarMesAtual() {
 		StringBuffer  sql = new StringBuffer();
 		sql.append("SELECT Sum(valor) ");
-		sql.append("FROM   u684253104_impcg.itemBaixa ib ");
+		sql.append("FROM   itemBaixa ib ");
 		sql.append("WHERE  ib.baixado = 0 ");
 		sql.append("       AND ib.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(), ");
 		sql.append("                                                   INTERVAL 1 month)), 1 ");
@@ -90,7 +90,7 @@ public class ItemBaixaDAO implements Serializable {
 	public BigDecimal obterSaldoTotalAPagarProximoMes() {
 		StringBuffer  sql = new StringBuffer();
 		sql.append("SELECT Sum(valor) ");
-		sql.append("FROM   u684253104_impcg.itemBaixa ib ");
+		sql.append("FROM   itemBaixa ib ");
 		sql.append("WHERE  ib.baixado = 0 ");
 		sql.append("       AND ib.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(), ");
 		sql.append("                                                   INTERVAL 0 month)), 1 ");
@@ -105,7 +105,7 @@ public class ItemBaixaDAO implements Serializable {
 	public BigDecimal obterSaldoTotalChequesACairMesAtual() {
 		StringBuffer  sql = new StringBuffer();
 		sql.append("SELECT Sum(valor) ");
-		sql.append("FROM   u684253104_impcg.itemBaixa ib ");
+		sql.append("FROM   itemBaixa ib ");
 		sql.append("WHERE  ib.baixado = :baixado ");
 		sql.append("       AND ib.cheque = :cheque ");
 		sql.append("       AND ib.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(), ");
@@ -123,7 +123,7 @@ public class ItemBaixaDAO implements Serializable {
 	public BigDecimal obterSaldoTotalChequesACairProximoMes() {
 		StringBuffer  sql = new StringBuffer();
 		sql.append("SELECT Sum(valor) ");
-		sql.append("FROM   u684253104_impcg.itemBaixa ib ");
+		sql.append("FROM   itemBaixa ib ");
 		sql.append("WHERE  ib.baixado = :baixado ");
 		sql.append("       AND ib.cheque = :cheque ");
 		sql.append("       AND ib.data BETWEEN (SELECT Adddate(Last_day(Subdate(Curdate(), ");

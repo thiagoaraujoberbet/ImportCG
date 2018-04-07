@@ -129,12 +129,12 @@ public class EstoqueDAO implements Serializable {
 		sql.append("                        p.marca, ");
 		sql.append("                        p.modelo, ");
 		sql.append("                        (SELECT Ifnull(Sum(ie.quantidade), 0) ");
-		sql.append("                         FROM   u684253104_impcg.itemEntrada ie ");
+		sql.append("                         FROM   itemEntrada ie ");
 		sql.append("                         WHERE  ie.idItemEntrada = i.idItemEntrada) - (SELECT Ifnull(Sum(iv.quantidade), 0) ");
-		sql.append("                                                                       FROM   u684253104_impcg.itemVenda iv ");
+		sql.append("                                                                       FROM   itemVenda iv ");
 		sql.append("                                                                       WHERE  iv.idItemEntrada = i.idItemEntrada) AS estoque ");
-		sql.append("        FROM   u684253104_impcg.itemEntrada i ");
-		sql.append("               INNER JOIN u684253104_impcg.produto p ");
+		sql.append("        FROM   itemEntrada i ");
+		sql.append("               INNER JOIN produto p ");
 		sql.append("                       ON i.idProduto = p.idProduto) x ");
 		sql.append("WHERE  x.estoque > 0");
 		

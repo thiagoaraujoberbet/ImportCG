@@ -69,6 +69,10 @@
 	                        	<h:outputText value="#{entrada.quantidadeTotal}" />
 	                        </p:column>
 	                        
+   	                        <p:column headerText="Origem" filterBy="#{entrada.origem.descricao}" sortBy="#{entrada.origem.descricao}">
+	                        	<h:outputText value="#{entrada.origem.descricao}" />
+	                        </p:column>
+	                        
    	                        <p:column headerText="Despesa Lançada?" filterBy="#{entrada.despesaLancada}" sortBy="#{entrada.despesaLancada}">
 	                        	<h:outputText value="#{entrada.despesaLancada eq true ? 'Sim' : 'Não'}" style="#{entrada.despesaLancada eq true ? 'color: #238E23;' : 'color: #FF0000;'}"/>
 	                        </p:column>

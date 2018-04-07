@@ -9,14 +9,18 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.importcg.enumeration.EnumTipoMsgTimeline;
+import br.com.importcg.enumeration.EnumTipoTimeline;
 import br.com.importcg.model.CatalogoInternacional;
 import br.com.importcg.model.Fornecedor;
 import br.com.importcg.model.Produto;
 import br.com.importcg.model.ProdutoImagem;
+import br.com.importcg.model.Timeline;
 import br.com.importcg.service.CatalogoInternacionalService;
 import br.com.importcg.service.FornecedorService;
 import br.com.importcg.service.ItemVendaService;
 import br.com.importcg.service.ProdutoService;
+import br.com.importcg.service.TimelineService;
 import br.com.importcg.util.FacesUtil;
 import br.com.importcg.wrapper.VendasRealizadasWrapper;
 
@@ -56,6 +60,9 @@ public class ProdutoMB implements Serializable {
 	@Inject
 	private ItemVendaService itemVendaService;
 	
+	@Inject
+	private TimelineService timelineService;
+	
 	public void inicializar() {
 		if (idProduto != null) {
 			produto = produtoService.porId(idProduto);
@@ -80,12 +87,19 @@ public class ProdutoMB implements Serializable {
 	public String salvar() {
 		produtoService.salvar(produto);
 		
-		if (produto.isEdicao())
+		if (produto.isEdicao()) {
 			FacesUtil.addInfoMessage("Produto editado com sucesso!");
-		else
+		} else {
+			this.gerarTimeline();
 			FacesUtil.addInfoMessage("Produto cadastrado com sucesso!");
+		}
 		
 		return "listarProduto.xhtml?faces-redirect=true";
+	}
+	
+	private void gerarTimeline() {
+		timelineService.salvar(new Timeline(EnumTipoTimeline.CADASTROPRODUTO, EnumTipoMsgTimeline.SIMPLES,"fa fa-tv bg-yellow", "Novo Produto!", 
+				produto.getNome() + " | " + produto.getMarca() + " | " + produto.getModelo() + " foi adicionado ao catálogo de produtos.", new Date()));
 	}
 	
 	public void salvarCatalogoInternacional() {
