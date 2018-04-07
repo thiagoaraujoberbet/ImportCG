@@ -34,7 +34,7 @@
 		<class>br.com.importcg.model.Venda</class>
 		
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/teste_impcg" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/u684253104_impcg" />
  			<property name="javax.persistence.jdbc.user" value="u684253104_impcg" /> 
 			<property name="javax.persistence.jdbc.password" value="Dsw3uUwC3p9S" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
