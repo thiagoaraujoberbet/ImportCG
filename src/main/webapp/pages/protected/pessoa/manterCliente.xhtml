@@ -39,23 +39,30 @@
                     <p:separator/>
 
                     <div class="ui-fluid">
-						<p:panelGrid id="capaPanel1" columns="4" style="width:100%;">
-						
-							<p:outputLabel value="Nome" for="nome"/>
-							<p:inputText id="nome" value="#{clienteMB.cliente.nome}"/>	
+                    	<p:panelGrid id="capaPanel1" columns="2" style="width:100%;"> 
+		                    <p:panelGrid id="capaPanel2" columns="1" style="width:100%;"> 
+		                    	<img src="#{clienteMB.cliente.linkImgFacebook}" 
+		                    		class="img-circle" alt="User Image" width="72px" height="72px"/>
+		                    </p:panelGrid>
+		                    
+							<p:panelGrid id="capaPanel3" columns="4" style="width:100%;">
 							
-							<p:outputLabel value="Data de Nasc." for="dataNascimento"/>
-							<p:calendar id="dataNascimento" value="#{clienteMB.cliente.dataNascimento}" pattern="dd/MM/yyyy" mask="true" />
-							
-							<p:outputLabel value="Celular" for="celular"/>
-							<p:inputMask id="celular" value="#{clienteMB.cliente.celular}" mask="(99) 99999-9999" />
-							
-							<p:outputLabel value="E-mail" for="email"/>
-							<p:inputText id="email" value="#{clienteMB.cliente.email}" />
-													
+								<p:outputLabel value="Nome" for="nome"/>
+								<p:inputText id="nome" value="#{clienteMB.cliente.nome}"/>	
+								
+								<p:outputLabel value="Data de Nasc." for="dataNascimento"/>
+								<p:calendar id="dataNascimento" value="#{clienteMB.cliente.dataNascimento}" pattern="dd/MM/yyyy" mask="true" />
+								
+								<p:outputLabel value="Celular" for="celular"/>
+								<p:inputMask id="celular" value="#{clienteMB.cliente.celular}" mask="(99) 99999-9999" />
+								
+								<p:outputLabel value="E-mail" for="email"/>
+								<p:inputText id="email" value="#{clienteMB.cliente.email}" />
+														
+							</p:panelGrid>
 						</p:panelGrid>
 						
-						<p:panelGrid id="capaPanel2" columns="2" style="width:100%;">
+						<p:panelGrid id="capaPanel4" columns="2" style="width:100%;">
 							<p:outputLabel value="Endereço Residencial" for="endResidencial"/>
 							<p:inputText id="endResidencial" value="#{clienteMB.cliente.enderecoResidencial}" />
 							
@@ -63,7 +70,7 @@
 							<p:inputText id="endComercial" value="#{clienteMB.cliente.enderecoComercial}" />
 						</p:panelGrid>
 						
-						<p:panelGrid id="capaPanel3" columns="1" style="width:100%;" rendered="#{!empty clienteMB.produtosCompradosPorCliente}">
+						<p:panelGrid id="capaPanel5" columns="1" style="width:100%;" rendered="#{!empty clienteMB.produtosCompradosPorCliente}">
 	   	                    <p:dataTable id="produtosCompradosTable" widgetVar="produtosCompradosTable" rows="10"	 
 			                    			 value="#{clienteMB.produtosCompradosPorCliente}" var="item" rowKey="#{item.id}"
 			                                 paginator="true" 	                                 

@@ -64,6 +64,8 @@ public class Pessoa implements Serializable {
 	
 	private String enderecoComercial;
 	
+	private String linkImgFacebook;
+	
 	// Utilizado na consulta de listagem de clientes (ListaClienteMB -> listarCliente.xhtml)
 	@Transient
 	private Integer quantidadeComprada;
@@ -198,6 +200,14 @@ public class Pessoa implements Serializable {
 
 	public void setEnderecoComercial(String enderecoComercial) {
 		this.enderecoComercial = enderecoComercial;
+	}
+	
+	public String getLinkImgFacebook() {
+		return linkImgFacebook;
+	}
+
+	public void setLinkImgFacebook(String linkImgFacebook) {
+		this.linkImgFacebook = linkImgFacebook;
 	}
 	
 	public BigDecimal getValorComprado() {
