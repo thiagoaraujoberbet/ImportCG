@@ -87,7 +87,7 @@
 							<p:inputMask id="cpf" value="#{funcionarioMB.funcionario.cpf}" mask="999.999.999-99" style="width:100%;"/>
 													
 							<p:outputLabel value="Data de Nasc." for="dataNascimento"/>
-							<p:inputMask id="dataNascimento" value="#{funcionarioMB.funcionario.dataNascimento}" mask="99/99/9999" style="width:100%;" required="true" requiredMessage="A data de nascimento do funcionário é obrigatório!"/>
+							<p:calendar id="dataNascimento" value="#{funcionarioMB.funcionario.dataNascimento}" pattern="dd/MM/yyyy" mask="true" />
 							
 							<p:outputLabel value="Celular" for="celular"/>
 							<p:inputMask id="celular" value="#{funcionarioMB.funcionario.celular}" mask="(99) 99999-9999" style="width:100%;" required="true" requiredMessage="O celular do funcionário é obrigatório!"/>

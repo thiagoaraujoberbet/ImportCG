@@ -82,7 +82,7 @@
 	                        
   	                        <p:column headerText="Situação" style="width:7%; text-align:center;">
 	                        	<h:outputText value="#{venda.situacao}" 
-	                        		style="#{venda.situacao eq 'OK' ? 'color: #238E23;' : 'color: #FF0000;'}"/>
+	                        		styleClass="#{venda.situacao eq 'OK' ? 'label label-success' : 'label label-danger'}"/>
 	                        </p:column>
 	                        
    	                        <p:column headerText="Vendedor" filterBy="#{venda.funcionario.nome}" sortBy="#{venda.funcionario.nome}" style="text-align:center;">
@@ -91,7 +91,7 @@
 	                        
    	                        <p:column headerText="Status" filterBy="#{venda.status.descricao}" sortBy="#{venda.status.descricao}" style="text-align: center;">
 	                        	<h:outputText value="#{venda.status.descricao}"
-	                        		style="#{venda.status eq 'VENDACONCLUIDA' ? 'color: #238E23;' : (venda.status eq 'PAGAMENTOPARCIAL' ? 'color: #FF7F00;' : 'color: #FF0000;')}"/>
+	                        		styleClass="#{venda.status eq 'VENDACONCLUIDA' ? 'label label-success' : (venda.status eq 'PAGAMENTOPARCIAL' ? 'label label-warning' : 'label label-danger')}"/>
 	                        </p:column>
 	                        	
 	                    </p:dataTable>

@@ -6,9 +6,11 @@ public enum EnumInstituicao {
 	BANCOHSBC("Banco HSBC"),
 	BANCOITAU("Banco Itaú"),
 	BANCOSANTANDER("Banco Santander"),
-	PAGSEGURO("PagSeguro"),
+	IMPORTCG("ImportCG"),
 	MERCADOPAGO("Mercado Pago"),
-	IMPORTCG("ImportCG");
+	NUBANK("Nubank"),
+	PAGSEGURO("PagSeguro"),
+	PICPAY("Pic Pay");
 	
 	private String descricao;
 	
